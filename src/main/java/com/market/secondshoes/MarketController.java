@@ -7,17 +7,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MarketController {
 
     @GetMapping("/")
-    static String face() {
+    static String index() {
         return "index";
     }
 
     @GetMapping("/login")
-    static String login() {
+    static String loginForm() {
         return "login";
     }
 
     @GetMapping("/signup")
-    static String signup() {
+    static String signupForm() {
         return "signup";
+    }
+
+    @GetMapping("/cart")
+    static String cartForm() {
+        return "cart";
     }
 }
