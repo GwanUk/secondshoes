@@ -8,7 +8,7 @@ public class MarketController {
 
     @GetMapping("/")
     static String index() {
-        return "index";
+        return "header";
     }
 
     @GetMapping("item")

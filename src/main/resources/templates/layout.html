@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout (header)" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -15,7 +15,7 @@
         <!-- Navigation-->
         <div th:replace="~{navigation :: copy}"></div>
         <!-- Header-->
-        <div th:replace="~{header :: copy}"></div>
+        <div th:replace="${header}"></div>
         <!-- Section-->
         <div th:replace="~{items :: copy}"></div>
         <!-- Footer-->
