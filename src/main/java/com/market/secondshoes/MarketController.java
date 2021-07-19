@@ -11,6 +11,11 @@ public class MarketController {
         return "index";
     }
 
+    @GetMapping("item")
+    static String itemForm() {
+        return "item";
+    }
+
     @GetMapping("/login")
     static String loginForm() {
         return "login";
