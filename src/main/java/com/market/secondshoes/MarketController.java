@@ -16,18 +16,10 @@ public class MarketController {
         return "item";
     }
 
-    @GetMapping("/login")
-    static String loginForm() {
-        return "login";
+    @GetMapping("/search")
+    static String search() {
+        return "search";
     }
 
-    @GetMapping("/signup")
-    static String signupForm() {
-        return "signup";
-    }
 
-    @GetMapping("/cart")
-    static String cartForm() {
-        return "cart";
-    }
 }
