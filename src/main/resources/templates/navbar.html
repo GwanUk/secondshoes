@@ -7,12 +7,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">판매관리</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                       data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="#!">회원 정보 관리</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
@@ -22,12 +22,84 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+                <button class="btn btn-outline-dark" type="submit" th:unless="${param.id} == null">
                     <i class="bi-cart-fill me-1"></i>
-                    Cart
+                    장바구니
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
             </form>
+            <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" th:if="${param.id} == null">
+                <i class="bi-cart-fill me-1"></i>
+                로그인
+            </button>
+            <!--lgoin modal-->
+            <div class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Bootstrap 5 Modal Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe" />
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <div class="modal-footer d-block">
+                                    <p class="float-start">Forgot <a href="#">Password</a></p>
+                                    <button type="submit" class="btn btn-warning float-end">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-outline-dark ms-1 p-lg" type="button" data-bs-toggle="modal" data-bs-target="#signUpForm" th:if="${param.id} == null">
+                <i class="bi-cart-fill me-1"></i>
+                회원가입
+            </button>
+            <!--signUp modal-->
+            <div class="modal fade" id="signUpForm" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel1">Bootstrap 5 Modal Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="text" class="form-control" id="username1" name="username" placeholder="Username" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password1" name="password" placeholder="Password" />
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe1" />
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <div class="modal-footer d-block">
+                                    <p class="float-start">Not yet account <a href="#">Sign Up</a></p>
+                                    <p class="float-start">Forgot <a href="#">Password</a></p>
+                                    <button type="submit" class="btn btn-warning float-end">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
+

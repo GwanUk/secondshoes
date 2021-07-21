@@ -9,3 +9,173 @@
     outline: none;
     box-shadow: none;
 }
+
+/*==login-modal==*/
+body {
+    font-family: 'Varela Round', sans-serif;
+}
+.modal-login {
+    color: #636363;
+    width: 350px;
+}
+.modal-login .modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+}
+.modal-login .modal-header {
+    border-bottom: none;
+    position: relative;
+    justify-content: center;
+}
+.modal-login h4 {
+    text-align: center;
+    font-size: 26px;
+}
+.modal-login  .form-group {
+    position: relative;
+}
+.modal-login i {
+    position: absolute;
+    left: 13px;
+    top: 11px;
+    font-size: 18px;
+}
+.modal-login .form-control {
+    padding-left: 40px;
+}
+.modal-login .form-control:focus {
+    border-color: #00ce81;
+}
+.modal-login .form-control, .modal-login .btn {
+    min-height: 40px;
+    border-radius: 3px;
+}
+.modal-login .hint-text {
+    text-align: center;
+    padding-top: 10px;
+}
+.modal-login .close {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+.modal-login .btn, .modal-login .btn:active {
+    border: none;
+    background: #00ce81 !important;
+    line-height: normal;
+}
+.modal-login .btn:hover, .modal-login .btn:focus {
+    background: #00bf78 !important;
+}
+.modal-login .modal-footer {
+    background: #ecf0f1;
+    border-color: #dee4e7;
+    text-align: center;
+    margin: 0 -20px -20px;
+    border-radius: 5px;
+    font-size: 13px;
+    justify-content: center;
+}
+.modal-login .modal-footer a {
+    color: #999;
+}
+.trigger-btn {
+    display: inline-block;
+    margin: 100px auto;
+}
+
+/*==sign-up==*/
+.main-body {
+    padding: 15px;
+}
+
+.nav-link {
+    color: #4a5568;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+
+/*==edit-form==*/
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}

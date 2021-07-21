@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="layout (header)" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="content(content)" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -17,14 +17,8 @@
     <body>
         <!-- Navigation-->
         <div th:replace="~{navbar :: copy}"></div>
-        <!-- Header-->
-        <div th:replace="${header}"></div>
-        <!-- Searchbar -->
-        <div th:replace="~{searchbar :: copy}"></div>
-        <!-- Option -->
-        <div th:replace="~{option :: copy}"></div>
-        <!-- Section-->
-        <div th:replace="~{items :: copy}"></div>
+        <!-- content-->
+        <div th:replace="${content}"></div>
         <!-- Footer-->
         <div th:replace="~{footer :: copy}"></div>
         <!-- Bootstrap core JS-->
