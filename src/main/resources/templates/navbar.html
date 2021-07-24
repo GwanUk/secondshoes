@@ -6,7 +6,7 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">home</a></li>
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="/">쪽지함</a></li>
                 <li class="nav-item"><a class="nav-link" href="sellForm">판매관리</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
@@ -23,12 +23,12 @@
             </ul>
                 <button class="btn btn-outline-dark" type="button" onclick="cartForm()" th:unless="${param.id} == null">
                     <i class="bi-cart-fill me-1"></i>
-                    장바구니
+                    찜
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
                 <button class="btn btn-outline-dark ms-1" type="button" onclick="cartForm()" th:unless="${param.id} == null">
                     <i class="bi-cart-fill me-1"></i>
-                    메세지
+                    알림
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
             <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" onclick="loginForm()" th:if="${param.id} == null">

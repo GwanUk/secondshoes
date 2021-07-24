@@ -1,4 +1,4 @@
-package com.market.secondshoes;
+package com.market.secondshoes.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +11,9 @@ public class MarketController {
         return "index";
     }
 
-    @GetMapping("/item")
+    @GetMapping("/itemForm")
     static String itemForm() {
-        return "item";
+        return "itemForm";
     }
 
     @GetMapping("/editForm")

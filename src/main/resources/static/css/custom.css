@@ -1,3 +1,7 @@
+.item-card:hover {
+    border: #1e2125 2px solid;
+}
+
 /*==searchbar======================================================================================*/
 .form-control-borderless {
     border: none;
