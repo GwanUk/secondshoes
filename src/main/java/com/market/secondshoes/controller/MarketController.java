@@ -41,4 +41,9 @@ public class MarketController {
         return "loginForm";
     }
 
+    @GetMapping("/chatForm")
+    static String chatForm() {
+        return "chatForm";
+    }
+
 }
