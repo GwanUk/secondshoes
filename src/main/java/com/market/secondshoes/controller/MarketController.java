@@ -46,4 +46,19 @@ public class MarketController {
         return "chatForm";
     }
 
+    @GetMapping("/sellList")
+    static String sellList() {
+        return "sellList";
+    }
+
+    @GetMapping("/buyList")
+    static String buyList() {
+        return "buyList";
+    }
+
+    @GetMapping("/wishList")
+    static String wishList() {
+        return "wishList";
+    }
+
 }
