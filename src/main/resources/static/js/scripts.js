@@ -1,13 +1,12 @@
-function cartForm() {
-    location.href = "cartForm";
+function cart() {
+    location.href = "cart";
 }
-function signUpForm() {
-    location.href = "signUpForm";
+function signUp() {
+    location.href = "signUp";
 }
-function loginForm() {
-    location.href = "loginForm";
+function login() {
+    location.href = "login";
 }
-
-function itemForm() {
-    location.href = "itemForm";
+function item() {
+    location.href = "item";
 }

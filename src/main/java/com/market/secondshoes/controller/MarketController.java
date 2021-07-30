@@ -1,8 +1,17 @@
 package com.market.secondshoes.controller;
 
+import com.market.secondshoes.form.MemberSaveForm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
+@Slf4j
 @Controller
 public class MarketController {
 
@@ -11,37 +20,48 @@ public class MarketController {
         return "index";
     }
 
-    @GetMapping("/itemForm")
+    @GetMapping("/item")
     static String itemForm() {
         return "itemForm";
     }
 
-    @GetMapping("/editForm")
+    @GetMapping("/edit")
     static String editForm() {
         return "editForm";
     }
 
-    @GetMapping("/sellForm")
+    @GetMapping("/sell")
     static String sellForm() {
         return "sellForm";
     }
 
-    @GetMapping("/cartForm")
+    @GetMapping("/cart")
     static String cartForm() {
         return "cartForm";
     }
 
-    @GetMapping("/signUpForm")
-    static String signUpForm() {
+    @GetMapping("/signUp")
+    static String signUpForm(Model model) {
+        model.addAttribute("memberSaveForm", new MemberSaveForm());
         return "signUpForm";
     }
 
-    @GetMapping("/loginForm")
+    @PostMapping("/signUp")
+    static String signUp(@Valid @ModelAttribute MemberSaveForm form, BindingResult bindingResult) {
+        log.info("::{}  {}  {}::", form.getEmail(), form.getName(), form.getPassword());
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "signUpForm";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
     static String loginForm() {
         return "loginForm";
     }
 
-    @GetMapping("/chatForm")
+    @GetMapping("/chat")
     static String chatForm() {
         return "chatForm";
     }
