@@ -1,7 +1,9 @@
 package com.market.secondshoes.controller;
 
 import com.market.secondshoes.form.MemberSaveForm;
+import com.market.secondshoes.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,8 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 public class MarketController {
+
+
 
     @GetMapping("/")
     static String index() {
@@ -53,6 +57,7 @@ public class MarketController {
             log.info("errors={}", bindingResult);
             return "signUpForm";
         }
+
         return "redirect:/";
     }
 

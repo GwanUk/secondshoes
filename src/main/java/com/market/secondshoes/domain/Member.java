@@ -3,13 +3,9 @@ package com.market.secondshoes.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -27,4 +23,14 @@ public class Member {
 
     @Embedded
     private Address address;
+
+    public static Member createMember(String email, String name, String password) {
+        Member member = new Member();
+        member.email = email;
+        member.name = name;
+        member.password = password;
+
+        return member;
+    }
+
 }
