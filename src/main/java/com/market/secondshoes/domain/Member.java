@@ -1,11 +1,11 @@
 package com.market.secondshoes.domain;
 
+import com.market.secondshoes.dto.MemberSignUpDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -31,6 +31,10 @@ public class Member {
         member.password = password;
 
         return member;
+    }
+
+    public static Member createMember(MemberSignUpDto memberSignUpDto) {
+        return Member.createMember(memberSignUpDto.getEmail(), memberSignUpDto.getName(), memberSignUpDto.getPassword());
     }
 
 }
