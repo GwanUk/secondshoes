@@ -1,4 +1,4 @@
-package com.market.secondshoes.dto;
+package com.market.secondshoes.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;

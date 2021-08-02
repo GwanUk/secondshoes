@@ -1,20 +1,30 @@
 package com.market.secondshoes.controller;
 
+import com.market.secondshoes.Const;
+import com.market.secondshoes.domain.Member;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
-        return "home";
-    }
+    public String homeLogin(HttpServletRequest request, Model model) {
 
-    @GetMapping("/{id}")
-    public String loginHome(@PathVariable String id) {
-        System.out.println(" ! loginId = " + id);
+        Member loginMember = null;
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            loginMember = (Member)session.getAttribute(Const.LOGIN_MEMBER);
+        }
+
+        model.addAttribute("member", loginMember);
+
         return "home";
     }
 

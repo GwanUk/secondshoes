@@ -1,4 +1,4 @@
-package com.market.secondshoes.service;
+package com.market.secondshoes.service.member;
 
 import com.market.secondshoes.domain.Member;
 import com.market.secondshoes.repository.MemberRepository;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberService {
+public class SignUpService {
 
     private final MemberRepository memberRepository;
 

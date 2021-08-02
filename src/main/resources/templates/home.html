@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: content (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: copy (~{::copy}, ${member})}" xmlns:th="http://www.thymeleaf.org">
 <contents th:fragment="copy">
     <div th:replace="~{header::copy}"></div>
     <div th:replace="~{searchbar::copy}"></div>
