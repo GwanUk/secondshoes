@@ -14,4 +14,6 @@ public class MemberLoginDto {
 
     @NotBlank
     private String password;
+
+    private boolean maintain;
 }

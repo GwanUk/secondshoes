@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")

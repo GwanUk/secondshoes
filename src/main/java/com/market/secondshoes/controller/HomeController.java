@@ -2,28 +2,21 @@ package com.market.secondshoes.controller;
 
 import com.market.secondshoes.Const;
 import com.market.secondshoes.domain.Member;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String homeLogin(HttpServletRequest request, Model model) {
+    public String homeLogin(@SessionAttribute(name = Const.LOGIN_MEMBER, required = false) Member member, Model model) {
 
-        Member loginMember = null;
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            loginMember = (Member)session.getAttribute(Const.LOGIN_MEMBER);
-        }
-
-        model.addAttribute("member", loginMember);
+        model.addAttribute("member", member);
 
         return "home";
     }

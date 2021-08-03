@@ -21,15 +21,12 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
-@Slf4j
 public class LoginController {
 
     private final LoginService loginService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
-
-        log.info("!!!login!!!");
 
         model.addAttribute("memberLoginDto", new MemberLoginDto());
 
@@ -51,13 +48,19 @@ public class LoginController {
         }
 
         HttpSession session = request.getSession();
+
+        if (memberLoginDto.isMaintain()) {
+            session.setMaxInactiveInterval(604800);
+        }
+
         session.setAttribute(Const.LOGIN_MEMBER, loginMember);
 
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
+
 
         HttpSession session = request.getSession(false);
 
