@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: content (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: content (~{::copy}, ${loginMemberId})}" xmlns:th="http://www.thymeleaf.org">
 <!--판매 양식-->
 <section th:fragment="copy">
 <div class="container h-100">

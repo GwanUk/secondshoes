@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy(member)">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy(loginMemberId)">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/">Second-Shoes</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -6,9 +6,9 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link" href="sellForm" th:unless="${member} == null">판매관리</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/logout" th:unless="${member} == null">로그아웃</a></li>
-                <li class="nav-item dropdown" th:unless="${member} == null">
+                <li class="nav-item"><a class="nav-link" href="/items/sell">판매관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/logout" th:unless="${loginMemberId} == null">로그아웃</a></li>
+                <li class="nav-item dropdown" th:unless="${loginMemberId} == null">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -22,20 +22,20 @@
                     </ul>
                 </li>
             </ul>
-                <button class="btn btn-outline-dark" type="button" onclick="cart()" th:unless="${member} == null">
+                <button class="btn btn-outline-dark" type="button" onclick="cart()" th:unless="${loginMemberId} == null">
                     <i class="bi-cart-fill me-1"></i>
                     장바구니
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
-                <button class="btn btn-outline-dark ms-1" type="button" onclick="" th:unless="${member} == null">
+                <button class="btn btn-outline-dark ms-1" type="button" onclick="" th:unless="${loginMemberId} == null">
                     <i class="bi-cart-fill me-1"></i>
                     쪽지
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
-            <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" onclick="login()" th:if="${member} == null">
+            <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" onclick="login()" th:if="${loginMemberId} == null">
                 로그인
             </button>
-            <button class="btn btn-outline-dark ms-1" type="button" data-bs-toggle="modal" data-bs-target="#signUpForm" onclick="signUp()" th:if="${member} == null">
+            <button class="btn btn-outline-dark ms-1" type="button" data-bs-toggle="modal" data-bs-target="#signUpForm" onclick="signUp()" th:if="${loginMemberId} == null">
                 회원가입
             </button>
         </div>
