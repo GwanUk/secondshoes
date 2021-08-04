@@ -1,6 +1,6 @@
 package com.market.secondshoes.controller.member;
 
-import com.market.secondshoes.ConstShoes;
+import com.market.secondshoes.ShoesConst;
 import com.market.secondshoes.domain.Member;
 import com.market.secondshoes.dto.member.MemberLoginDto;
 import com.market.secondshoes.service.member.LoginService;
@@ -52,7 +52,7 @@ public class LoginController {
             session.setMaxInactiveInterval(604800);
         }
 
-        session.setAttribute(ConstShoes.LOGIN_MEMBER_ID, loginMember.getId());
+        session.setAttribute(ShoesConst.LOGIN_MEMBER_ID, loginMember.getId());
 
         return "redirect:/";
     }

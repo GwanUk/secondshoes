@@ -8,5 +8,9 @@ function login() {
     location.href = "/members/login";
 }
 function item() {
-    location.href = "/items/item";
+    location.href = "/item";
+}
+
+function sellAdd() {
+    location.href = "/sell/add";
 }

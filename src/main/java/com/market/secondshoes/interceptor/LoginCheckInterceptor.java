@@ -1,6 +1,6 @@
 package com.market.secondshoes.interceptor;
 
-import com.market.secondshoes.ConstShoes;
+import com.market.secondshoes.ShoesConst;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         HttpSession session = request.getSession();
 
-        if (session == null || session.getAttribute(ConstShoes.LOGIN_MEMBER_ID) == null) {
+        if (session == null || session.getAttribute(ShoesConst.LOGIN_MEMBER_ID) == null) {
 
             response.sendRedirect("/members/login?redirectURL"+requestURI);
 

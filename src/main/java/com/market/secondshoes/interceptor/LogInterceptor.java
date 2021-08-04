@@ -1,6 +1,6 @@
 package com.market.secondshoes.interceptor;
 
-import com.market.secondshoes.ConstShoes;
+import com.market.secondshoes.ShoesConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,27 +18,27 @@ public class LogInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI();
         String logId = UUID.randomUUID().toString();
 
-        request.setAttribute(ConstShoes.LOG_ID, logId);
+        request.setAttribute(ShoesConst.LOG_ID, logId);
 
-        log.info("REQUEST [{}][{}][{}]", logId, requestURI, handler);
+        log.info("<== REQUEST [{}][{}][{}] ==>", logId, requestURI, handler);
 
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle [{}]", modelAndView);
+        log.info("<== postHandle [{}] ==>", modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String requestURI = request.getRequestURI();
-        String logId = (String)request.getAttribute(ConstShoes.LOG_ID);
+        String logId = (String)request.getAttribute(ShoesConst.LOG_ID);
 
-        log.info("RESPONSE [{}][{}][{}]", logId, requestURI, handler);
+        log.info("<== RESPONSE [{}][{}][{}] ==>", logId, requestURI, handler);
 
         if (ex != null) {
-            log.error("afterCompletion error!!", ex);
+            log.error("!!! afterCompletion error !!!", ex);
         }
     }
 }
