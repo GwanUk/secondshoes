@@ -21,7 +21,7 @@ logging:
   level:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
-    org.apache.coyote.http11: debug #http메세지를 서버에서 로그로 남김
+#    org.apache.coyote.http11: debug #http메세지를 서버에서 로그로 남김
 
 server:
   servlet:

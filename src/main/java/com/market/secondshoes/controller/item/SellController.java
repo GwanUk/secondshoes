@@ -42,10 +42,7 @@ public class SellController {
             return "sellForm";
         }
 
-        if (!itemSellDto.getImgs().isEmpty()) {
-            log.info("@@## {} @@##", itemSellDto.getImgs());
-            log.info("@@## {} @@##", itemSellDto.getImgs().getOriginalFilename());
-        }
+
 
         return "redirect:/sell/add";
     }
