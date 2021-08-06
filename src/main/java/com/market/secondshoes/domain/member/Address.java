@@ -1,4 +1,4 @@
-package com.market.secondshoes.domain;
+package com.market.secondshoes.domain.member;
 
 import lombok.Getter;
 

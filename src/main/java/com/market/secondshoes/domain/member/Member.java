@@ -1,6 +1,5 @@
-package com.market.secondshoes.domain;
+package com.market.secondshoes.domain.member;
 
-import com.market.secondshoes.dto.member.MemberLoginDto;
 import com.market.secondshoes.dto.member.MemberSignUpDto;
 import lombok.AccessLevel;
 import lombok.Getter;

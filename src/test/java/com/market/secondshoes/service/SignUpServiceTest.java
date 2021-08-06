@@ -1,6 +1,6 @@
 package com.market.secondshoes.service;
 
-import com.market.secondshoes.domain.Member;
+import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.service.member.SignUpService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

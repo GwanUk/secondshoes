@@ -1,7 +1,7 @@
 package com.market.secondshoes.controller.item;
 
 import com.market.secondshoes.argumentresolver.Login;
-import com.market.secondshoes.dto.item.ItemSellDto;
+import com.market.secondshoes.dto.item.ItemAddDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("/sell")
 @RequiredArgsConstructor
 @Slf4j
-public class SellController {
+public class ItemAddController {
 
     @Value("${file.dir}")
     private String fileDir;
@@ -28,18 +28,18 @@ public class SellController {
     public String sellForm(@Login Long loginMemberId, Model model) {
 
         model.addAttribute("loginMemberId", loginMemberId);
-        model.addAttribute("itemSellDto", new ItemSellDto());
+        model.addAttribute("itemAddDto", new ItemAddDto());
 
-        return "sellForm";
+        return "itemAddForm";
     }
 
     @PostMapping("/add")
-    public String sell(@Valid @ModelAttribute ItemSellDto itemSellDto, BindingResult bindingResult, @Login Long loginMemberId, Model model) {
+    public String sell(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long loginMemberId, Model model) {
 
         model.addAttribute("loginMemberId", loginMemberId);
 
         if (bindingResult.hasErrors()) {
-            return "sellForm";
+            return "itemAddForm";
         }
 
 

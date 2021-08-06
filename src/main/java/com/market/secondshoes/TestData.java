@@ -1,6 +1,6 @@
 package com.market.secondshoes;
 
-import com.market.secondshoes.domain.Member;
+import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

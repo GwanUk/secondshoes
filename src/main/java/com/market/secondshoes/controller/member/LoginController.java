@@ -1,7 +1,7 @@
 package com.market.secondshoes.controller.member;
 
 import com.market.secondshoes.ShoesConst;
-import com.market.secondshoes.domain.Member;
+import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.member.MemberLoginDto;
 import com.market.secondshoes.service.member.LoginService;
 import lombok.RequiredArgsConstructor;

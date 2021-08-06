@@ -1,10 +1,9 @@
 package com.market.secondshoes.controller.member;
 
-import com.market.secondshoes.domain.Member;
+import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.member.MemberSignUpDto;
 import com.market.secondshoes.service.member.SignUpService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

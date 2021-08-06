@@ -6,17 +6,17 @@
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-9">
 
-            <h1 class="text-white mb-4" th:text="#{sell.page.sell}">Apply for a job</h1>
+            <h1 class="text-white mb-4" th:text="#{item.page.sell}">Apply for a job</h1>
 
             <div class="card" style="border-radius: 15px;">
                 <div class="card-body">
 
-                    <form th:object="${itemSellDto}" method="post" enctype="multipart/form-data">
+                    <form th:object="${itemAddDto}" method="post" enctype="multipart/form-data">
                         <div class="row align-items-center pt-4 pb-3">
                             <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{title}"/>
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0" th:text="#{sell.label.title}">title</h6>
+                                <h6 class="mb-0" th:text="#{item.label.title}">title</h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
@@ -30,8 +30,54 @@
 
                         <div class="row align-items-center py-3">
                             <div class="col-md-3 ps-5">
+                                <h6 class="mb-0" th:text="#{item.label.gender}">Gender</h6>
+                            </div>
+                            <div class="col-md-4 pe-5" th:each="gender : ${T(com.market.secondshoes.domain.item.Gender).values()}">
+                                <input type="radio" th:field="*{gender}" th:value="${gender.name()}" class="form-check-input"/>
+                                <label th:for="${#ids.prev('gender')}" th:text="${gender.getSex()}"></label>
+                            </div>
+                        </div>
 
-                                <h6 class="mb-0" th:text="#{sell.label.tag}">tag</h6>
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0" th:text="#{item.label.size}">Size</h6>
+                            </div>
+                            <div class="col-md-9 pe-5" >
+                                <select th:field="*{size}" class="form-select">
+                                    <option th:each="size : ${T(com.market.secondshoes.domain.item.Size).values()}"
+                                            th:value="${size.name()}" th:text="${size.getDimensions()}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0" th:text="#{item.label.brand}">Brand</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <select th:field="*{brand}" class="form-select">
+                                    <option th:each="brand : ${T(com.market.secondshoes.domain.item.Brand).values()}"
+                                            th:value="${brand.name()}" th:text="${brand.getBrandName()}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0" th:text="#{item.label.category}">Category</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <select th:field="*{category}" class="form-select">
+                                    <option th:each="category : ${T(com.market.secondshoes.domain.item.Category).values()}"
+                                            th:value="${category.name()}" th:text="${category.getCategoryType()}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0" th:text="#{item.label.tag}">tag</h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
@@ -46,7 +92,7 @@
                         <div class="row align-items-center py-3">
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0" th:text="#{sell.label.price}">price</h6>
+                                <h6 class="mb-0" th:text="#{item.label.price}">price</h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
@@ -56,12 +102,14 @@
                             </div>
                         </div>
 
+
+
                         <hr class="mx-n3">
 
                         <div class="row align-items-center py-3">
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0" th:text="#{sell.label.explain}">explain</h6>
+                                <h6 class="mb-0" th:text="#{item.label.explain}">explain</h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
@@ -76,7 +124,7 @@
                         <div class="row align-items-center py-3">
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0" th:text="#{sell.label.itemImgs}">Upload CV</h6>
+                                <h6 class="mb-0" th:text="#{item.label.itemImages}">Upload CV</h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
@@ -90,7 +138,7 @@
                         <hr class="mx-n3">
 
                         <div class="px-5 py-4 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-outline-dark btn-lg w-100" onclick="sellAdd()" th:text="#{sell.button.add}">Send application</button>
+                            <button type="submit" class="btn btn-outline-dark btn-lg w-100" onclick="sellAdd()" th:text="#{item.button.add}">Send application</button>
                         </div>
                     </form>
 

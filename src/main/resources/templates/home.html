@@ -3,7 +3,7 @@
 <contents th:fragment="copy">
     <div th:replace="~{header::copy}"></div>
     <div th:replace="~{searchbar::copy}"></div>
-    <div th:replace="~{option::copy}"></div>
+    <div th:replace="~{option::copy(${itemAddDto})}"></div>
     <div th:replace="~{items::copy}"></div>
 </contents>
 </html>
