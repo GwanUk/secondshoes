@@ -2,7 +2,7 @@ package com.market.secondshoes;
 
 import com.market.secondshoes.argumentresolver.LoginMemberArgumentResolver;
 import com.market.secondshoes.interceptor.LogInterceptor;
-import com.market.secondshoes.interceptor.LoginCheckInterceptor;
+import com.market.secondshoes.interceptor.MemberLoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -25,8 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/js/**", "/imgs/**", "/assets/**");
 
-        registry.addInterceptor(new LoginCheckInterceptor())
+        registry.addInterceptor(new MemberLoginCheckInterceptor())
                 .order(2)
-                .addPathPatterns("/sell/**");
+                .addPathPatterns("/item/sell/**");
     }
 }

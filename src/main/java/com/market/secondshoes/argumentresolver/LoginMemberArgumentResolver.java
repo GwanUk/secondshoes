@@ -30,6 +30,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             return null;
         }
 
-        return session.getAttribute(ShoesConst.LOGIN_MEMBER_ID);
+        return session.getAttribute(ShoesConst.MEMBER_ID);
     }
 }

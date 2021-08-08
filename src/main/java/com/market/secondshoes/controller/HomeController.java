@@ -10,19 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String homeLogin(@Login Long loginMemberId, Model model) {
+    public String homeLogin(@Login Long memberId, Model model) {
 
-        model.addAttribute("loginMemberId", loginMemberId);
+        model.addAttribute("memberId", memberId);
         model.addAttribute("itemAddDto", new ItemAddDto());
-
 
         return "home";
     }
 
     @GetMapping("/item")
-    public String itemForm(@Login Long loginMemberId, Model model) {
+    public String itemForm(@Login Long memberId, Model model) {
 
-        model.addAttribute("loginMemberId", loginMemberId);
+        model.addAttribute("memberId", memberId);
 
         return "itemForm";
     }

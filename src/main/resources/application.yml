@@ -28,4 +28,4 @@ server:
     session:
       tracking-modes: cookie
 
-file.dir: C:/Users/uk/mydirectory/myprojects/imgsFolder/secondshoes/src/main/resources/images/
+file.dir: C:/Users/uk/mydirectory/imageFolder

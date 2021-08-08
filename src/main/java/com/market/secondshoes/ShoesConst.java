@@ -2,7 +2,7 @@ package com.market.secondshoes;
 
 public interface ShoesConst {
 
-    String LOGIN_MEMBER_ID = "loginMemberId";
+    String MEMBER_ID = "memberId";
 
     String LOG_ID = "logId";
 }

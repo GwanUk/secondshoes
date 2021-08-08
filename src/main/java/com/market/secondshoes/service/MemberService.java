@@ -1,4 +1,4 @@
-package com.market.secondshoes.service.member;
+package com.market.secondshoes.service;
 
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.repository.MemberRepository;
@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class SignUpService {
+@Transactional(readOnly = true)
+public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    public Optional<Member> findMemberById(Long id) {
+        return memberRepository.findById(id);
+    }
 
     @Transactional
     public Long join(Member member) {
@@ -36,5 +40,10 @@ public class SignUpService {
         if (findMemberByEmail.isPresent()) {
             throw new IllegalStateException("이미 가입된 이메일입니다.");
         }
+    }
+
+    public Optional<Member> login(String email, String password) {
+        return memberRepository.findMemberByEmail(email)
+                .filter(m -> m.getPassword().equals(password));
     }
 }

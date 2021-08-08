@@ -1,11 +1,14 @@
 package com.market.secondshoes.domain.member;
 
+import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.dto.member.MemberSignUpDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +26,9 @@ public class Member {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "member")
+    private List<Item> item = new ArrayList<>();
 
     public static Member createMember(String email, String name, String password) {
         Member member = new Member();

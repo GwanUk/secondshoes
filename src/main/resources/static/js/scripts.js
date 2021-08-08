@@ -2,15 +2,11 @@ function cart() {
     location.href = "cart";
 }
 function signUp() {
-    location.href = "/members/signUp";
+    location.href = "/member/signUp";
 }
 function login() {
-    location.href = "/members/login";
+    location.href = "/member/login";
 }
 function item() {
     location.href = "/item";
-}
-
-function sellAdd() {
-    location.href = "/sell/add";
 }

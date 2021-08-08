@@ -1,9 +1,10 @@
-package com.market.secondshoes.controller.member;
+package com.market.secondshoes.controller;
 
 import com.market.secondshoes.ShoesConst;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.member.MemberLoginDto;
-import com.market.secondshoes.service.member.LoginService;
+import com.market.secondshoes.dto.member.MemberSignUpDto;
+import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,31 +20,57 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/members")
-public class LoginController {
+@RequestMapping("/member")
+public class MemberController {
 
-    private final LoginService loginService;
+    private final MemberService memberService;
+
+    @GetMapping("/signUp")
+    public String signUpForm(Model model) {
+
+        model.addAttribute("memberSignUpDto", new MemberSignUpDto());
+
+        return "MemberSignUpForm";
+    }
+
+    @PostMapping("/signUp")
+    public String signUp(@Valid @ModelAttribute MemberSignUpDto memberSignUpDto, BindingResult bindingResult) {
+
+        if (!memberSignUpDto.getPassword().equals(memberSignUpDto.getPasswordCheck())) {
+            bindingResult.rejectValue("password", "passwordCheck");
+            bindingResult.rejectValue("passwordCheck", "passwordCheck");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "MemberSignUpForm";
+        }
+
+        Member member = Member.createMember(memberSignUpDto);
+        memberService.join(member);
+
+        return "redirect:/member/login";
+    }
 
     @GetMapping("/login")
     public String loginForm(Model model) {
 
         model.addAttribute("memberLoginDto", new MemberLoginDto());
 
-        return "loginForm";
+        return "MemberLoginForm";
     }
 
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute MemberLoginDto memberLoginDto, BindingResult bindingResult, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            return "loginForm";
+            return "MemberLoginForm";
         }
 
-        Member loginMember = loginService.login(memberLoginDto.getEmail(), memberLoginDto.getPassword()).orElse(null);
+        Member loginMember = memberService.login(memberLoginDto.getEmail(), memberLoginDto.getPassword()).orElse(null);
 
         if (loginMember == null) {
             bindingResult.reject("loginFail");
-            return "loginForm";
+            return "MemberLoginForm";
         }
 
         HttpSession session = request.getSession();
@@ -52,7 +79,7 @@ public class LoginController {
             session.setMaxInactiveInterval(604800);
         }
 
-        session.setAttribute(ShoesConst.LOGIN_MEMBER_ID, loginMember.getId());
+        session.setAttribute(ShoesConst.MEMBER_ID, loginMember.getId());
 
         return "redirect:/";
     }

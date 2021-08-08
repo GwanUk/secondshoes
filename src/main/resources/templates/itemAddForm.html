@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: copy (~{::copy}, ${loginMemberId})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: copy (~{::copy}, ${memberId})}" xmlns:th="http://www.thymeleaf.org">
 <!--판매 양식-->
 <section th:fragment="copy">
 <div class="container h-100">
@@ -15,14 +15,10 @@
                         <div class="row align-items-center pt-4 pb-3">
                             <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{title}"/>
                             <div class="col-md-3 ps-5">
-
                                 <h6 class="mb-0" th:text="#{item.label.title}">title</h6>
-
                             </div>
                             <div class="col-md-9 pe-5">
-
                                 <input type="text" class="form-control form-control-lg" th:field="*{title}" th:errorclass="field-error"/>
-
                             </div>
                         </div>
 
@@ -74,19 +70,6 @@
                             </div>
                         </div>
 
-                        <div class="row align-items-center py-3">
-                            <div class="col-md-3 ps-5">
-
-                                <h6 class="mb-0" th:text="#{item.label.tag}">tag</h6>
-
-                            </div>
-                            <div class="col-md-9 pe-5">
-
-                                <input type="email" class="form-control form-control-lg" placeholder="example@example.com" />
-
-                            </div>
-                        </div>
-
                         <hr class="mx-n3">
 
                         <div class="row align-items-center py-3">
@@ -97,7 +80,7 @@
                             </div>
                             <div class="col-md-9 pe-5">
 
-                                <input type="email" class="form-control form-control-lg" placeholder="example@example.com" />
+                                <input type="text" class="form-control form-control-lg" th:field="*{price}"/>
 
                             </div>
                         </div>
@@ -114,7 +97,7 @@
                             </div>
                             <div class="col-md-9 pe-5">
 
-                                <textarea class="form-control" rows="3" placeholder="Message sent to the employer"></textarea>
+                                <textarea class="form-control" rows="3" th:field="*{explain}" placeholder="Message sent to the employer"></textarea>
 
                             </div>
                         </div>
@@ -138,7 +121,7 @@
                         <hr class="mx-n3">
 
                         <div class="px-5 py-4 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-outline-dark btn-lg w-100" onclick="sellAdd()" th:text="#{item.button.add}">Send application</button>
+                            <button type="submit" class="btn btn-outline-dark btn-lg w-100" th:text="#{item.button.add}">Send application</button>
                         </div>
                     </form>
 

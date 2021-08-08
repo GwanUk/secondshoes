@@ -5,16 +5,16 @@ import lombok.Getter;
 @Getter
 public enum Size {
 
-    size220(220), size225(225),
-    size230(230), size235(235),
-    size240(240), size245(245),
-    size250(250), size255(255),
-    size260(260), size265(265),
-    size270(270), size275(275),
-    size280(280), size285(285),
-    size290(290), size295(295),
-    size300(300), size305(305),
-    size310(310);
+    SIZE220(220), SIZE225(225),
+    SIZE230(230), SIZE235(235),
+    SIZE240(240), SIZE245(245),
+    SIZE250(250), SIZE255(255),
+    SIZE260(260), SIZE265(265),
+    SIZE270(270), SIZE275(275),
+    SIZE280(280), SIZE285(285),
+    SIZE290(290), SIZE295(295),
+    SIZE300(300), SIZE305(305),
+    SIZE310(310);
 
     private final int dimensions;
 
