@@ -1,11 +1,15 @@
 package com.market.secondshoes.service;
 
 import com.market.secondshoes.dto.item.UploadImage;
+import com.market.secondshoes.exception.ImageExceededException;
+import com.market.secondshoes.exception.ImageExtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,7 +20,14 @@ public class ImageStore {
     @Value("${file.dir}")
     private String fileDir;
 
+    private final String imageExt[] = new String[]{".jpg", ".png", ".jpeg", ".gif"};
+
     public List<UploadImage> storeImages(List<MultipartFile> multipartFiles) {
+
+        if (multipartFiles.size() > 5) {
+            throw new ImageExceededException("이미지 파일의 개수가 5개 초과입니다.");
+        }
+
         return multipartFiles.stream()
                 .filter(multipartFile -> !multipartFile.isEmpty())
                 .map(multipartFile -> storeImage(multipartFile))
@@ -34,7 +45,7 @@ public class ImageStore {
 
         try {
             multipartFile.transferTo(new File(getFullPath(storeImageName)));
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -46,7 +57,15 @@ public class ImageStore {
     }
 
     private String extractExt(String originalImageName) {
-        return originalImageName.substring(originalImageName.lastIndexOf("."));
+        String ext = originalImageName.substring(originalImageName.lastIndexOf("."));
+        imageExtCheck(ext);
+        return ext;
+    }
+
+    private void imageExtCheck(String ext) {
+        if (Arrays.stream(imageExt).filter(s -> s.equals(ext)).findFirst().isEmpty()) {
+            throw new ImageExtException("이미지 파일이 아닙니다.");
+        }
     }
 
     private String getFullPath(String fileName) {

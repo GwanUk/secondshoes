@@ -28,4 +28,4 @@ server:
     session:
       tracking-modes: cookie
 
-file.dir: C:/Users/uk/mydirectory/imageFolder
+file.dir: C:/Users/uk/mydirectory/imageFolder/

@@ -2,7 +2,11 @@ package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
+import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
+import com.market.secondshoes.dto.item.UploadImage;
+import com.market.secondshoes.exception.ImageExceededException;
+import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,17 +52,29 @@ public class ItemController {
 
         model.addAttribute("memberId", memberId);
 
+        Member member = memberService.findMemberById(memberId).orElse(null);
+
+        if (member == null) {
+            return "redirect:/member/login";
+        }
+
+        List<UploadImage> uploadImages = null;
+
+        try {
+            uploadImages = imageStore.storeImages(itemAddDto.getImages());
+        } catch (ImageExceededException e) {
+            bindingResult.rejectValue("images","imagesExceededCheck",e.getMessage());
+        } catch (ImageExtException e) {
+            bindingResult.rejectValue("images","imagesExtCheck", e.getMessage());
+        }
+
         if (bindingResult.hasErrors()) {
-            log.info("### error ###{}", bindingResult);
+            log.info("!!!!!! errors !!!!!! {}", bindingResult);
             return "itemAddForm";
         }
 
-        Item item = Item.createItem(itemAddDto, imageStore.storeImages(itemAddDto.getImages()));
-
-        item.setMember(memberService.findMemberById(memberId).orElseThrow(() -> new RuntimeException("존재하지 않는 memberId입니다.")));
-
-        log.info("@@@ {} @@@", item);
-
+        Item item = Item.createItem();
+        item.change(member, itemAddDto, uploadImages);
         itemService.itemAdd(item);
 
         return "redirect:/item/sell/add";

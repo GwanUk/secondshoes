@@ -42,4 +42,17 @@ public class Member {
     public static Member createMember(MemberSignUpDto memberSignUpDto) {
         return Member.createMember(memberSignUpDto.getEmail(), memberSignUpDto.getName(), memberSignUpDto.getPassword());
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", grade=" + grade +
+                ", address=" + address +
+                ", item.size=" + item.size() +
+                '}';
+    }
 }

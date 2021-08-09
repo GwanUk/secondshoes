@@ -3,11 +3,16 @@ package com.market.secondshoes.domain.item;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
 import com.market.secondshoes.dto.item.UploadImage;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
 
     @Id @GeneratedValue
@@ -39,23 +44,23 @@ public class Item {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    protected Item() {
+    public static Item createItem() {
+        return new Item();
     }
 
-    public static Item createItem(ItemAddDto itemAddDto, List<UploadImage> uploadImage) {
-        Item item = new Item();
-        item.title = itemAddDto.getTitle();
-        item.gender = itemAddDto.getGender();
-        item.size = itemAddDto.getSize();
-        item.brand = itemAddDto.getBrand();
-        item.category = itemAddDto.getCategory();
-        item.price = itemAddDto.getPrice();
-        item.explain = itemAddDto.getExplain();
-        item.images = uploadImage;
-        return item;
+    public void change(Member member, ItemAddDto itemAddDto, List<UploadImage> uploadImage) {
+        title = itemAddDto.getTitle();
+        gender = itemAddDto.getGender();
+        size = itemAddDto.getSize();
+        brand = itemAddDto.getBrand();
+        category = itemAddDto.getCategory();
+        price = itemAddDto.getPrice();
+        explain = itemAddDto.getExplain();
+        images = uploadImage;
+        addMember(member);
     }
 
-    public void setMember(Member member) {
+    private void addMember(Member member) {
         this.member = member;
         member.getItem().add(this);
     }
