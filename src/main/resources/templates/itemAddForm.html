@@ -25,6 +25,7 @@
                         <hr class="mx-n3">
 
                         <div class="row align-items-center py-3">
+                            <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{gender}"/>
                             <div class="col-md-3 ps-5">
                                 <h6 class="mb-0" th:text="#{item.label.gender}">Gender</h6>
                             </div>
@@ -73,15 +74,12 @@
                         <hr class="mx-n3">
 
                         <div class="row align-items-center py-3">
+                            <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{price}"/>
                             <div class="col-md-3 ps-5">
-
                                 <h6 class="mb-0" th:text="#{item.label.price}">price</h6>
-
                             </div>
                             <div class="col-md-9 pe-5">
-
-                                <input type="text" class="form-control form-control-lg" th:field="*{price}"/>
-
+                                <input type="text" class="form-control form-control-lg" th:field="*{price}" th:errorclass="field-error"/>
                             </div>
                         </div>
 
@@ -90,15 +88,12 @@
                         <hr class="mx-n3">
 
                         <div class="row align-items-center py-3">
+                            <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{explain}"/>
                             <div class="col-md-3 ps-5">
-
                                 <h6 class="mb-0" th:text="#{item.label.explain}">explain</h6>
-
                             </div>
                             <div class="col-md-9 pe-5">
-
-                                <textarea class="form-control" rows="3" th:field="*{explain}" placeholder="Message sent to the employer"></textarea>
-
+                                <textarea class="form-control" rows="3" th:field="*{explain}" th:errorclass="field-error" placeholder="Message sent to the employer"></textarea>
                             </div>
                         </div>
 
