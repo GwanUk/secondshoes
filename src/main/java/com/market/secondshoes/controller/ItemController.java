@@ -16,13 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -63,9 +59,9 @@ public class ItemController {
         try {
             uploadImages = imageStore.storeImages(itemAddDto.getImages());
         } catch (ImageExceededException e) {
-            bindingResult.rejectValue("images","imagesExceededCheck",e.getMessage());
+            bindingResult.rejectValue("images", "imagesExceededCheck", e.getMessage());
         } catch (ImageExtException e) {
-            bindingResult.rejectValue("images","imagesExtCheck", e.getMessage());
+            bindingResult.rejectValue("images", "imagesExtCheck", e.getMessage());
         }
 
         if (bindingResult.hasErrors()) {
@@ -78,5 +74,12 @@ public class ItemController {
         itemService.itemAdd(item);
 
         return "redirect:/item/sell/add";
+    }
+
+    @GetMapping("/items")
+    @ResponseBody
+    public String items() {
+        log.info("일단 체크");
+        return "test";
     }
 }
