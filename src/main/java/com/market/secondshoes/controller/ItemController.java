@@ -4,6 +4,7 @@ import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
+import com.market.secondshoes.dto.item.ItemOptionDto;
 import com.market.secondshoes.dto.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
@@ -76,10 +77,10 @@ public class ItemController {
         return "redirect:/item/sell/add";
     }
 
-    @GetMapping("/items")
+    @PostMapping("/items")
     @ResponseBody
-    public String items() {
-        log.info("일단 체크");
-        return "test";
+    public ItemOptionDto items_option(@RequestBody ItemOptionDto itemOptionDto) {
+        log.info("### {} ###", itemOptionDto);
+        return itemOptionDto;
     }
 }

@@ -32,7 +32,7 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private Long price;
+    private Integer price;
 
     private String explain;
 

@@ -1,7 +1,7 @@
 package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
-import com.market.secondshoes.dto.item.ItemAddDto;
+import com.market.secondshoes.dto.item.ItemOptionDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,9 @@ public class HomeController {
     public String homeLogin(@Login Long memberId, Model model) {
 
         model.addAttribute("memberId", memberId);
-        model.addAttribute("itemAddDto", new ItemAddDto());
+        model.addAttribute("itemOptionDto", new ItemOptionDto());
 
-        return "home";
+        return "index";
     }
 
     @GetMapping("/item")

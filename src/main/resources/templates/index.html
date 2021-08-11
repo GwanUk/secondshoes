@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: copy (~{::copy}, ${memberId})}" xmlns:th="http://www.thymeleaf.org">
+<options th:fragment="copy">
+    <!--헤더-->
+    <header class="bg-dark py-5" th:fragment="copy">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Second-Shoes</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            </div>
+        </div>
+    </header>
+    <!--컨테이너-->
+    <div class="container mt-5">
+        <!--폼-->
+        <form th:object="${itemOptionDto}" action="/item/items" method="post">
+            <!--검색-->
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fas fa-search h4 text-body"></i>
+                        </div>
+                        <div class="col card card-sm">
+                            <input class="form-control form-control-lg form-control-borderless" type="search"
+                                   placeholder="검색">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-outline-dark" type="button" onclick="items()">검색</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--옵션-->
+            <div class="row">
+                <aside class="col-sm-4">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header"><h6 class="title" th:text="#{item.label.gender}">Color check</h6></header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="col-md-4 pe-5 form-check form-check-inline" th:each="gender : ${T(com.market.secondshoes.domain.item.Gender).values()}">
+                                        <input type="radio" th:field="*{gender}" th:value="${gender.name()}" class="form-check-input"/>
+                                        <label th:for="${#ids.prev('gender')}" th:text="${gender.getSex()}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Range input </h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Min</label>
+                                            <input type="number" class="form-control" id="inputEmail10" placeholder="$0">
+                                        </div>
+                                        <div class="form-group col-md-6 text-right">
+                                            <label>Max</label>
+                                            <input type="number" class="form-control" placeholder="$1,0000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+                <aside class="col-sm-8">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title" th:text="#{item.label.size}">Brands </h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div th:each="size : ${T(com.market.secondshoes.domain.item.Size).values()}" class="form-check form-check-inline" >
+                                        <input type="checkbox" th:field="*{sizes}" th:value="${size.name()}" class="form-check-input"/>
+                                        <label th:for="${#ids.prev('sizes')}" th:text="${size.getDimensions()}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title" th:text="#{item.label.brand}">Brands </h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div th:each="brand : ${T(com.market.secondshoes.domain.item.Brand).values()}" class="form-check form-check-inline" >
+                                        <input type="checkbox" th:field="*{brands}" th:value="${brand.name()}" class="form-check-input"/>
+                                        <label th:for="${#ids.prev('brands')}" th:text="${brand.getBrandName()}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title" th:text="#{item.label.category}">Choose type </h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div th:each="category : ${T(com.market.secondshoes.domain.item.Category).values()}" class="form-check form-check-inline" >
+                                        <input type="checkbox" th:field="*{categories}" th:value="${category.name()}" class="form-check-input"/>
+                                        <label th:for="${#ids.prev('categories')}" th:text="${category.getCategoryType()}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </form>
+    </div>
+    <!--container end.//-->
+
+    <h1>items</h1>
+</options>
+</html>

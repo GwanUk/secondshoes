@@ -16,9 +16,9 @@ public enum Size {
     SIZE300(300), SIZE305(305),
     SIZE310(310);
 
-    private final int dimensions;
+    private final Integer dimensions;
 
-    Size(int dimensions) {
+    Size(Integer dimensions) {
         this.dimensions = dimensions;
     }
     
