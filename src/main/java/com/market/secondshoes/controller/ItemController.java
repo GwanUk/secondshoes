@@ -2,10 +2,10 @@ package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
-import com.market.secondshoes.dto.item.ItemOptionDto;
-import com.market.secondshoes.dto.item.UploadImage;
+import com.market.secondshoes.dto.item.ItemFindDto;
+import com.market.secondshoes.dto.item.ItemThumbDto;
+import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
@@ -14,6 +14,8 @@ import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,9 +38,8 @@ public class ItemController {
     private String fileDir;
 
     @GetMapping("/sell/add")
-    public String add(@Login Long memberId, Model model) {
+    public String add(Model model) {
 
-        model.addAttribute("memberId", memberId);
         model.addAttribute("itemAddDto", new ItemAddDto());
 
         return "itemAddForm";
@@ -46,14 +47,6 @@ public class ItemController {
 
     @PostMapping("/sell/add")
     public String add(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId, Model model) {
-
-        model.addAttribute("memberId", memberId);
-
-        Member member = memberService.findMemberById(memberId).orElse(null);
-
-        if (member == null) {
-            return "redirect:/member/login";
-        }
 
         List<UploadImage> uploadImages = null;
 
@@ -71,16 +64,22 @@ public class ItemController {
         }
 
         Item item = Item.createItem();
-        item.change(member, itemAddDto, uploadImages);
+        item.change(memberService.findMemberById(memberId), itemAddDto, uploadImages);
         itemService.itemAdd(item);
 
         return "redirect:/item/sell/add";
     }
 
+    @GetMapping("/items")
+    @ResponseBody
+    public Page<ItemThumbDto> findAllItems(Pageable pageable) {
+        return itemService.findAllItems(pageable);
+    }
+
     @PostMapping("/items")
     @ResponseBody
-    public ItemOptionDto items_option(@RequestBody ItemOptionDto itemOptionDto) {
-        log.info("### {} ###", itemOptionDto);
-        return itemOptionDto;
+    public ItemThumbDto items_option(@RequestBody ItemFindDto itemFindDto) {
+        log.info("### {}", itemFindDto);
+        return null;
     }
 }

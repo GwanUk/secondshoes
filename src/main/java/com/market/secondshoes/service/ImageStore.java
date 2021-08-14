@@ -1,6 +1,6 @@
 package com.market.secondshoes.service;
 
-import com.market.secondshoes.dto.item.UploadImage;
+import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import org.springframework.beans.factory.annotation.Value;

@@ -16,8 +16,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Optional<Member> findMemberById(Long id) {
-        return memberRepository.findById(id);
+    public Member findMemberById(Long id) {
+        return memberRepository.findMemberById(id);
     }
 
     @Transactional

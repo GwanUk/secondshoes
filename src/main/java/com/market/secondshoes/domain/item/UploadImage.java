@@ -1,4 +1,4 @@
-package com.market.secondshoes.dto.item;
+package com.market.secondshoes.domain.item;
 
 import lombok.Getter;
 
@@ -21,13 +21,5 @@ public class UploadImage {
         uploadImage.storeImageName = storeImageName;
 
         return uploadImage;
-    }
-
-    @Override
-    public String toString() {
-        return "UploadImage{" +
-                "uploadImageNames='" + uploadImageNames + '\'' +
-                ", storeImageName='" + storeImageName + '\'' +
-                '}';
     }
 }

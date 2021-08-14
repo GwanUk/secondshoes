@@ -1,5 +1,6 @@
 package com.market.secondshoes.domain.item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
@@ -8,6 +9,7 @@ public enum Brand {
 
     private final String brandName;
 
+    @JsonCreator
     Brand(String brandName) {
         this.brandName = brandName;
     }

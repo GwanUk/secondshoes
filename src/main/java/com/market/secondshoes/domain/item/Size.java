@@ -1,5 +1,6 @@
 package com.market.secondshoes.domain.item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
@@ -18,6 +19,7 @@ public enum Size {
 
     private final Integer dimensions;
 
+    @JsonCreator
     Size(Integer dimensions) {
         this.dimensions = dimensions;
     }

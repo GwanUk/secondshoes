@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: copy (~{::copy}, ${memberId})}" xmlns:th="http://www.thymeleaf.org">
-<options th:fragment="copy">
+<html th:replace="~{layout :: copy (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
+<content th:fragment="copy">
     <!--헤더-->
     <header class="bg-dark py-5" th:fragment="copy">
         <div class="container px-4 px-lg-5 my-5">
@@ -11,9 +11,9 @@
         </div>
     </header>
     <!--컨테이너-->
-    <div class="container mt-5">
+    <div class="container mt-5" id="find_target">
         <!--폼-->
-        <form th:object="${itemOptionDto}" action="/item/items" method="post">
+        <form th:object="${itemFindDto}">
             <!--검색-->
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8">
@@ -55,11 +55,11 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Min</label>
-                                            <input type="number" class="form-control" id="inputEmail10" placeholder="$0">
+                                            <input type="number" class="form-control" th:field="*{minPrice}" placeholder="$0">
                                         </div>
                                         <div class="form-group col-md-6 text-right">
                                             <label>Max</label>
-                                            <input type="number" class="form-control" placeholder="$1,0000">
+                                            <input type="number" class="form-control" th:field="*{maxPrice}" placeholder="$1,0000">
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +114,42 @@
         </form>
     </div>
     <!--container end.//-->
-
-    <h1>items</h1>
-</options>
+    <!--상품 목록-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="items_target">
+<!--                <div class="col mb-5" >-->
+<!--                    <div class="card h-100 item-card" onclick="item()">-->
+<!--                        &lt;!&ndash; Sale badge&ndash;&gt;-->
+<!--                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
+<!--                        &lt;!&ndash; Product image&ndash;&gt;-->
+<!--                        <img class="card-img-top" src="../imgs/bbq.jpg" alt="..."/>-->
+<!--                        &lt;!&ndash; Product details&ndash;&gt;-->
+<!--                        <div class="card-body p-4">-->
+<!--                            <div class="text-center">-->
+<!--                                &lt;!&ndash; Product name&ndash;&gt;-->
+<!--                                <h5 class="fw-bolder">황금올리브</h5>-->
+<!--                                &lt;!&ndash; Product reviews&ndash;&gt;-->
+<!--                                <div class="d-flex justify-content-center small text-warning mb-2">-->
+<!--                                    <div class="bi-star-fill"></div>-->
+<!--                                    <div class="bi-star-fill"></div>-->
+<!--                                    <div class="bi-star-fill"></div>-->
+<!--                                    <div class="bi-star-fill"></div>-->
+<!--                                    <div class="bi-star-fill"></div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; Product price&ndash;&gt;-->
+<!--                                <span class="text-muted text-decoration-line-through">$20.00</span>-->
+<!--                                $18.00-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; Product actions&ndash;&gt;-->
+<!--                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">-->
+<!--                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </section>
+</content>
 </html>

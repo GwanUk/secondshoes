@@ -1,5 +1,6 @@
 package com.market.secondshoes.domain.item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 @Getter
 public enum Category {
@@ -7,6 +8,7 @@ public enum Category {
 
     private final String categoryType;
 
+    @JsonCreator
     Category(String categoryType) {
         this.categoryType = categoryType;
     }

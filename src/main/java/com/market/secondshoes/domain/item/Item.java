@@ -1,8 +1,8 @@
 package com.market.secondshoes.domain.item;
 
+import com.market.secondshoes.domain.BaseTimeEntity;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
-import com.market.secondshoes.dto.item.UploadImage;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Item extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
@@ -38,7 +38,7 @@ public class Item {
 
     @ElementCollection
     @CollectionTable(name = "ITEM_IMAGES", joinColumns = @JoinColumn(name = "ITEM_ID"))
-    private List<UploadImage> images;
+    private List<UploadImage> uploadImages;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
@@ -48,7 +48,7 @@ public class Item {
         return new Item();
     }
 
-    public void change(Member member, ItemAddDto itemAddDto, List<UploadImage> uploadImage) {
+    public void change(Member member, ItemAddDto itemAddDto, List<UploadImage> uploadImages) {
         title = itemAddDto.getTitle();
         gender = itemAddDto.getGender();
         size = itemAddDto.getSize();
@@ -56,28 +56,12 @@ public class Item {
         category = itemAddDto.getCategory();
         price = itemAddDto.getPrice();
         explain = itemAddDto.getExplain();
-        images = uploadImage;
+        this.uploadImages = uploadImages;
         addMember(member);
     }
 
     private void addMember(Member member) {
         this.member = member;
         member.getItem().add(this);
-    }
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", gender=" + gender +
-                ", size=" + size +
-                ", brand=" + brand +
-                ", category=" + category +
-                ", price=" + price +
-                ", explain='" + explain + '\'' +
-                ", images=" + images +
-                ", member=" + member +
-                '}';
     }
 }
