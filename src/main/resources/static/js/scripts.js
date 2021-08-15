@@ -67,20 +67,27 @@ window.addEventListener('DOMContentLoaded', function () {
         const xhr = new XMLHttpRequest();
         xhr.open("get", "/item/items");
         xhr.onload = () => {
-            console.log(xhr.responseText)
             let pageable = JSON.parse(xhr.responseText);
-            pageable.content.forEach((itemThumb) => {
+            console.log(pageable);
+            pageable.content.forEach((itemDetailDto) => {
+                console.log("어허");
+                for (const key in itemDetailDto) {
+                    console.log(key + " : " + itemDetailDto[key]);
+                }
+                console.log(itemDetailDto.uploadImages);
+                console.log(itemDetailDto.memberInfoDto);
+
                 document.getElementById("items_target").innerHTML += "<div class=\"col mb-5\" >\n" +
                     "                    <div class=\"card h-100 item-card\" onclick=\"item()\">\n" +
                     "                        <!-- Sale badge-->\n" +
                     "                        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n" +
                     "                        <!-- Product image-->\n" +
-                    "                        <img class=\"card-img-top\" src=\"../imgs/bbq.jpg\" alt=\"...\"/>\n" +
+                    "                        <img class=\"card-img-top\" src=/item/image/"+itemDetailDto.uploadImages[0].storeImageName+" alt=\"...\"/>\n" +
                     "                        <!-- Product details-->\n" +
                     "                        <div class=\"card-body p-4\">\n" +
                     "                            <div class=\"text-center\">\n" +
                     "                                <!-- Product name-->\n" +
-                    "                                <h5 class=\"fw-bolder\">"+itemThumb.title+"</h5></h5>\n" +
+                    "                                <h5 class=\"fw-bolder\">"+itemDetailDto.title+"</h5></h5>\n" +
                     "                                <!-- Product reviews-->\n" +
                     "                                <div class=\"d-flex justify-content-center small text-warning mb-2\">\n" +
                     "                                    <div class=\"bi-star-fill\"></div>\n" +

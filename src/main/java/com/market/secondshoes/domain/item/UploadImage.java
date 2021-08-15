@@ -22,4 +22,12 @@ public class UploadImage {
 
         return uploadImage;
     }
+
+    @Override
+    public String toString() {
+        return "UploadImage{" +
+                "uploadImageNames='" + uploadImageNames + '\'' +
+                ", storeImageName='" + storeImageName + '\'' +
+                '}';
+    }
 }

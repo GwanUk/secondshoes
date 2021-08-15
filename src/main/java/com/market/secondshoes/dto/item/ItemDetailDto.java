@@ -1,0 +1,55 @@
+package com.market.secondshoes.dto.item;
+
+import com.market.secondshoes.domain.item.*;
+import com.market.secondshoes.domain.member.Member;
+import com.market.secondshoes.dto.member.MemberInfoDto;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+public class ItemDetailDto {
+
+    private Long id;
+    private String title;
+    private Gender gender;
+    private Size size;
+    private Brand brand;
+    private Category category;
+    private Integer price;
+    private String explain;
+    private List<UploadImage> uploadImages ;
+    private MemberInfoDto memberInfoDto;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
+
+
+    private ItemDetailDto() {
+    }
+
+    public static ItemDetailDto createItemThumb(Long id, String title, Gender gender, Size size, Brand brand, Category category, Integer price, String explain, List<UploadImage> uploadImages, Member member, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+        ItemDetailDto itemDetailDto = new ItemDetailDto();
+        itemDetailDto.id = id;
+        itemDetailDto.title = title;
+        itemDetailDto.gender = gender;
+        itemDetailDto.size = size;
+        itemDetailDto.brand = brand;
+        itemDetailDto.category = category;
+        itemDetailDto.price = price;
+        itemDetailDto.explain = explain;
+        itemDetailDto.uploadImages = uploadImages;
+        itemDetailDto.memberInfoDto = MemberInfoDto.createMemberInfoDto(member);
+        itemDetailDto.createdDate = createdDate;
+        itemDetailDto.lastModifiedDate = lastModifiedDate;
+
+
+        return itemDetailDto;
+    }
+
+    public static ItemDetailDto createItemThumb(Item item) {
+        return createItemThumb(item.getId(), item.getTitle(), item.getGender(), item.getSize(), item.getBrand(), item.getCategory(), item.getPrice(), item.getExplain(), item.getUploadImages(), item.getMember(), item.getCreatedDate(), item.getLastModifiedDate());
+    }
+}

@@ -4,7 +4,7 @@ import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.dto.item.ItemAddDto;
 import com.market.secondshoes.dto.item.ItemFindDto;
-import com.market.secondshoes.dto.item.ItemThumbDto;
+import com.market.secondshoes.dto.item.ItemDetailDto;
 import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
@@ -14,14 +14,19 @@ import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Controller
@@ -72,14 +77,21 @@ public class ItemController {
 
     @GetMapping("/items")
     @ResponseBody
-    public Page<ItemThumbDto> findAllItems(Pageable pageable) {
+    public Page<ItemDetailDto> findAllItems(Pageable pageable) {
         return itemService.findAllItems(pageable);
     }
 
     @PostMapping("/items")
     @ResponseBody
-    public ItemThumbDto items_option(@RequestBody ItemFindDto itemFindDto) {
-        log.info("### {}", itemFindDto);
+    public Slice<ItemDetailDto> items_option(@RequestBody ItemFindDto itemFindDto) {
+        PageRequest.of(0, 100);
         return null;
+    }
+
+    @GetMapping("/image/{storeImageName}")
+    @ResponseBody
+    public Resource image(@PathVariable String storeImageName) throws MalformedURLException {
+        log.info("####{} {} ", storeImageName, imageStore.getFullPath(storeImageName));
+        return new UrlResource("file:" + imageStore.getFullPath(storeImageName));
     }
 }

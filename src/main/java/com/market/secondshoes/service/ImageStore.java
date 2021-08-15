@@ -3,6 +3,7 @@ package com.market.secondshoes.service;
 import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,7 +69,7 @@ public class ImageStore {
         }
     }
 
-    private String getFullPath(String fileName) {
+    public String getFullPath(String fileName) {
         return fileDir + fileName;
     }
 }

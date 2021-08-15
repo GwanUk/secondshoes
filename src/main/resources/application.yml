@@ -13,6 +13,7 @@ spring:
         #        show_sql: true
         format_sql: true
 #        default_batch_fetch_size: 100 #in 파라미터 개수
+#        use_sql_comments: true #jpql 쿼리문 보이게
 
   messages:
     basename: messages, errors

@@ -1,7 +1,7 @@
 package com.market.secondshoes.service;
 
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.dto.item.ItemThumbDto;
+import com.market.secondshoes.dto.item.ItemDetailDto;
 import com.market.secondshoes.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -20,8 +20,8 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
-    public Page<ItemThumbDto> findAllItems(Pageable pageable) {
-        return itemRepository.findAll(pageable).map(ItemThumbDto::createItemThumb);
+    public Page<ItemDetailDto> findAllItems(Pageable pageable) {
+        return itemRepository.findAll(pageable).map(ItemDetailDto::createItemThumb);
 
     }
 }
