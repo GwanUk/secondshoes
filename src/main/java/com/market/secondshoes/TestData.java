@@ -7,20 +7,31 @@ import com.market.secondshoes.repository.ItemRepository;
 import com.market.secondshoes.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Component
 @RequiredArgsConstructor
 public class TestData {
 
-    private final MemberRepository memberRepository;
+    private final InitService initService;
 
     @PostConstruct
     public void init() {
-        for (int i = 0; i < 2; i++) {
-            Member member = Member.createMember("test" + i + "@naver.com", "testName" + i, "test!" + i);
-            memberRepository.save(member);
+        initService.init();
+    }
+
+    @Component
+    static class InitService {
+        @PersistenceContext
+        private EntityManager em;
+
+        @Transactional
+        public void init() {
+
         }
     }
 }

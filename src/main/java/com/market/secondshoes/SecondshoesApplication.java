@@ -11,4 +11,4 @@ public class SecondshoesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SecondshoesApplication.class, args);
 	}
-}
+ }
