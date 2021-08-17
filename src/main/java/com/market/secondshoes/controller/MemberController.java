@@ -45,8 +45,7 @@ public class MemberController {
             return "MemberSignUpForm";
         }
 
-        Member member = Member.createMember(memberSignUpDto);
-        memberService.join(member);
+        memberService.join(memberSignUpDto.makeMember());
 
         return "redirect:/member/login";
     }

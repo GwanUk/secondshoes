@@ -1,5 +1,6 @@
 package com.market.secondshoes.dto.member;
 
+import com.market.secondshoes.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,4 +24,8 @@ public class MemberSignUpDto {
 
     @NotBlank
     private String passwordCheck;
+
+    public Member makeMember() {
+        return Member.createMember(this.getEmail(), this.getName(), this.getPassword());
+    }
 }

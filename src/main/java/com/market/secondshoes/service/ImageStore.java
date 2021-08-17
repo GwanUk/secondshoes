@@ -3,7 +3,6 @@ package com.market.secondshoes.service;
 import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +20,7 @@ public class ImageStore {
     @Value("${file.dir}")
     private String fileDir;
 
-    private final String imageExt[] = new String[]{".jpg", ".png", ".jpeg", ".gif"};
+    private final String[] imageExt = new String[]{".jpg", ".png", ".jpeg", ".gif"};
 
     public List<UploadImage> storeImages(List<MultipartFile> multipartFiles) {
 
@@ -31,7 +30,7 @@ public class ImageStore {
 
         return multipartFiles.stream()
                 .filter(multipartFile -> !multipartFile.isEmpty())
-                .map(multipartFile -> storeImage(multipartFile))
+                .map(this::storeImage)
                 .collect(Collectors.toList());
     }
 

@@ -1,10 +1,12 @@
 package com.market.secondshoes.service;
 
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.dto.item.ItemDetailDto;
+import com.market.secondshoes.dto.item.ItemConditionDto;
+
 import com.market.secondshoes.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,8 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
-    public Page<ItemDetailDto> findAllItems(Pageable pageable) {
-        return itemRepository.findAll(pageable).map(ItemDetailDto::createItemThumb);
 
+    public Page<Item> search(ItemConditionDto itemConditionDto, Pageable pageable) {
+        return itemRepository.search(itemConditionDto, pageable);
     }
 }

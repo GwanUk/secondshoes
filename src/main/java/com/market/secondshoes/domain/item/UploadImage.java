@@ -1,18 +1,18 @@
 package com.market.secondshoes.domain.item;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
 @Getter
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UploadImage {
 
     private String uploadImageNames;
     private String storeImageName;
-
-    protected UploadImage() {
-    }
 
     public static UploadImage createUploadImage(String uploadImageNames, String storeImageName) {
 
@@ -21,13 +21,5 @@ public class UploadImage {
         uploadImage.storeImageName = storeImageName;
 
         return uploadImage;
-    }
-
-    @Override
-    public String toString() {
-        return "UploadImage{" +
-                "uploadImageNames='" + uploadImageNames + '\'' +
-                ", storeImageName='" + storeImageName + '\'' +
-                '}';
     }
 }

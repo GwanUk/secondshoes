@@ -2,24 +2,20 @@ package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.dto.item.ItemAddDto;
-import com.market.secondshoes.dto.item.ItemFindDto;
-import com.market.secondshoes.dto.item.ItemDetailDto;
 import com.market.secondshoes.domain.item.UploadImage;
+import com.market.secondshoes.dto.item.ItemAddDto;
+import com.market.secondshoes.dto.item.ItemConditionDto;
+import com.market.secondshoes.dto.item.ItemDetailDto;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,15 +28,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
-@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
     private final ImageStore imageStore;
     private final MemberService memberService;
-
-    @Value("${file.dir}")
-    private String fileDir;
 
     @GetMapping("/sell/add")
     public String add(Model model) {
@@ -51,7 +43,7 @@ public class ItemController {
     }
 
     @PostMapping("/sell/add")
-    public String add(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId, Model model) {
+    public String add(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId) {
 
         List<UploadImage> uploadImages = null;
 
@@ -64,7 +56,6 @@ public class ItemController {
         }
 
         if (bindingResult.hasErrors()) {
-            log.info("!!!!!! errors !!!!!! {}", bindingResult);
             return "itemAddForm";
         }
 
@@ -75,23 +66,16 @@ public class ItemController {
         return "redirect:/item/sell/add";
     }
 
-    @GetMapping("/items")
-    @ResponseBody
-    public Page<ItemDetailDto> findAllItems(Pageable pageable) {
-        return itemService.findAllItems(pageable);
-    }
-
     @PostMapping("/items")
     @ResponseBody
-    public Slice<ItemDetailDto> items_option(@RequestBody ItemFindDto itemFindDto) {
-        PageRequest.of(0, 100);
-        return null;
+    public Page<ItemDetailDto> items(@RequestBody ItemConditionDto itemConditionDto) {
+        Page<Item> page = itemService.search(itemConditionDto, PageRequest.of(itemConditionDto.getPage(), itemConditionDto.getSize()));
+        return page.map(ItemDetailDto::createItemDetailDto);
     }
 
     @GetMapping("/image/{storeImageName}")
     @ResponseBody
     public Resource image(@PathVariable String storeImageName) throws MalformedURLException {
-        log.info("####{} {} ", storeImageName, imageStore.getFullPath(storeImageName));
         return new UrlResource("file:" + imageStore.getFullPath(storeImageName));
     }
 }

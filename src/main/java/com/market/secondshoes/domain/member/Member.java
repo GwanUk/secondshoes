@@ -1,7 +1,6 @@
 package com.market.secondshoes.domain.member;
 
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.dto.member.MemberSignUpDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,9 +36,5 @@ public class Member {
         member.password = password;
 
         return member;
-    }
-
-    public static Member createMember(MemberSignUpDto memberSignUpDto) {
-        return Member.createMember(memberSignUpDto.getEmail(), memberSignUpDto.getName(), memberSignUpDto.getPassword());
     }
 }
