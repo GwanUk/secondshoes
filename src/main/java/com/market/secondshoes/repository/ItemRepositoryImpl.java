@@ -1,6 +1,7 @@
 package com.market.secondshoes.repository;
 
 import com.market.secondshoes.domain.item.*;
+import com.market.secondshoes.domain.member.QMember;
 import com.market.secondshoes.dto.item.ItemConditionDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
@@ -35,7 +36,9 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                 builder.or(item.explain.contains(s));
             });
         }
-        QueryResults<Item> results = queryFactory.select(item)
+        QueryResults<Item> results = queryFactory
+                .selectFrom(item)
+                .join(item.member, QMember.member).fetchJoin()
                 .where(builder,
                         genderEq(condition.getGender()),
                         priceGoe(condition.getPriceGoe()),
@@ -43,7 +46,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                         sizesIn(condition.getSizes()),
                         brandsIn(condition.getBrands()),
                         categories(condition.getCategories()))
-                .from(item)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetchResults();
         return new PageImpl<>(results.getResults(), pageable, results.getTotal());
     }
