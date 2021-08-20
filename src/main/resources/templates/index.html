@@ -29,6 +29,12 @@
                         </div>
                     </div>
                 </div>
+
+                <select id="dataPerPage">
+                    <option value="8">8개씩보기</option>
+                    <option value="16">16개씩보기</option>
+                    <option value="32">32개씩보기</option>
+                </select>
             </div>
             <!--옵션-->
             <div class="row">
@@ -110,15 +116,17 @@
                     </div>
                 </aside>
             </div>
-            <input type="hidden" id="page" name="page">
-            <input type="hidden" id="size" name="size">
         </form>
     </div>
     <!--container end.//-->
     <!--상품 목록-->
     <div class="container px-4 px-lg-5 mb-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mb-5" id="items_target"></div>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="page_target"></div>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mb-5">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="page_ul"></ul>
+            </nav>
+        </div>
     </div>
 </content>
 </html>

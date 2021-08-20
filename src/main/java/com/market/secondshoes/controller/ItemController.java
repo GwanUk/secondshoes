@@ -12,6 +12,7 @@ import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -66,11 +68,12 @@ public class ItemController {
         return "redirect:/item/sell/add";
     }
 
-    @PostMapping("/items")
+    @PostMapping("/items/{size}/{number}")
     @ResponseBody
-    public Page<ItemDetailDto> items(@RequestBody ItemConditionDto itemConditionDto) {
-        Page<Item> page = itemService.search(itemConditionDto, PageRequest.of(itemConditionDto.getPage(), itemConditionDto.getSize()));
-        return page.map(ItemDetailDto::createItemDetailDto);
+    public Page<ItemDetailDto> items(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number) {
+        log.info("##### {} {}", size, number);
+        Page<Item> result = itemService.search(itemConditionDto, PageRequest.of(number, size));
+        return result.map(ItemDetailDto::createItemDetailDto);
     }
 
     @GetMapping("/image/{storeImageName}")

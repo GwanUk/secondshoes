@@ -1,26 +1,16 @@
-function cart() {
-    location.href = "cart";
-}
 function signUp() {
     location.href = "/member/signUp";
 }
 function login() {
     location.href = "/member/login";
 }
-function item() {
-    location.href = "/item";
-}
 
-function items() {
+function items(size, number) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/item/items')
-    xhr.setRequestHeader('Content-type', 'application/json')
-
+    xhr.open('post', '/item/items/' + size + '/' + number);
+    xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onload = () => {
-
         let page = JSON.parse(xhr.responseText);
-        console.log(page);
-
         /*items form*/
         document.getElementById("items_target").innerHTML="";
         page.content.forEach((itemDetailDto) => {
@@ -55,19 +45,10 @@ function items() {
                 "    </div>\n" +
                 "</div>\n";
         });
-
-        /*page form*/
-        document.getElementById("page_target").innerHTML = "<< \t";
-
-        for (let i = 0; i < page.totalPages; i++) {
-            let p = i + 1;
-            document.getElementById("page_target").innerHTML += p + "\t";
-
-        }
-
-        document.getElementById("page_target").innerHTML += ">>";
+        paging(page);
     };
 
+    /*options*/
     let search_value = document.getElementById("search").value;
 
     let gender_value = null;
@@ -101,9 +82,6 @@ function items() {
         }
     }
 
-    let page_value = document.getElementById("page").value;
-    let size_value = document.getElementById("size").value;
-
     let data = {
         search: search_value,
         gender: gender_value,
@@ -112,17 +90,35 @@ function items() {
         sizes: sizes_arr,
         brands: brands_arr,
         categories: categories_arr,
-        page: 1,
-        size: 5
     };
     xhr.send(JSON.stringify(data));
 }
 
+function paging(page) {
+    console.log(page)
+    let page_ul = document.getElementById("page_ul");
+    page_ul.innerHTML = "";
 
+    if (page.number > 0) {
+        page_ul.innerHTML += "<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\" onclick='items("+page.size+","+(page.number-1)+")'>이전</a></li>";
+    }
+
+    let offset = parseInt(page.number/10);
+    for (let i = offset; i < offset+10; i++) {
+        page_ul.innerHTML += "<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\" onclick='items("+page.size+","+i+")'>"+(i+1)+"</a></li>";
+        if (i == page.totalPages) {
+            break;
+        }
+    }
+
+    if (page.number < page.totalPages) {
+        page_ul.innerHTML += "<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\" onclick='items("+page.size+","+(page.number+1)+")'>다음</a></li>";
+    }
+}
 
 window.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById("find_target")) {
-        items();
+        items(document.getElementById("dataPerPage").value, 0);
     }
 });
 
