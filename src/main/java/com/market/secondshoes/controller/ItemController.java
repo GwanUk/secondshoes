@@ -6,6 +6,7 @@ import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.dto.item.ItemAddDto;
 import com.market.secondshoes.dto.item.ItemConditionDto;
 import com.market.secondshoes.dto.item.ItemDetailDto;
+import com.market.secondshoes.dto.item.ItemThumbDto;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
@@ -70,10 +71,15 @@ public class ItemController {
 
     @PostMapping("/items/{size}/{number}")
     @ResponseBody
-    public Page<ItemDetailDto> items(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number) {
-        log.info("##### {} {}", size, number);
+    public Page<ItemThumbDto> items(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number) {
         Page<Item> result = itemService.search(itemConditionDto, PageRequest.of(number, size));
-        return result.map(ItemDetailDto::createItemDetailDto);
+        return result.map(ItemThumbDto::createItemThumbDto);
+    }
+
+    @GetMapping("/{id}")
+    public String item(@PathVariable Long id, Model model) {
+        model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
+        return "itemForm";
     }
 
     @GetMapping("/image/{storeImageName}")

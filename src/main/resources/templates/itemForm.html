@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{layout :: copy (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
 <!-- Product section-->
-<contents th:fragment="copy">
-<section class="py-5">
+<section class="py-5" th:fragment="copy">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
@@ -29,6 +28,4 @@
         </div>
     </div>
 </section>
-    <div th:replace="~{items::copy}"></div>
-</contents>
 </html>

@@ -13,7 +13,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class ItemConditionDto {
 
     private String search;
@@ -31,8 +30,4 @@ public class ItemConditionDto {
     private List<Brand> brands;
 
     private List<Category> categories;
-
-    private Integer page;
-
-    private Integer size;
 }

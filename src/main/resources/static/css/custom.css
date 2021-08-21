@@ -180,3 +180,10 @@ body {
 .border-top {
     border-top: 1px solid #dee2e6!important;
 }
+
+/*page*/
+.page-now {
+    /*background-color: #dc3545;*/
+    /*border-color: #dc3545;*/
+    color: #dc3545;
+}

@@ -4,12 +4,12 @@ import com.market.secondshoes.domain.item.*;
 import com.market.secondshoes.domain.member.QMember;
 import com.market.secondshoes.dto.item.ItemConditionDto;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -36,7 +36,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                 builder.or(item.explain.contains(s));
             });
         }
-        QueryResults<Item> results = queryFactory
+
+        List<Item> content = queryFactory
                 .selectFrom(item)
                 .join(item.member, QMember.member).fetchJoin()
                 .where(builder,
@@ -48,8 +49,19 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                         categories(condition.getCategories()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetchResults();
-        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+                .fetch();
+
+        JPAQuery<Item> countQuery = queryFactory
+                .selectFrom(item)
+                .where(builder,
+                        genderEq(condition.getGender()),
+                        priceGoe(condition.getPriceGoe()),
+                        priceLoe(condition.getPriceLoe()),
+                        sizesIn(condition.getSizes()),
+                        brandsIn(condition.getBrands()),
+                        categories(condition.getCategories()));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     private BooleanExpression genderEq(Gender gender) {
