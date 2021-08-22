@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -94,5 +91,13 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+
+
+    @GetMapping("/find/{id}")
+    public String findMemberById(@PathVariable Long id, Model model) {
+        model.addAttribute("member", memberService.findMemberById(id));
+        return "memberDetail";
     }
 }

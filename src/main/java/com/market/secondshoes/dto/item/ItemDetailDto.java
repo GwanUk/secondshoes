@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -23,8 +24,8 @@ public class ItemDetailDto {
     private String explain;
     private List<UploadImage> uploadImages ;
     private MemberInfoDto memberInfoDto;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastModifiedDate;
+    private String createdDate;
+    private String lastModifiedDate;
 
     protected ItemDetailDto() {
     }
@@ -41,8 +42,8 @@ public class ItemDetailDto {
         itemDetailDto.explain = explain;
         itemDetailDto.uploadImages = uploadImages;
         itemDetailDto.memberInfoDto = MemberInfoDto.createMemberInfoDto(member);
-        itemDetailDto.createdDate = createdDate;
-        itemDetailDto.lastModifiedDate = lastModifiedDate;
+        itemDetailDto.createdDate = createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        itemDetailDto.lastModifiedDate = lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return itemDetailDto;
     }
 

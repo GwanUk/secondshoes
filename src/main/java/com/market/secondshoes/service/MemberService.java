@@ -5,6 +5,9 @@ import com.market.secondshoes.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +30,6 @@ public class MemberService {
         return member.getId();
     }
 
-    public Optional<Member> findMemberByEmail(String email) {
-        return memberRepository.findMemberByEmail(email);
-    }
-
-    public List<Member> findMemberAll() {
-        return memberRepository.findAll();
-    }
-
     private void validateDuplicateEmail(Member member) {
         Optional<Member> findMemberByEmail = memberRepository.findMemberByEmail(member.getEmail());
         if (findMemberByEmail.isPresent()) {
@@ -46,4 +41,5 @@ public class MemberService {
         return memberRepository.findMemberByEmail(email)
                 .filter(m -> m.getPassword().equals(password));
     }
+
 }

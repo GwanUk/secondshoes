@@ -60,36 +60,30 @@ function items(data, size, number) {
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onload = () => {
         let page = JSON.parse(xhr.responseText);
-        console.log(page);
         document.getElementById("items_target").innerHTML="";
-        page.content.forEach((ItemThumbDto) => {
+        page.content.forEach((itemThumbDto) => {
+            let now = new Date();
             document.getElementById("items_target").innerHTML +=
                 "<div class=\"col mt-5\">\n" +
-                "    <div class=\"card h-100 item-card\" onclick=\"item(" + ItemThumbDto.id + ")\">\n" +
+                "    <div class=\"card h-100 item-card\">\n" +
                 "        <!-- Sale badge-->\n" +
                 "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n" +
                 "        <!-- Product image-->\n" +
-                "        <img class=\"card-img-top\" " + (ItemThumbDto.uploadImage ? "src=\"/item/image/" + ItemThumbDto.uploadImage.storeImageName + "\"" : "" ) + "  alt=\"...\"/>\n" +
+                "        <img class=\"card-img-top img-thumbnail hover-custom\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"item(" + itemThumbDto.id + ")\"/>\n" +
                 "        <!-- Product details-->\n" +
                 "        <div class=\"card-body p-4\">\n" +
                 "            <div class=\"text-center\">\n" +
                 "                <!-- Product name-->\n" +
-                "                <h5 class=\"fw-bolder\">"+ItemThumbDto.title+"</h5></h5>\n" +
-                "                <!-- Product reviews-->\n" +
-                "                <div class=\"d-flex justify-content-center small text-warning mb-2\">\n" +
-                "                    <div class=\"bi-star-fill\"></div>\n" +
-                "                    <div class=\"bi-star-fill\"></div>\n" +
-                "                    <div class=\"bi-star-fill\"></div>\n" +
-                "                    <div class=\"bi-star-fill\"></div>\n" +
-                "                    <div class=\"bi-star-fill\"></div>\n" +
-                "                </div>\n" +
+                "                <h5 class=\"fw-bolder\">"+itemThumbDto.title+"</h5></h5>\n" +
                 "                <!-- Product price-->\n" +
-                "                <span class=\"text-muted text-decoration-line-through\">$20.00</span>$18.00\n" +
+                "                <span class=\"\">" + itemThumbDto.price + "</span><br/>" +
+                "                <a class=\"\" href=\"/member/find/"+itemThumbDto.memberInfoDto.id+"\">" + itemThumbDto.memberInfoDto.name + "</a><br/>" +
+                "                <span class=\"\">" + itemThumbDto.ago + "</span><br/>" +
                 "            </div>\n" +
                 "        </div>\n" +
                 "            <!-- Product actions-->\n" +
                 "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\n" +
-                "            <div class=\"text-center\"><a class=\"btn btn-outline-dark mt-auto\" href=\"#\">Add to cart</a></div>\n" +
+                "            <div class=\"text-center\"><a class=\"btn btn-outline-danger mt-auto\" href=\"#\">좋아요</a></div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>\n";
@@ -126,7 +120,6 @@ function paging(page) {
 }
 
 function item(id) {
-    console.log(id);
     location.href = "/item/" + id;
 }
 

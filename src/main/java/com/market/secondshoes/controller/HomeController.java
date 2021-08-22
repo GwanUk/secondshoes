@@ -23,7 +23,7 @@ public class HomeController {
 
     @GetMapping("/edit")
     public String editForm() {
-        return "editForm";
+        return "memberDetail";
     }
 
 
