@@ -6,7 +6,10 @@
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6" th:each="uploadImage : *{uploadImages}">
                 <img class="card-img-top mb-5 mb-md-0"
-                     th:src="@{/item/image/} + ${uploadImage.storeImageName}" alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"/>
+                     th:src="@{/item/image/} + ${uploadImage.storeImageName}"
+                     alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                     th:field="*{uploadImages}"
+                />
             </div>
             <div class="col-md-6">
                 <div class="small mb-1"><a th:href="@{/member/find/} + *{memberInfoDto.id}" th:text="*{memberInfoDto.name}">SKU: BST-498</a> </div>
@@ -26,12 +29,20 @@
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
                            style="max-width: 3rem"/>
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button" th:unless="${memberId} == *{memberInfoDto.id}">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button" th:text="수정">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button"
+                            th:onclick="|location.href='@{/item/updateForm/{id}(id=*{id})}'|" th:text="수정"
+                            th:if="${memberId} == *{memberInfoDto.id}">
                         <i class="bi-cart-fill me-1"></i>
+                        Add to cart
+                    </button>
+                    <button class="btn btn-outline-danger flex-shrink-0" type="button"
+                            th:onclick="|location.href='@{/item/remove/{id}(id=*{id})}'|" th:text="삭제"
+                            th:if="${memberId} == *{memberInfoDto.id}">
+                    <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
                 </div>

@@ -18,8 +18,18 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public Item itemAdd(Item item) {
+    public Item itemSave(Item item) {
         return itemRepository.save(item);
+    }
+
+    @Transactional
+    public void itemUpdate(Long id, Item item) {
+        itemRepository.findItemById(id).change(item);
+    }
+
+    @Transactional
+    public void itemRemove(Long id) {
+        itemRepository.deleteById(id);
     }
 
     public Page<Item> search(ItemConditionDto itemConditionDto, Pageable pageable) {
@@ -29,5 +39,7 @@ public class ItemService {
     public Item findItemById(Long id) {
         return itemRepository.findItemById(id);
     }
+
+
 
 }

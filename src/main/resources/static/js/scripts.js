@@ -56,7 +56,7 @@ function condition(page) {
 
 function items(data, size, number) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/item/items/' + size + '/' + number);
+    xhr.open('post', '/item/findAll/' + size + '/' + number);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onload = () => {
         let page = JSON.parse(xhr.responseText);
@@ -120,7 +120,27 @@ function paging(page) {
 }
 
 function item(id) {
-    location.href = "/item/" + id;
+    location.href = "/item/find/" + id;
+}
+
+function updateForm(id) {
+    location.href = "/item/update/" + id;
+}
+
+function imagePreview(event) {
+    let fileArr = Array.from(event.target.files);
+
+    fileArr.forEach(file => {
+        let fileReader = new FileReader();
+        let imgTag = document.createElement("img");
+        document.getElementById("image_container").appendChild(imgTag);
+
+        fileReader.onload = e => {
+            imgTag.setAttribute("src", e.target.result);
+        };
+
+        fileReader.readAsDataURL(file);
+    });
 }
 
 window.addEventListener('DOMContentLoaded', function () {

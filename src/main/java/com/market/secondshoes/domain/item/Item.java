@@ -60,6 +60,19 @@ public class Item extends BaseTimeEntity {
         addMember(member);
     }
 
+    public void change(Item item) {
+        title = item.getTitle();
+        gender = item.getGender();
+        size = item.getSize();
+        brand = item.getBrand();
+        category = item.getCategory();
+        price = item.getPrice();
+        explain = item.getExplain();
+        if (!item.getUploadImages().isEmpty()) {
+            uploadImages = item.getUploadImages();
+        }
+    }
+
     private void addMember(Member member) {
         this.member = member;
         member.getItem().add(this);

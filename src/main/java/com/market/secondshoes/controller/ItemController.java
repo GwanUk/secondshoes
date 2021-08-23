@@ -37,17 +37,17 @@ public class ItemController {
     private final ImageStore imageStore;
     private final MemberService memberService;
 
-    @GetMapping("/sell/add")
-    public String add(Model model) {
+    @GetMapping("/addForm")
+    public String itemAddForm(Model model) {
 
         model.addAttribute("itemAddDto", new ItemAddDto());
 
         return "itemAddForm";
     }
 
-    @PostMapping("/sell/add")
-    public String add(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId) {
-
+    @PostMapping("/save")
+    public String itemSave(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId, @RequestParam(required = false) Long id) {
+        log.info("@@@@@@@@@@여기 되나 {}", id);
         List<UploadImage> uploadImages = null;
 
         try {
@@ -64,27 +64,49 @@ public class ItemController {
 
         Item item = Item.createItem();
         item.change(memberService.findMemberById(memberId), itemAddDto, uploadImages);
-        itemService.itemAdd(item);
 
-        return "redirect:/item/sell/add";
+        if (id != null) {
+            itemService.itemUpdate(id, item);
+            return "redirect:/item/find/" + id;
+        }
+
+        itemService.itemSave(item);
+
+        return "redirect:/item/find/" + item.getId();
     }
 
-    @PostMapping("/items/{size}/{number}")
+    @PostMapping("/findAll/{size}/{number}")
     @ResponseBody
     public Page<ItemThumbDto> items(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number) {
         Page<Item> result = itemService.search(itemConditionDto, PageRequest.of(number, size));
         return result.map(ItemThumbDto::createItemThumbDto);
     }
 
-    @GetMapping("/{id}")
-    public String item(@PathVariable Long id, Model model) {
+    @GetMapping("/find/{id}")
+    public String itemFindOne(@PathVariable Long id, Model model) {
         model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
-        return "itemForm";
+        return "itemDetailForm";
     }
 
     @GetMapping("/image/{storeImageName}")
     @ResponseBody
     public Resource image(@PathVariable String storeImageName) throws MalformedURLException {
         return new UrlResource("file:" + imageStore.getFullPath(storeImageName));
+    }
+
+    @GetMapping("/updateForm/{id}")
+    public String itemUpdate(@PathVariable Long id, @Login Long memberId, Model model) {
+        if (id != memberId) {
+            log.info("!!!!! 잘못된 접근 입니다. 에러처리해야함 !!!!! {} {}", id, memberId);
+        }
+        log.info("####### {} {}", id, memberId);
+        model.addAttribute("itemAddDto", ItemAddDto.createItemAddDto(itemService.findItemById(id)));
+        return "itemAddForm";
+    }
+
+    @GetMapping("/remove/{id}")
+    public String itemRemove(@PathVariable Long id) {
+        itemService.itemRemove(id);
+        return "redirect:/";
     }
 }

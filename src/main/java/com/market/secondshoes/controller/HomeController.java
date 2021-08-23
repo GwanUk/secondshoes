@@ -13,43 +13,4 @@ public class HomeController {
         model.addAttribute("itemConditionDto", new ItemConditionDto());
         return "index";
     }
-
-    @GetMapping("/item")
-    public String itemForm() {
-        return "itemForm";
-    }
-
-
-
-    @GetMapping("/edit")
-    public String editForm() {
-        return "memberDetail";
-    }
-
-
-
-    @GetMapping("/cart")
-    public String cartForm() {
-        return "cartForm";
-    }
-
-    @GetMapping("/chat")
-    public String chatForm() {
-        return "chatForm";
-    }
-
-    @GetMapping("/sellList")
-    public String sellList() {
-        return "sellList";
-    }
-
-    @GetMapping("/buyList")
-    public String buyList() {
-        return "buyList";
-    }
-
-    @GetMapping("/wishList")
-    public String wishList() {
-        return "wishList";
-    }
 }

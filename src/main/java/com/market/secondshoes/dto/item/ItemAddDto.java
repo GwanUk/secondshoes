@@ -1,9 +1,6 @@
 package com.market.secondshoes.dto.item;
 
-import com.market.secondshoes.domain.item.Brand;
-import com.market.secondshoes.domain.item.Category;
-import com.market.secondshoes.domain.item.Gender;
-import com.market.secondshoes.domain.item.Size;
+import com.market.secondshoes.domain.item.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -17,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 public class ItemAddDto {
+
+    private Long id;
 
     @NotBlank
     private String title;
@@ -40,4 +39,19 @@ public class ItemAddDto {
     private String explain;
 
     private List<MultipartFile> images;
+
+    public static ItemAddDto createItemAddDto(Item item) {
+        ItemAddDto itemAddDto = new ItemAddDto();
+        if (item.getId() != null) {
+            itemAddDto.id = item.getId();
+        }
+        itemAddDto.title = item.getTitle();
+        itemAddDto.gender = item.getGender();
+        itemAddDto.size = item.getSize();
+        itemAddDto.brand = item.getBrand();
+        itemAddDto.category = item.getCategory();
+        itemAddDto.price = item.getPrice();
+        itemAddDto.explain = item.getExplain();
+        return itemAddDto;
+    }
 }
