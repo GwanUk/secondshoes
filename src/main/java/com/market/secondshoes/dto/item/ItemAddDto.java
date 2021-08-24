@@ -52,6 +52,7 @@ public class ItemAddDto {
         itemAddDto.category = item.getCategory();
         itemAddDto.price = item.getPrice();
         itemAddDto.explain = item.getExplain();
+
         return itemAddDto;
     }
 }

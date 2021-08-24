@@ -29,12 +29,31 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Item> item = new ArrayList<>();
 
-    public static Member createMember(String email, String name, String password) {
-        Member member = new Member();
-        member.email = email;
-        member.name = name;
-        member.password = password;
-
-        return member;
+    public static Member createMember() {
+        return new Member();
     }
+
+    /*login*/
+    public void change(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+    /*update*/
+    public void change(String email, String name, String password, Address address) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.address = address;
+    }
+
+    /*update*/
+    public void change(Member member) {
+        email = member.getEmail();
+        name = member.getName();
+        password = member.getPassword();
+        address = member.getAddress();
+    }
+
 }

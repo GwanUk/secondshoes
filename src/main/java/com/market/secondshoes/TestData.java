@@ -3,7 +3,6 @@ package com.market.secondshoes;
 import com.market.secondshoes.domain.item.*;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
-import com.market.secondshoes.service.ImageStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +33,8 @@ public class TestData {
         public void init() {
 
             for (int i = 0; i < 10; i++) {
-                Member member = Member.createMember("test" + i + "@test.com", "test" + i, "test!" + i);
+                Member member = Member.createMember();
+                member.change("test" + i + "@test.com", "test" + i, "test!" + i);
                 em.persist(member);
 
                 for (int j = 0; j < 10; j++) {

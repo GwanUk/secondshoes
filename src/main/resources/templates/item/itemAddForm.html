@@ -12,7 +12,7 @@
                 <div class="card-body">
 
                     <form th:object="${itemAddDto}" method="post" action="/item/save" enctype="multipart/form-data">
-                        <input type="text" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{id}"/>
                         <div class="row align-items-center pt-4 pb-3">
                             <div class="field-error d-flex pe-5 justify-content-end" th:errors="*{title}"/>
                             <div class="col-md-3 ps-5">

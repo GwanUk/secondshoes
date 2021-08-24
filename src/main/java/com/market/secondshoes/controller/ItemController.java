@@ -42,7 +42,7 @@ public class ItemController {
 
         model.addAttribute("itemAddDto", new ItemAddDto());
 
-        return "itemAddForm";
+        return "item/itemAddForm";
     }
 
     @PostMapping("/save")
@@ -59,7 +59,7 @@ public class ItemController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "itemAddForm";
+            return "item/itemAddForm";
         }
 
         Item item = Item.createItem();
@@ -85,7 +85,7 @@ public class ItemController {
     @GetMapping("/find/{id}")
     public String itemFindOne(@PathVariable Long id, Model model) {
         model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
-        return "itemDetailForm";
+        return "item/itemDetailForm";
     }
 
     @GetMapping("/image/{storeImageName}")
@@ -95,13 +95,9 @@ public class ItemController {
     }
 
     @GetMapping("/updateForm/{id}")
-    public String itemUpdate(@PathVariable Long id, @Login Long memberId, Model model) {
-        if (id != memberId) {
-            log.info("!!!!! 잘못된 접근 입니다. 에러처리해야함 !!!!! {} {}", id, memberId);
-        }
-        log.info("####### {} {}", id, memberId);
+    public String itemUpdate(@PathVariable Long id, Model model) {
         model.addAttribute("itemAddDto", ItemAddDto.createItemAddDto(itemService.findItemById(id)));
-        return "itemAddForm";
+        return "item/itemAddForm";
     }
 
     @GetMapping("/remove/{id}")

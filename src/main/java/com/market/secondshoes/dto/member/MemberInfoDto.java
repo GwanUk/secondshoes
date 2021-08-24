@@ -24,6 +24,4 @@ public class MemberInfoDto {
         memberInfoDto.address = member.getAddress();
         return memberInfoDto;
     }
-
-
 }

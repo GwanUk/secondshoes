@@ -12,7 +12,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="edit">회원 정보 관리</a></li>
+                        <li><a class="dropdown-item" th:href="@{/member/edit/{id}(id=${memberId})}">회원 정보 관리</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>

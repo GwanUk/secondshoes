@@ -1,21 +1,17 @@
 <html th:replace="~{layout :: copy(~{::copy})}" xmlns:th="http://www.thymeleaf.org">
 <div class="container rounded bg-white mt-5 mb-5" th:fragment="copy">
-  <div class="row">
+  <div class="row" th:object="${memberInfoDto}">
     <div class="col-md-3 border-right">
       <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
     </div>
     <div class="col-md-5 border-right">
       <div class="p-3 py-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h3 class="text-right">회원 정보 수정</h3>
+          <h3 class="text-right">회원 정보</h3>
         </div>
         <div class="row mt-2">
-          <div class="col-md-6"><label class="labels">이메일</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-          <div class="col-md-6"><label class="labels">이름</label><input type="text" class="form-control" value="" placeholder="surname"></div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-12"><label class="labels">비밀번호 변경</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-          <div class="col-md-12"><label class="labels">비밀번호 확인</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
+          <div class="col-md-6"><label class="labels">이메일</label><input type="email" disabled class="form-control" placeholder="email" th:field="*{email}"></div>
+          <div class="col-md-6"><label class="labels">이름</label><input type="text" disabled class="form-control" placeholder="name" th:field="*{name}"></div>
         </div>
         <div class="row mt-3">
           <div class="col-md-12">
@@ -34,17 +30,8 @@
     </div>
     <div class="col-md-4">
       <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center experience"><span><h4>주소지 관리</h4></span></div><br>
-
-        <div class="row mt-2">
-          <div class="col-md-6"><input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호"></div>
-          <div class="col-md-6"><input type="button" class="btn btn-outline-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></div><br>
-        </div>
-        <div class="col-md-12"><label class="labels">주소</label><input type="text" class="form-control" id="sample6_address" placeholder="주소"></div>
-        <div class="row"><label class="labels">상세 주소</label>
-          <div class="col-md-8"><input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소"></div>
-          <div class="col-md-4"><input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목"></div>
-        </div>
+        <div class="d-flex justify-content-between align-items-center experience"><span><h4>지역</h4></span></div><br>
+        <div class="col-md-12"><label class="labels">주소</label><input type="text" disabled class="form-control" placeholder="주소" th:field="*{address.address}"></div>
       </div>
       <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script>
@@ -81,17 +68,17 @@
                   extraAddr = ' (' + extraAddr + ')';
                 }
                 // 조합된 참고항목을 해당 필드에 넣는다.
-                document.getElementById("sample6_extraAddress").value = extraAddr;
+                document.getElementById("extraAddress").value = extraAddr;
 
               } else {
-                document.getElementById("sample6_extraAddress").value = '';
+                document.getElementById("extraAddress").value = '';
               }
 
               // 우편번호와 주소 정보를 해당 필드에 넣는다.
-              document.getElementById('sample6_postcode').value = data.zonecode;
-              document.getElementById("sample6_address").value = addr;
+              document.getElementById('postcode').value = data.zonecode;
+              document.getElementById("address").value = addr;
               // 커서를 상세주소 필드로 이동한다.
-              document.getElementById("sample6_detailAddress").focus();
+              document.getElementById("detailAddress").focus();
             }
           }).open();
         }

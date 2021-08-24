@@ -42,4 +42,9 @@ public class MemberService {
                 .filter(m -> m.getPassword().equals(password));
     }
 
+    @Transactional
+    public void update(Long id, Member member) {
+        memberRepository.findMemberById(id).change(member);
+    }
+
 }

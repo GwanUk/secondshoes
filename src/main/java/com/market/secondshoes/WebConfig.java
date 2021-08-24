@@ -33,6 +33,6 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new MemberHaveToLoginInterceptor())
                 .order(3)
-                .addPathPatterns("/item/addForm", "/item/save", "/item/update/**");
+                .addPathPatterns("/member/edit/**", "/item/addForm", "/item/save", "/item/update/**");
     }
 }

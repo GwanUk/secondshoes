@@ -26,6 +26,8 @@ public class MemberSignUpDto {
     private String passwordCheck;
 
     public Member makeMember() {
-        return Member.createMember(this.getEmail(), this.getName(), this.getPassword());
+        Member member = Member.createMember();
+        member.change(this.getEmail(), this.getName(), this.getPassword());
+        return member;
     }
 }
