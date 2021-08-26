@@ -12,8 +12,8 @@ import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
+import com.market.secondshoes.service.WishService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -30,12 +30,12 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
-@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
     private final ImageStore imageStore;
     private final MemberService memberService;
+    private final WishService wishService;
 
     @GetMapping("/addForm")
     public String itemAddForm(Model model) {
@@ -47,7 +47,6 @@ public class ItemController {
 
     @PostMapping("/save")
     public String itemSave(@Valid @ModelAttribute ItemAddDto itemAddDto, BindingResult bindingResult, @Login Long memberId, @RequestParam(required = false) Long id) {
-        log.info("@@@@@@@@@@여기 되나 {}", id);
         List<UploadImage> uploadImages = null;
 
         try {
@@ -77,9 +76,15 @@ public class ItemController {
 
     @PostMapping("/findAll/{size}/{number}")
     @ResponseBody
-    public Page<ItemThumbDto> items(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number) {
-        Page<Item> result = itemService.search(itemConditionDto, PageRequest.of(number, size));
-        return result.map(ItemThumbDto::createItemThumbDto);
+    public Page<ItemThumbDto> findAllItem(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @Login Long loginId) {
+        Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size));
+        return page.map(item -> {
+            ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
+            if (loginId != null && wishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
+                itemThumbDto.setWished(true);
+            }
+            return itemThumbDto;
+        });
     }
 
     @GetMapping("/find/{id}")

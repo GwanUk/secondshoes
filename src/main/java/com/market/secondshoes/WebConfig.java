@@ -2,6 +2,7 @@ package com.market.secondshoes;
 
 import com.market.secondshoes.argumentresolver.LoginMemberArgumentResolver;
 import com.market.secondshoes.interceptor.LogInterceptor;
+import com.market.secondshoes.interceptor.MemberHaveToLoginAJAXInterceptor;
 import com.market.secondshoes.interceptor.MemberHaveToLoginInterceptor;
 import com.market.secondshoes.interceptor.MemberLoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -34,5 +35,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new MemberHaveToLoginInterceptor())
                 .order(3)
                 .addPathPatterns("/member/edit/**", "/item/addForm", "/item/save", "/item/update/**");
+
+        registry.addInterceptor(new MemberHaveToLoginAJAXInterceptor())
+                .order(4)
+                .addPathPatterns("/wish/**");
     }
 }

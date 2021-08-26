@@ -27,7 +27,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
     }
 
     @Override
-    public Page<Item> search(ItemConditionDto condition, Pageable pageable) {
+    public Page<Item> findAll(ItemConditionDto condition, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         if (StringUtils.hasText(condition.getSearch())) {
             String[] searches = condition.getSearch().trim().split(" ");

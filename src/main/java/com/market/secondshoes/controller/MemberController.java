@@ -113,7 +113,7 @@ public class MemberController {
         model.addAttribute("memberEditDto", MemberEditDto.createMemberEditDto(memberService.findMemberById(id)));
         return "member/memberEditForm";
     }
-  
+
     @PostMapping("/edit/{id}")
     public String memberUpdate(@PathVariable Long id, @ModelAttribute MemberEditDto memberEditDto, BindingResult bindingResult, @Login Long loinId, RedirectAttributes redirectAttributes) {
         if (loinId != id) {

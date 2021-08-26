@@ -1,5 +1,6 @@
 package com.market.secondshoes.dto.item;
 
+import com.market.secondshoes.domain.Wish;
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.domain.member.Member;
@@ -10,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -22,6 +26,7 @@ public class ItemThumbDto {
     private UploadImage uploadImage;
     private MemberInfoDto memberInfoDto;
     private Long ago;
+    private boolean wished = false;
 
     public static ItemThumbDto createItemThumbDto(Long id, String title, Integer price, UploadImage uploadImage, Member member, LocalDateTime localDateTime) {
         ItemThumbDto itemThumbDto = new ItemThumbDto();

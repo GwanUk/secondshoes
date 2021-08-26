@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ItemRepositoryCustom {
 
-    Page<Item> search(ItemConditionDto itemConditionDto, Pageable pageable);
+    Page<Item> findAll(ItemConditionDto itemConditionDto, Pageable pageable);
 }

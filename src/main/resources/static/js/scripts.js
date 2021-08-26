@@ -1,11 +1,3 @@
-/* ===== member ===== */
-function signUp() {
-    location.href = "/member/signUp";
-}
-function login() {
-    location.href = "/member/login";
-}
-
 /* ===== item ===== */
 function condition(page) {
     let search_value = document.getElementById("search").value;
@@ -69,7 +61,7 @@ function items(data, size, number) {
                 "        <!-- Sale badge-->\n" +
                 "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n" +
                 "        <!-- Product image-->\n" +
-                "        <img class=\"card-img-top img-thumbnail hover-custom\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"item(" + itemThumbDto.id + ")\"/>\n" +
+                "        <img class=\"card-img-top img-thumbnail hover-custom\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
                 "        <!-- Product details-->\n" +
                 "        <div class=\"card-body p-4\">\n" +
                 "            <div class=\"text-center\">\n" +
@@ -83,7 +75,7 @@ function items(data, size, number) {
                 "        </div>\n" +
                 "            <!-- Product actions-->\n" +
                 "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\n" +
-                "            <div class=\"text-center\"><a class=\"btn btn-outline-danger mt-auto\" href=\"#\">좋아요</a></div>\n" +
+                "            <div class=\"text-center\"><a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(event," + itemThumbDto.id + ")\">찜</a></div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>\n";
@@ -120,11 +112,7 @@ function paging(page) {
 }
 
 function item(id) {
-    location.href = "/item/find/" + id;
-}
-
-function updateForm(id) {
-    location.href = "/item/update/" + id;
+    location.href = '/item/find/' + id;
 }
 
 function imagePreview(event) {
@@ -149,7 +137,23 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-/*item detail page*/
+/*wish*/
+function wish(event, itemId) {
+    let xhr = new XMLHttpRequest;
+    xhr.open("get", "/wish/save/" + itemId);
+    xhr.onload = () => {
+        console.log(xhr.responseText);
+        if (xhr.responseText == "success") {
+            event.target.classList.remove("btn-outline-danger");
+            event.target.classList.add("btn-danger");
+        } else if (xhr.responseText == "HaveToLogin") {
+            console.log(xhr.responseText);
+
+            location.href = "/member/login";
+        }
+    };
+    xhr.send();
+}
 
 
 

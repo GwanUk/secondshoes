@@ -9,19 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
-public class MemberHaveToLoginInterceptor implements HandlerInterceptor {
+public class MemberHaveToLoginAJAXInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-        String requestURI = request.getRequestURI();
-
         HttpSession session = request.getSession();
         if (session == null || session.getAttribute(ShoesConst.MEMBER_ID) == null) {
-            response.sendRedirect("/member/login?redirectURL"+requestURI);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print("HaveToLogin");
             return false;
         }
-
         return true;
     }
 }

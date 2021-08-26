@@ -1,6 +1,8 @@
 package com.market.secondshoes.domain.member;
 
+import com.market.secondshoes.domain.BaseTimeEntity;
 import com.market.secondshoes.domain.item.Item;
+import com.market.secondshoes.domain.Wish;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -29,8 +31,17 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Item> item = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Wish> wish;
+
     public static Member createMember() {
         return new Member();
+    }
+
+    public static Member createMember(Long id) {
+        Member member = new Member();
+        member.id = id;
+        return member;
     }
 
     /*login*/

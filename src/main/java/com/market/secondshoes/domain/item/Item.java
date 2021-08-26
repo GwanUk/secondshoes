@@ -1,6 +1,7 @@
 package com.market.secondshoes.domain.item;
 
 import com.market.secondshoes.domain.BaseTimeEntity;
+import com.market.secondshoes.domain.Wish;
 import com.market.secondshoes.domain.member.Member;
 import com.market.secondshoes.dto.item.ItemAddDto;
 import lombok.AccessLevel;
@@ -24,6 +25,7 @@ public class Item extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
     private Size size;
 
     @Enumerated(EnumType.STRING)
@@ -34,6 +36,8 @@ public class Item extends BaseTimeEntity {
 
     private Integer price;
 
+    @Lob
+    @Column(length = 1023)
     private String explain;
 
     @ElementCollection
@@ -44,8 +48,17 @@ public class Item extends BaseTimeEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @OneToMany(mappedBy = "item")
+    private List<Wish> wish;
+
     public static Item createItem() {
         return new Item();
+    }
+
+    public static Item createItem(Long id) {
+        Item item = new Item();
+        item.id = id;
+        return item;
     }
 
     public void change(Member member, ItemAddDto itemAddDto, List<UploadImage> uploadImages) {

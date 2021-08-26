@@ -32,8 +32,8 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public Page<Item> search(ItemConditionDto itemConditionDto, Pageable pageable) {
-        return itemRepository.search(itemConditionDto, pageable);
+    public Page<Item> findAll(ItemConditionDto itemConditionDto, Pageable pageable) {
+        return itemRepository.findAll(itemConditionDto, pageable);
     }
 
     public Item findItemById(Long id) {
