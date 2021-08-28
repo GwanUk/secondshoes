@@ -1,8 +1,9 @@
 package com.market.secondshoes.domain.member;
 
 import com.market.secondshoes.domain.BaseTimeEntity;
+import com.market.secondshoes.domain.item.ItemComment;
+import com.market.secondshoes.domain.item.ItemWish;
 import com.market.secondshoes.domain.item.Item;
-import com.market.secondshoes.domain.Wish;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,10 @@ public class Member extends BaseTimeEntity {
     private List<Item> item = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Wish> wish;
+    private List<ItemWish> itemWishes;
+
+    @OneToMany(mappedBy = "member")
+    private List<ItemComment> comments;
 
     public static Member createMember() {
         return new Member();

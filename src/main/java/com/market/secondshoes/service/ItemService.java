@@ -28,7 +28,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void itemRemove(Long id) {
+    public void itemDelete(Long id) {
         itemRepository.deleteById(id);
     }
 
@@ -39,7 +39,4 @@ public class ItemService {
     public Item findItemById(Long id) {
         return itemRepository.findItemById(id);
     }
-
-
-
 }

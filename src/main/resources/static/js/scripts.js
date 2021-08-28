@@ -111,13 +111,8 @@ function paging(page) {
     }
 }
 
-function item(id) {
-    location.href = '/item/find/' + id;
-}
-
 function imagePreview(event) {
     let fileArr = Array.from(event.target.files);
-
     fileArr.forEach(file => {
         let fileReader = new FileReader();
         let imgTag = document.createElement("img");
@@ -131,29 +126,56 @@ function imagePreview(event) {
     });
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById("find_target")) {
-        condition(0);
-    }
-});
-
 /*wish*/
 function wish(event, itemId) {
-    let xhr = new XMLHttpRequest;
-    xhr.open("get", "/wish/save/" + itemId);
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "/wish/ajax/" + itemId);
     xhr.onload = () => {
-        console.log(xhr.responseText);
-        if (xhr.responseText == "success") {
+        if (xhr.responseText == "save") {
             event.target.classList.remove("btn-outline-danger");
             event.target.classList.add("btn-danger");
+        } else if (xhr.responseText == "delete") {
+            event.target.classList.remove("btn-danger");
+            event.target.classList.add("btn-outline-danger");
         } else if (xhr.responseText == "HaveToLogin") {
-            console.log(xhr.responseText);
-
             location.href = "/member/login";
         }
     };
     xhr.send();
 }
+
+/*comment*/
+function commentFind(itemId) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "/comment/" + itemId);
+    xhr.onload = () => {
+        JSON.parse(xhr.responseText).forEach((itemCommentDto) => {  commentForm(itemCommentDto)  });
+    };
+    xhr.send();
+}
+
+function commentForm(itemCommentDto) {
+    document.getElementById("comment_target").innerHTML += "" +
+        "<div class=\"d-flex flex-row p-3\">\n" +
+        "    <div class=\"w-100\">\n" +
+        "        <div class=\"d-flex justify-content-between align-items-center\">\n" +
+        "            <div class=\"d-flex flex-row align-items-center\"> <span class=\"mr-2\">"+ itemCommentDto.name +"</span> <small class=\"c-badge\">Top Comment</small> </div> <small>"+ itemCommentDto.createdDate +"</small>\n" +
+        "        </div>\n" +
+        "        <p class=\"text-justify comment-text mb-0\">"+ itemCommentDto.comment +"</p>\n" +
+        "        <div class=\"d-flex flex-row user-feed\"> <span class=\"itemWish\"><i class=\"fa fa-heartbeat mr-2\"></i>14</span> <span class=\"ml-3\"><i class=\"fa fa-comments-o mr-2\"></i>Reply</span> </div>\n" +
+        "    </div>\n" +
+        "</div>";
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+    if (document.getElementById("find_target")) {
+        condition(0);
+    }
+
+    if (document.getElementById("itemId")) {
+        commentFind(document.getElementById("itemId").value);
+    }
+});
 
 
 

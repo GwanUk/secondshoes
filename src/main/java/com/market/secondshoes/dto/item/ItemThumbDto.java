@@ -1,6 +1,5 @@
 package com.market.secondshoes.dto.item;
 
-import com.market.secondshoes.domain.Wish;
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.domain.item.UploadImage;
 import com.market.secondshoes.domain.member.Member;
@@ -11,9 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Getter
 @Setter

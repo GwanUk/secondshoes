@@ -12,7 +12,7 @@ public class CartController {
 
     @GetMapping("/cart")
     public String cartForm() {
-        return "cartForm";
+        return "wishForm";
     }
     @GetMapping("/wishList")
     public String wishList() {

@@ -22,9 +22,9 @@
                     </ul>
                 </li>
             </ul>
-                <button class="btn btn-outline-dark" type="button" onclick="location.href='/member/cart'" th:unless="${memberId} == null">
+                <button class="btn btn-outline-dark" type="button" onclick="location.href='/itemWish/form'" th:unless="${memberId} == null">
                     <i class="bi-cart-fill me-1"></i>
-                    장바구니
+                    찜
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
                 <button class="btn btn-outline-dark ms-1" type="button" onclick="location.href='/member/chat'" th:unless="${memberId} == null">

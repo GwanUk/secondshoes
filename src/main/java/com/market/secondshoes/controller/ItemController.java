@@ -3,16 +3,13 @@ package com.market.secondshoes.controller;
 import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.domain.item.UploadImage;
-import com.market.secondshoes.dto.item.ItemAddDto;
-import com.market.secondshoes.dto.item.ItemConditionDto;
-import com.market.secondshoes.dto.item.ItemDetailDto;
-import com.market.secondshoes.dto.item.ItemThumbDto;
+import com.market.secondshoes.dto.item.*;
 import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
-import com.market.secondshoes.service.WishService;
+import com.market.secondshoes.service.ItemWishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -35,7 +32,7 @@ public class ItemController {
     private final ItemService itemService;
     private final ImageStore imageStore;
     private final MemberService memberService;
-    private final WishService wishService;
+    private final ItemWishService itemWishService;
 
     @GetMapping("/addForm")
     public String itemAddForm(Model model) {
@@ -80,7 +77,7 @@ public class ItemController {
         Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size));
         return page.map(item -> {
             ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
-            if (loginId != null && wishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
+            if (loginId != null && itemWishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
                 itemThumbDto.setWished(true);
             }
             return itemThumbDto;
@@ -90,6 +87,7 @@ public class ItemController {
     @GetMapping("/find/{id}")
     public String itemFindOne(@PathVariable Long id, Model model) {
         model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
+        model.addAttribute("itemCommentAddDto", ItemCommentAddDto.createItemCommentAddDto(id));
         return "item/itemDetailForm";
     }
 
@@ -107,7 +105,7 @@ public class ItemController {
 
     @GetMapping("/remove/{id}")
     public String itemRemove(@PathVariable Long id) {
-        itemService.itemRemove(id);
+        itemService.itemDelete(id);
         return "redirect:/";
     }
 }

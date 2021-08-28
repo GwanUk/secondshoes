@@ -1,6 +1,6 @@
-package com.market.secondshoes.domain;
+package com.market.secondshoes.domain.item;
 
-import com.market.secondshoes.domain.item.Item;
+import com.market.secondshoes.domain.BaseTimeEntity;
 import com.market.secondshoes.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Wish extends BaseTimeEntity {
+public class ItemWish extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "WISH_ID")
@@ -25,10 +25,10 @@ public class Wish extends BaseTimeEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    public static Wish createWish(Long itemId, Long memberId) {
-        Wish wish = new Wish();
-        wish.item = Item.createItem(itemId);
-        wish.member = Member.createMember(memberId);
-        return wish;
+    public static ItemWish createWish(Long itemId, Long memberId) {
+        ItemWish itemWish = new ItemWish();
+        itemWish.item = Item.createItem(itemId);
+        itemWish.member = Member.createMember(memberId);
+        return itemWish;
     }
 }

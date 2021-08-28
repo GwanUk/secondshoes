@@ -7,38 +7,22 @@
       <div class="col-lg-8 mb-4 mb-md-0">
         <!-- Section: Product list -->
         <section class="mb-5">
+
           <!-- Single item -->
-          <div class="row border-bottom mb-4">
+          <div class="row border-bottom mb-4" th:each="itemThumbDto : ${itemThumbDtoList}">
             <div class="col-md-2 mb-4 mb-md-0">
-              <div
-                      class="
-                          bg-image
-                          ripple
-                          rounded-5
-                          mb-4
-                          overflow-hidden
-                          d-block
-                          "
-                      data-ripple-color="light"
-              >
-                <img
-                        src="https://mdbootstrap.com/img/new/ecommerce/vertical/085.jpg"
-                        class="w-100"
-                        alt=""
-                />
+              <div class="bg-image ripple rounded-5 mb-4 overflow-hidden d-block" data-ripple-color="light">
+                <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/085.jpg" class="w-100" alt=""/>
                 <a href="#!">
                   <div class="hover-overlay">
-                    <div
-                            class="mask"
-                            style="background-color: hsla(0, 0%, 98.4%, 0.2)"
-                    ></div>
+                    <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>
                   </div>
                 </a>
               </div>
             </div>
 
             <div class="col-md-8 mb-4 mb-md-0">
-              <p class="fw-bold">Product very long title</p>
+              <p class="fw-bold" th:text="${itemThumbDto.title}">Product very long title</p>
               <p class="mb-1">
                 <span class="text-muted me-2">Size:</span><span>8.5</span>
               </p>
@@ -48,37 +32,19 @@
               </p>
 
               <p class="mb-4">
-                <a href="" class="text-muted pe-3 border-end"
-                ><small
-                ><i class="fas fa-trash me-2"></i>Remove</small
-                ></a
-                >
-                <a href="" class="text-muted ps-3"
-                ><small
-                ><i class="fas fa-heart me-2"></i>Move to wish
-                  list</small
-                ></a
-                >
+                <a href="" class="text-muted pe-3 border-end"><small><i class="fas fa-trash me-2"></i>Remove</small></a>
+                <a href="" class="text-muted ps-3"><small><i class="fas fa-heart me-2"></i>Move to wishlist</small></a>
               </p>
             </div>
 
             <div class="col-md-2 mb-4 mb-md-0">
               <div class="form-outline mb-4">
-                <input
-                        type="number"
-                        id="typeNumber"
-                        class="form-control"
-                        value="1"
-                        min="1"
-                />
-                <label class="form-label" for="typeNumber"
-                >Quantity</label
-                >
+                <input type="number" id="typeNumber" class="form-control" value="1" min="1"/>
+                <label class="form-label" for="typeNumber">Quantity</label>
               </div>
 
               <h5 class="mb-2">
-                <s class="text-muted me-2 small align-middle">$119</s
-                ><span class="align-middle">$101</span>
+                <s class="text-muted me-2 small align-middle">$119</s><span class="align-middle">$101</span>
               </h5>
               <p class="text-danger"><small>You save 15%</small></p>
             </div>
@@ -133,7 +99,7 @@
                 >
                 <a href="" class="text-muted ps-3"
                 ><small
-                ><i class="fas fa-heart me-2"></i>Move to wish
+                ><i class="fas fa-heart me-2"></i>Move to itemWish
                   list</small
                 ></a
                 >
@@ -211,7 +177,7 @@
                 >
                 <a href="" class="text-muted ps-3"
                 ><small
-                ><i class="fas fa-heart me-2"></i>Move to wish
+                ><i class="fas fa-heart me-2"></i>Move to itemWish
                   list</small
                 ></a
                 >

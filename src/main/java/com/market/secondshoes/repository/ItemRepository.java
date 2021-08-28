@@ -8,6 +8,4 @@ public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositor
 
     @EntityGraph(attributePaths = {"member"})
     Item findItemById(Long id);
-
-
 }
