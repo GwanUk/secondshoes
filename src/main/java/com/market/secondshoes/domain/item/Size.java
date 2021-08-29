@@ -19,7 +19,6 @@ public enum Size {
 
     private final Integer dimensions;
 
-    @JsonCreator
     Size(Integer dimensions) {
         this.dimensions = dimensions;
     }

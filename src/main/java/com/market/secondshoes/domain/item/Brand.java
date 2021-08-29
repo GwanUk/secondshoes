@@ -9,7 +9,6 @@ public enum Brand {
 
     private final String brandName;
 
-    @JsonCreator
     Brand(String brandName) {
         this.brandName = brandName;
     }

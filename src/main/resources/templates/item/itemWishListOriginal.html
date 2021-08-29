@@ -9,7 +9,7 @@
         <section class="mb-5">
 
           <!-- Single item -->
-          <div class="row border-bottom mb-4" th:each="itemThumbDto : ${itemThumbDtoList}">
+          <div class="row border-bottom mb-4">
             <div class="col-md-2 mb-4 mb-md-0">
               <div class="bg-image ripple rounded-5 mb-4 overflow-hidden d-block" data-ripple-color="light">
                 <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/085.jpg" class="w-100" alt=""/>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-md-8 mb-4 mb-md-0">
-              <p class="fw-bold" th:text="${itemThumbDto.title}">Product very long title</p>
+              <p class="fw-bold">Product very long title</p>
               <p class="mb-1">
                 <span class="text-muted me-2">Size:</span><span>8.5</span>
               </p>

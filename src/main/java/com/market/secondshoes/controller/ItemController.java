@@ -108,4 +108,9 @@ public class ItemController {
         itemService.itemDelete(id);
         return "redirect:/";
     }
+
+    @GetMapping("/sellList")
+    public String sellList(@Login Long loginId) {
+        return "/item/itemSellList";
+    }
 }

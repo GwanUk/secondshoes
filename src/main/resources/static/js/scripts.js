@@ -61,7 +61,7 @@ function items(data, size, number) {
                 "        <!-- Sale badge-->\n" +
                 "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n" +
                 "        <!-- Product image-->\n" +
-                "        <img class=\"card-img-top img-thumbnail hover-custom\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
+                "        <img class=\"card-img-top img-thumbnail hover-custom w-100 h-100\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
                 "        <!-- Product details-->\n" +
                 "        <div class=\"card-body p-4\">\n" +
                 "            <div class=\"text-center\">\n" +

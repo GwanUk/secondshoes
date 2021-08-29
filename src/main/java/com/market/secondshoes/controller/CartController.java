@@ -12,10 +12,10 @@ public class CartController {
 
     @GetMapping("/cart")
     public String cartForm() {
-        return "wishForm";
+        return "itemWishList";
     }
     @GetMapping("/wishList")
     public String wishList() {
-        return "wishList";
+        return "itemSellList";
     }
 }

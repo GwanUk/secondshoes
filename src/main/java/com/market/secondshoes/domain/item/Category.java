@@ -8,7 +8,6 @@ public enum Category {
 
     private final String categoryType;
 
-    @JsonCreator
     Category(String categoryType) {
         this.categoryType = categoryType;
     }

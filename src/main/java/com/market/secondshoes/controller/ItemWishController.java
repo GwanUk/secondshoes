@@ -2,10 +2,9 @@ package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
 import com.market.secondshoes.domain.item.ItemWish;
-import com.market.secondshoes.dto.item.ItemThumbDto;
+import com.market.secondshoes.dto.item.ItemDetailDto;
 import com.market.secondshoes.service.ItemWishService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +19,14 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/wish")
-@Slf4j
 public class ItemWishController {
 
     private final ItemWishService itemWishService;
 
     @GetMapping("/form")
     public String wishForm(@Login Long loginId, Model model) {
-        model.addAttribute("itemThumbDtoList", itemWishService.findWishFetchByMemberId(loginId).stream().map(wish -> ItemThumbDto.createItemThumbDto(wish.getItem())).collect(Collectors.toList()));
-        return "wishForm";
+        model.addAttribute("itemDetailDtoList", itemWishService.findWishFetchByMemberId(loginId).stream().map(wish -> ItemDetailDto.createItemDetailDto(wish.getItem())).collect(Collectors.toList()));
+        return "/item/itemWishList";
     }
 
     @GetMapping("/ajax/{itemId}")
@@ -36,7 +34,6 @@ public class ItemWishController {
     public String wishSave(@PathVariable Long itemId, @Login Long loginId) {
         Optional<ItemWish> wish = itemWishService.findWishByItemIdAndMemberId(itemId, loginId);
         if (wish.isPresent()) {
-            log.info("@@@@@@ {}", wish.get().getId());
             itemWishService.wishDelete(wish.get().getId());
             return "delete";
         }

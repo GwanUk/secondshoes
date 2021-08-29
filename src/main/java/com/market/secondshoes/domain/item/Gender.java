@@ -9,7 +9,6 @@ public enum Gender {
 
     private final String sex;
 
-    @JsonCreator
     Gender(String sex) {
         this.sex = sex;
     }
