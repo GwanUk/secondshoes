@@ -51,7 +51,7 @@ public class Item extends BaseTimeEntity {
     private List<ItemWish> itemWishes;
 
     @OneToMany(mappedBy = "item")
-    private List<ItemComment> comments;
+    private List<ItemComment> itemComments;
 
     public static Item createItem() {
         return new Item();

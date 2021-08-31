@@ -11,10 +11,12 @@ import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.MemberService;
 import com.market.secondshoes.service.ItemWishService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -36,9 +39,7 @@ public class ItemController {
 
     @GetMapping("/addForm")
     public String itemAddForm(Model model) {
-
         model.addAttribute("itemAddDto", new ItemAddDto());
-
         return "item/itemAddForm";
     }
 
@@ -73,7 +74,7 @@ public class ItemController {
 
     @PostMapping("/findAll/{size}/{number}")
     @ResponseBody
-    public Page<ItemThumbDto> findAllItem(@RequestBody ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @Login Long loginId) {
+    public Page<ItemThumbDto> findAllItem(@RequestBody(required = false) ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @Login Long loginId) {
         Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size));
         return page.map(item -> {
             ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
@@ -82,6 +83,14 @@ public class ItemController {
             }
             return itemThumbDto;
         });
+    }
+
+    @GetMapping("/findSellItems")
+    public String findSellItems(Pageable pageable , @Login Long loginId, Model model) {
+        log.info("@@@@ [{}] [{}]",pageable,loginId);
+        Page<ItemSellListDto> page = itemService.findSellItems(loginId, pageable).map(ItemSellListDto::createItemSellListDto);
+        model.addAttribute("itemSellListDtoPage", page);
+        return "/item/itemSellList";
     }
 
     @GetMapping("/find/{id}")

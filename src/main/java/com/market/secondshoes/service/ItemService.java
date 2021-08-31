@@ -36,6 +36,11 @@ public class ItemService {
         return itemRepository.findAll(itemConditionDto, pageable);
     }
 
+    public Page<Item> findSellItems(Long id, Pageable pageable) {
+        return itemRepository.findItemsByMemberId(id, pageable);
+
+    }
+
     public Item findItemById(Long id) {
         return itemRepository.findItemById(id);
     }
