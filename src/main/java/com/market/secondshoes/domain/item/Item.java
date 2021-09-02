@@ -53,8 +53,12 @@ public class Item extends BaseTimeEntity {
     @OneToMany(mappedBy = "item")
     private List<ItemComment> itemComments;
 
+    private Long viewCount;
+
     public static Item createItem() {
-        return new Item();
+        Item item = new Item();
+        item.viewCount = 0L;
+        return item;
     }
 
     public static Item createItem(Long id) {
@@ -75,6 +79,11 @@ public class Item extends BaseTimeEntity {
         addMember(member);
     }
 
+    private void addMember(Member member) {
+        this.member = member;
+        member.getItem().add(this);
+    }
+
     public void change(Item item) {
         title = item.getTitle();
         gender = item.getGender();
@@ -88,8 +97,9 @@ public class Item extends BaseTimeEntity {
         }
     }
 
-    private void addMember(Member member) {
-        this.member = member;
-        member.getItem().add(this);
+    public void viewCountPlus() {
+        viewCount++;
     }
+
+
 }

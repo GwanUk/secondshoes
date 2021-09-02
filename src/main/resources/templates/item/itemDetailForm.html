@@ -2,16 +2,22 @@
 <html th:replace="~{layout :: copy (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
 <!-- Product section-->
 <section class="py-5"  th:fragment="copy">
-    <div class="container px-4 px-lg-5 my-5" th:object="${itemDetailDto}" >
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6" th:each="uploadImage : *{uploadImages}">
-                <img class="card-img-top mb-5 mb-md-0"
-                     th:src="@{/item/image/} + ${uploadImage.storeImageName}"
-                     alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
-                     th:field="*{uploadImages}"
-                />
+    <div class="container px-4 px-lg-5 my-5" th:object="${itemDetailDto}">
+        <div class="row gx-4 gx-lg-5 align-items-center px-5 mx-5">
+            <div class="album px-0">
+                <div id="imageListSlide" class="images">
+                    <img class="image_slide"
+                         th:each="uploadImage : *{uploadImages}"
+                         th:src="@{/item/image/} + ${uploadImage.storeImageName}"
+                         alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                         th:field="*{uploadImages}"/>
+                </div>
+                <div class="control_panel">
+                    <span class="dot" th:each="uploadImage, uploadImageStat : *{uploadImages}" th:name="${uploadImageStat.count}" onclick="slide(this)"></span>
+                </div>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-4 ms-5 ps-5">
                 <div class="small mb-1"><a th:href="@{/member/find/} + *{memberInfoDto.id}" th:text="*{memberInfoDto.name}">SKU: BST-498</a> </div>
                 <h1 class="display-5 fw-bolder" th:text="*{title}">Shop item template</h1>
                 <div class="fs-5 mb-5">

@@ -8,10 +8,9 @@ import com.market.secondshoes.exception.ImageExceededException;
 import com.market.secondshoes.exception.ImageExtException;
 import com.market.secondshoes.service.ImageStore;
 import com.market.secondshoes.service.ItemService;
-import com.market.secondshoes.service.MemberService;
 import com.market.secondshoes.service.ItemWishService;
+import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
-@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -87,7 +85,6 @@ public class ItemController {
 
     @GetMapping("/findSellItems")
     public String findSellItems(Pageable pageable , @Login Long loginId, Model model) {
-        log.info("@@@@ [{}] [{}]",pageable,loginId);
         Page<ItemSellListDto> page = itemService.findSellItems(loginId, pageable).map(ItemSellListDto::createItemSellListDto);
         model.addAttribute("itemSellListDtoPage", page);
         return "/item/itemSellList";
@@ -95,6 +92,7 @@ public class ItemController {
 
     @GetMapping("/find/{id}")
     public String itemFindOne(@PathVariable Long id, Model model) {
+        itemService.viewCountPlus(id);
         model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
         model.addAttribute("itemCommentAddDto", ItemCommentAddDto.createItemCommentAddDto(id));
         return "item/itemDetailForm";

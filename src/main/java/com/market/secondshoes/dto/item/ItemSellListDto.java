@@ -17,6 +17,7 @@ public class ItemSellListDto {
     private List<UploadImage> uploadImages;
     private Integer wishCount;
     private Integer commentCount;
+    private Long viewCount;
     private LocalDateTime createdDate;
 
     public static ItemSellListDto createItemSellListDto(Item item) {
@@ -26,6 +27,7 @@ public class ItemSellListDto {
         itemSellListDto.uploadImages = item.getUploadImages();
         itemSellListDto.wishCount = item.getItemWishes().size();
         itemSellListDto.commentCount = item.getItemComments().size();
+        itemSellListDto.viewCount = item.getViewCount();
         itemSellListDto.createdDate = item.getCreatedDate();
         return itemSellListDto;
     }

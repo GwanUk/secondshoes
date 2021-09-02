@@ -46,6 +46,7 @@ function condition(page) {
     items(JSON.stringify(data), document.getElementById("dataPerPage").value, page);
 }
 
+/*findAll*/
 function items(data, size, number) {
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/item/findAll/' + size + '/' + number);
@@ -59,7 +60,7 @@ function items(data, size, number) {
                 "<div class=\"col mt-5\">\n" +
                 "    <div class=\"card h-100 item-card\">\n" +
                 "        <!-- Sale badge-->\n" +
-                "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">Sale</div>\n" +
+                "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">" + itemThumbDto.createdDate + "<i class=\"bi bi-eye mx-1\"></i>" + itemThumbDto.viewCount + "</div>\n" +
                 "        <!-- Product image-->\n" +
                 "        <img class=\"card-img-top img-thumbnail hover-custom w-100 h-100\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
                 "        <!-- Product details-->\n" +
@@ -68,14 +69,15 @@ function items(data, size, number) {
                 "                <!-- Product name-->\n" +
                 "                <h5 class=\"fw-bolder\">"+itemThumbDto.title+"</h5></h5>\n" +
                 "                <!-- Product price-->\n" +
-                "                <span class=\"\">" + itemThumbDto.price + "</span><br/>" +
-                "                <a class=\"\" href=\"/member/find/"+itemThumbDto.memberInfoDto.id+"\">" + itemThumbDto.memberInfoDto.name + "</a><br/>" +
-                "                <span class=\"\">" + itemThumbDto.ago + "</span><br/>" +
+                "                <span class=\"text-\"><i class=\"bi bi-cash-coin me-1\"></i>" + itemThumbDto.price + "</span><br/>" +
                 "            </div>\n" +
                 "        </div>\n" +
                 "            <!-- Product actions-->\n" +
                 "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\n" +
-                "            <div class=\"text-center\"><a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(event," + itemThumbDto.id + ")\">찜</a></div>\n" +
+                "            <div class=\"text-center\">" +
+                "                <a class=\"btn btn-outline-primary mt-auto\" href=\"/member/find/"+itemThumbDto.memberInfoDto.id+"\">" + itemThumbDto.memberInfoDto.name + "</a>" +
+                "                <a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(event," + itemThumbDto.id + ")\"><i class=\"bi bi-heart \"></i></a>" +
+                "            </div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>\n";
@@ -85,6 +87,7 @@ function items(data, size, number) {
     xhr.send(data);
 }
 
+/*paging*/
 function paging(page) {
     let page_ul = document.getElementById("page_ul");
     page_ul.innerHTML = "";
@@ -111,6 +114,7 @@ function paging(page) {
     }
 }
 
+/*이미지 미리보기*/
 function imagePreview(event) {
     let fileArr = Array.from(event.target.files);
     fileArr.forEach(file => {
@@ -168,14 +172,34 @@ function commentForm(itemCommentDto) {
 }
 
 window.addEventListener('DOMContentLoaded', function () {
+    /*indexPage 조회*/
     if (document.getElementById("find_target")) {
         condition(0);
     }
 
+    /*댓글 조회*/
     if (document.getElementById("itemId")) {
         commentFind(document.getElementById("itemId").value);
     }
+
+    /*image-slide css*/
+    if (document.getElementById("imageListSlide")) {
+        document.getElementsByClassName("dot")[0].classList.add("active");
+    }
 });
+
+/*item image-slide*/
+function slide(ob) {
+    let imageListSlide = document.getElementById("imageListSlide");
+    let nowDot = ob.getAttribute("name");
+    imageListSlide.style.transform = "translate(" + (1 - nowDot) * 522 + "px, 0px)";
+    for (let dot of document.getElementsByClassName("dot")) {
+        dot.className = "dot";
+    }
+    ob.classList.add("active");
+}
+
+
 
 
 

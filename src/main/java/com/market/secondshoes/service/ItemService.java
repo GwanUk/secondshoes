@@ -32,6 +32,11 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
+    @Transactional
+    public void viewCountPlus(Long id) {
+        itemRepository.findItemById(id).viewCountPlus();
+    }
+
     public Page<Item> findAll(ItemConditionDto itemConditionDto, Pageable pageable) {
         return itemRepository.findAll(itemConditionDto, pageable);
     }
@@ -44,4 +49,6 @@ public class ItemService {
     public Item findItemById(Long id) {
         return itemRepository.findItemById(id);
     }
+
+
 }

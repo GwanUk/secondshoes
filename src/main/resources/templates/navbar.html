@@ -6,31 +6,19 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link" href="/item/addForm">판매등록</a></li>
-                <li class="nav-item"><a class="nav-link" href="/member/logout" th:unless="${memberId} == null">로그아웃</a></li>
-                <li class="nav-item dropdown" th:unless="${memberId} == null">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/member/edit/{id}(id=${memberId})}">회원 정보 관리</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li><a class="dropdown-item" href="/item/findSellItems?page=0&size=10">판매 목록</a></li>
-                        <li><a class="dropdown-item" href="/wish/form">관심 목록</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/item/addForm" th:unless="${memberId} == null">상품등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/item/findSellItems?page=0&size=10" th:unless="${memberId} == null">상품목록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/wish/form" th:unless="${memberId} == null">관심목록</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/member/edit/{id}(id=${memberId})}" th:unless="${memberId} == null">회원정보</a></li>
             </ul>
-            <button class="btn btn-outline-dark" type="button" onclick="location.href='/wish/form'" th:unless="${memberId} == null">
-                <i class="bi-cart-fill me-1"></i>
-                찜
-                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+            <button class="btn btn-outline-dark" type="button" onclick="location.href='/member/logout'" th:unless="${memberId} == null">
+                <i class="bi bi-person-x-fill me-1"></i> 로그아웃
             </button>
             <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" onclick="location.href='/member/login'" th:if="${memberId} == null">
-                로그인
+                <i class="bi bi-person-check-fill me-1"></i> 로그인
             </button>
             <button class="btn btn-outline-dark ms-1" type="button" data-bs-toggle="modal" data-bs-target="#signUpForm" onclick="location.href='/member/signUp'" th:if="${memberId} == null">
-                회원가입
+                <i class="bi bi-person-circle me-1"></i> 회원가입
             </button>
         </div>
     </div>
