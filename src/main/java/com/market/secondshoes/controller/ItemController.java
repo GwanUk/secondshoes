@@ -16,6 +16,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,10 +71,10 @@ public class ItemController {
         return "redirect:/item/find/" + item.getId();
     }
 
-    @PostMapping("/findAll/{size}/{number}")
+    @PostMapping("/findAll/{size}/{number}/{order}")
     @ResponseBody
-    public Page<ItemThumbDto> findAllItem(@RequestBody(required = false) ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @Login Long loginId) {
-        Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size));
+    public Page<ItemThumbDto> findAllItem(@RequestBody(required = false) ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @PathVariable String order, @Login Long loginId) {
+        Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size, Sort.by(Sort.Direction.DESC, order)));
         return page.map(item -> {
             ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
             if (loginId != null && itemWishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
@@ -107,6 +108,7 @@ public class ItemController {
     @GetMapping("/updateForm/{id}")
     public String itemUpdate(@PathVariable Long id, Model model) {
         model.addAttribute("itemAddDto", ItemAddDto.createItemAddDto(itemService.findItemById(id)));
+        model.addAttribute("images", itemService.findItemById(id).getUploadImages());
         return "item/itemAddForm";
     }
 
@@ -114,10 +116,5 @@ public class ItemController {
     public String itemRemove(@PathVariable Long id) {
         itemService.itemDelete(id);
         return "redirect:/";
-    }
-
-    @GetMapping("/sellList")
-    public String sellList(@Login Long loginId) {
-        return "/item/itemSellList";
     }
 }

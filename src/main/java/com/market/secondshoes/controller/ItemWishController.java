@@ -1,8 +1,10 @@
 package com.market.secondshoes.controller;
 
 import com.market.secondshoes.argumentresolver.Login;
+import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.domain.item.ItemWish;
 import com.market.secondshoes.dto.item.ItemDetailDto;
+import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.ItemWishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

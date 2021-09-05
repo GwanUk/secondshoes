@@ -4,17 +4,22 @@ import com.market.secondshoes.domain.item.*;
 import com.market.secondshoes.domain.member.QMember;
 import com.market.secondshoes.dto.item.ItemConditionDto;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.market.secondshoes.domain.item.QItem.item;
 
@@ -37,7 +42,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
             });
         }
 
-        List<Item> content = queryFactory
+        JPAQuery<Item> query = queryFactory
                 .selectFrom(item)
                 .join(item.member, QMember.member).fetchJoin()
                 .where(builder,
@@ -48,8 +53,13 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                         brandsIn(condition.getBrands()),
                         categories(condition.getCategories()))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+                .limit(pageable.getPageSize());
+
+                for (Sort.Order order : pageable.getSort()) {
+                    query.orderBy(order(order));
+                }
+
+        List<Item> content = query.fetch();
 
         JPAQuery<Item> countQuery = queryFactory
                 .selectFrom(item)
@@ -86,6 +96,12 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
 
     private BooleanExpression categories(List<Category> categories) {
         return !categories.isEmpty() ? item.category.in(categories) : null;
+    }
+
+    private OrderSpecifier order(Sort.Order order) {
+        PathBuilder pathBuilder = new PathBuilder(item.getType(), item.getMetadata());
+        OrderSpecifier orderSpecifier = new OrderSpecifier(order.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(order.getProperty()));
+        return orderSpecifier;
     }
 
 

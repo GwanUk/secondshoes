@@ -43,13 +43,13 @@ function condition(page) {
         categories: categories_arr,
     };
 
-    items(JSON.stringify(data), document.getElementById("dataPerPage").value, page);
+    items(JSON.stringify(data), document.getElementById("dataPerPage").value, page, document.getElementById("dataOrder").value);
 }
 
 /*findAll*/
-function items(data, size, number) {
+function items(data, size, number, order) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/item/findAll/' + size + '/' + number);
+    xhr.open('post', '/item/findAll/' + size + '/' + number + '/' + order);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onload = () => {
         let page = JSON.parse(xhr.responseText);
@@ -114,18 +114,43 @@ function paging(page) {
     }
 }
 
-/*이미지 미리보기*/
-function imagePreview(event) {
-    let fileArr = Array.from(event.target.files);
-    fileArr.forEach(file => {
-        let fileReader = new FileReader();
-        let imgTag = document.createElement("img");
-        document.getElementById("image_container").appendChild(imgTag);
+/*item image-slide*/
+function slide(ob) {
+    let imageListSlide = document.getElementById("imageListSlide");
+    let nowDot = ob.getAttribute("name");
+    imageListSlide.style.transform = "translate(" + (1 - nowDot) * 522 + "px, 0px)";
+    for (let dot of document.getElementsByClassName("dot")) {
+        dot.className = "dot";
+    }
+    ob.classList.add("active");
+}
 
-        fileReader.onload = e => {
-            imgTag.setAttribute("src", e.target.result);
+/*image preview*/
+function imagePreview(obj) {
+    let imageListSlide = document.getElementById("imageListSlide");
+    let controlPanel = document.getElementById("controlPanel");
+    imageListSlide.innerHTML = "";
+    controlPanel.innerHTML = "";
+
+    Array.from(obj.files)
+        .forEach((file, i) => {
+            let fileReader = new FileReader();
+            let imgTag = document.createElement("img");
+            imgTag.classList.add("image");
+            imageListSlide.appendChild(imgTag);
+
+            let spanTag = document.createElement("span");
+            spanTag.setAttribute("name", (i + 1));
+            spanTag.classList.add("dot")
+            spanTag.onclick = (event) => slide(event.target);
+            controlPanel.appendChild(spanTag);
+            if (i == 0) {
+                slide(spanTag);
+            }
+
+            fileReader.onload = e => {
+                imgTag.setAttribute("src", e.target.result);
         };
-
         fileReader.readAsDataURL(file);
     });
 }
@@ -183,21 +208,12 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     /*image-slide css*/
-    if (document.getElementById("imageListSlide")) {
+    if (document.getElementsByClassName("dot").length > 0) {
         document.getElementsByClassName("dot")[0].classList.add("active");
     }
 });
 
-/*item image-slide*/
-function slide(ob) {
-    let imageListSlide = document.getElementById("imageListSlide");
-    let nowDot = ob.getAttribute("name");
-    imageListSlide.style.transform = "translate(" + (1 - nowDot) * 522 + "px, 0px)";
-    for (let dot of document.getElementsByClassName("dot")) {
-        dot.className = "dot";
-    }
-    ob.classList.add("active");
-}
+
 
 
 

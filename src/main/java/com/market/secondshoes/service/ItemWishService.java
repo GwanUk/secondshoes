@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 public class ItemWishService {
 
     private final ItemWishRepository itemWishRepository;
+    private final ItemService itemService;
 
     @Transactional
     public ItemWish wishSave(Long itemId, Long memberId) {
+        itemService.wishCountPlus(itemId);
         return itemWishRepository.save(ItemWish.createWish(itemId, memberId));
     }
 

@@ -54,10 +54,12 @@ public class Item extends BaseTimeEntity {
     private List<ItemComment> itemComments;
 
     private Long viewCount;
+    private Long wishCount;
 
     public static Item createItem() {
         Item item = new Item();
         item.viewCount = 0L;
+        item.wishCount = 0L;
         return item;
     }
 
@@ -102,4 +104,7 @@ public class Item extends BaseTimeEntity {
     }
 
 
+    public void wishCountPlus() {
+        wishCount++;
+    }
 }

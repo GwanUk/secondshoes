@@ -37,6 +37,11 @@ public class ItemService {
         itemRepository.findItemById(id).viewCountPlus();
     }
 
+    @Transactional
+    public void wishCountPlus(Long id) {
+        itemRepository.findItemById(id).wishCountPlus();
+    }
+
     public Page<Item> findAll(ItemConditionDto itemConditionDto, Pageable pageable) {
         return itemRepository.findAll(itemConditionDto, pageable);
     }

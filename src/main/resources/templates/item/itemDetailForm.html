@@ -6,7 +6,7 @@
         <div class="row gx-4 gx-lg-5 align-items-center px-5 mx-5">
             <div class="album px-0">
                 <div id="imageListSlide" class="images">
-                    <img class="image_slide"
+                    <img class="image"
                          th:each="uploadImage : *{uploadImages}"
                          th:src="@{/item/image/} + ${uploadImage.storeImageName}"
                          alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"

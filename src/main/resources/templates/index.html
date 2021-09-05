@@ -33,13 +33,13 @@
             <!--page-->
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
-                    <select id="dataOrder">
-                        <option value="8">최근 등록 순</option>
-                        <option value="16">조회 많은 순</option>
-                        <option value="32">찜 많은 순</option>
+                    <select id="dataOrder" onchange="condition(0)">
+                        <option value="createdDate">최근 등록 순</option>
+                        <option value="viewCount">조회 많은 순</option>
+                        <option value="wishCount">찜 많은 순</option>
                     </select>
                 </div>
-                <div class="p-2 bd-highlight">
+                <div class="p-2 bd-highlight" onchange="condition(0)">
                     <select id="dataPerPage">
                         <option value="8">8개</option>
                         <option value="16">16개</option>
