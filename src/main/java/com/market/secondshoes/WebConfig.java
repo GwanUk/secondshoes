@@ -34,11 +34,11 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new MemberHaveToLoginAJAXInterceptor())
                 .order(3)
-                .addPathPatterns("/wish/ajax/**");
+                .addPathPatterns("/wish/ajax/**", "/comment/ajax/**");
 
         registry.addInterceptor(new MemberHaveToLoginInterceptor())
                 .order(4)
-                .addPathPatterns("/member/edit/**", "/item/addForm", "/item/save", "/item/update/**", "/wish/**", "/comment");
+                .addPathPatterns("/member/edit/**", "/item/addForm", "/item/save", "/item/update/**", "/wish/**");
 
 
     }

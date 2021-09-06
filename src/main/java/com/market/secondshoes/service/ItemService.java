@@ -2,7 +2,6 @@ package com.market.secondshoes.service;
 
 import com.market.secondshoes.domain.item.Item;
 import com.market.secondshoes.dto.item.ItemConditionDto;
-
 import com.market.secondshoes.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,8 +32,8 @@ public class ItemService {
     }
 
     @Transactional
-    public void viewCountPlus(Long id) {
-        itemRepository.findItemById(id).viewCountPlus();
+    public void viewCountPlus(Item item) {
+        item.viewCountPlus();
     }
 
     @Transactional

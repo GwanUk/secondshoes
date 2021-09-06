@@ -110,9 +110,9 @@
                                 <div class="album px-0">
                                     <div id="imageListSlide" class="images">
                                         <img th:if="${images} != null"
-                                             class="image"
                                              th:each="image : ${images}"
                                              th:src="@{/item/image/} + ${image.storeImageName}"
+                                             class="image"
                                              alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"/>
                                     </div>
                                     <div id="controlPanel" class="control_panel">

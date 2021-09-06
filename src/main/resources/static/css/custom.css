@@ -37,9 +37,15 @@
 .active, .dot:hover {
     background-color: #717171;
 }
-/*==items======================================================================================*/
-.hover-custom:hover {
+/*==hover======================================================================================*/
+.hover-custom-border:hover {
     border: #1e2125 2px solid;
+}
+.hover-custom-bg:hover {
+    background-color: #d3d3d4;
+}
+.hover-custom-bgg:hover {
+    background-color: #0f5132;
 }
 
 /*==searchbar======================================================================================*/

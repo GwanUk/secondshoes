@@ -32,9 +32,9 @@ public class ItemComment extends BaseTimeEntity {
 
     public static ItemComment createItemComment(ItemCommentAddDto itemCommentAddDto) {
         ItemComment itemComment = new ItemComment();
+        itemComment.comment= itemCommentAddDto.getComment();
         itemComment.item = Item.createItem(itemCommentAddDto.getItemId());
         itemComment.member = Member.createMember(itemCommentAddDto.getMemberId());
-        itemComment.comment= itemCommentAddDto.getComment();
         return itemComment;
     }
 }

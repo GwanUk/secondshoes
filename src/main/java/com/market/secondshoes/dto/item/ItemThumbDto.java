@@ -22,17 +22,17 @@ public class ItemThumbDto {
     private UploadImage uploadImage;
     private MemberInfoDto memberInfoDto;
     private String createdDate;
-    private boolean wished = false;
+    private boolean itemWished = false;
     private Long viewCount;
 
-    public static ItemThumbDto createItemThumbDto(Long id, String title, Integer price, UploadImage uploadImage, Member member, LocalDateTime localDateTime, Long viewCount) {
+    public static ItemThumbDto createItemThumbDto(Long id, String title, Integer price, UploadImage uploadImage, Member member, LocalDateTime createdDate, Long viewCount) {
         ItemThumbDto itemThumbDto = new ItemThumbDto();
         itemThumbDto.id = id;
         itemThumbDto.title = title;
         itemThumbDto.price = price;
         itemThumbDto.uploadImage = uploadImage;
         itemThumbDto.memberInfoDto = MemberInfoDto.createMemberInfoDto(member);
-        itemThumbDto.createdDate = localDateTime.format(DateTimeFormatter.ofPattern("yy-MM-dd H:mm"));
+        itemThumbDto.createdDate = createdDate.format(DateTimeFormatter.ofPattern("yy-MM-dd H:mm"));
         itemThumbDto.viewCount = viewCount;
         return itemThumbDto;
     }
@@ -43,5 +43,9 @@ public class ItemThumbDto {
             uploadImage = item.getUploadImages().get(0);
         }
         return createItemThumbDto(item.getId(), item.getTitle(), item.getPrice(), uploadImage, item.getMember(), item.getCreatedDate(), item.getViewCount());
+    }
+
+    public void wished() {
+        itemWished = true;
     }
 }

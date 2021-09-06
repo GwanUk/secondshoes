@@ -27,6 +27,7 @@ public class ItemDetailDto {
     private String createdDate;
     private String lastModifiedDate;
     private Long viewCount;
+    private boolean itemWished;
 
     protected ItemDetailDto() {
     }
@@ -51,5 +52,9 @@ public class ItemDetailDto {
 
     public static ItemDetailDto createItemDetailDto(Item item) {
         return createItemDetailDto(item.getId(), item.getTitle(), item.getGender(), item.getSize(), item.getBrand(), item.getCategory(), item.getPrice(), item.getExplain(), item.getUploadImages(), item.getMember(), item.getCreatedDate(), item.getLastModifiedDate(), item.getViewCount());
+    }
+
+    public void wished() {
+        itemWished = true;
     }
 }

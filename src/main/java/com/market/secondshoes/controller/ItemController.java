@@ -11,6 +11,7 @@ import com.market.secondshoes.service.ItemService;
 import com.market.secondshoes.service.ItemWishService;
 import com.market.secondshoes.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/item")
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -78,7 +80,7 @@ public class ItemController {
         return page.map(item -> {
             ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
             if (loginId != null && itemWishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
-                itemThumbDto.setWished(true);
+                itemThumbDto.wished();
             }
             return itemThumbDto;
         });
@@ -92,10 +94,14 @@ public class ItemController {
     }
 
     @GetMapping("/find/{id}")
-    public String itemFindOne(@PathVariable Long id, Model model) {
-        itemService.viewCountPlus(id);
-        model.addAttribute("itemDetailDto", ItemDetailDto.createItemDetailDto(itemService.findItemById(id)));
-        model.addAttribute("itemCommentAddDto", ItemCommentAddDto.createItemCommentAddDto(id));
+    public String itemFindOne(@PathVariable Long id, Model model, @Login Long loginId) {
+        Item item = itemService.findItemById(id);
+        itemService.viewCountPlus(item);
+        ItemDetailDto itemDetailDto = ItemDetailDto.createItemDetailDto(item);
+        if (loginId != null && itemWishService.findWishByItemIdAndMemberId(id, loginId).isPresent()) {
+            itemDetailDto.wished();
+        }
+        model.addAttribute("itemDetailDto", itemDetailDto);
         return "item/itemDetailForm";
     }
 
@@ -107,8 +113,9 @@ public class ItemController {
 
     @GetMapping("/updateForm/{id}")
     public String itemUpdate(@PathVariable Long id, Model model) {
-        model.addAttribute("itemAddDto", ItemAddDto.createItemAddDto(itemService.findItemById(id)));
-        model.addAttribute("images", itemService.findItemById(id).getUploadImages());
+        Item item = itemService.findItemById(id);
+        model.addAttribute("itemAddDto", ItemAddDto.createItemAddDto(item));
+        model.addAttribute("images", item.getUploadImages());
         return "item/itemAddForm";
     }
 

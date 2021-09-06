@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link" href="/item/addForm" th:unless="${memberId} == null">상품등록</a></li>
-                <li class="nav-item"><a class="nav-link" href="/item/findSellItems?page=0&size=10" th:unless="${memberId} == null">상품목록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/item/findSellItems?page=0&size=10&sort=createdDate,desc" th:unless="${memberId} == null">상품목록</a></li>
                 <li class="nav-item"><a class="nav-link" href="/wish/form" th:unless="${memberId} == null">관심목록</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/member/edit/{id}(id=${memberId})}" th:unless="${memberId} == null">회원정보</a></li>
             </ul>

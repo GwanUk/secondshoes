@@ -23,4 +23,14 @@ public class ItemCommentService {
     public ItemComment itemCommentSave(ItemComment itemComment) {
         return itemCommentRepository.save(itemComment);
     }
+
+    @Transactional
+    public void remove(Long id) {
+        itemCommentRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void save(ItemComment itemComment) {
+        itemCommentRepository.save(itemComment);
+    }
 }

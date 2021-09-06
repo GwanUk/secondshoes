@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -15,20 +16,18 @@ public class ItemSellListDto {
     private Long id;
     private String title;
     private List<UploadImage> uploadImages;
-    private Integer wishCount;
-    private Integer commentCount;
+    private Long wishCount;
     private Long viewCount;
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     public static ItemSellListDto createItemSellListDto(Item item) {
         ItemSellListDto itemSellListDto = new ItemSellListDto();
         itemSellListDto.id = item.getId();
         itemSellListDto.title = item.getTitle();
         itemSellListDto.uploadImages = item.getUploadImages();
-        itemSellListDto.wishCount = item.getItemWishes().size();
-        itemSellListDto.commentCount = item.getItemComments().size();
+        itemSellListDto.wishCount = item.getWishCount();
         itemSellListDto.viewCount = item.getViewCount();
-        itemSellListDto.createdDate = item.getCreatedDate();
+        itemSellListDto.createdDate = item.getCreatedDate().format(DateTimeFormatter.ofPattern("yy-MM-dd H:mm"));
         return itemSellListDto;
     }
 }

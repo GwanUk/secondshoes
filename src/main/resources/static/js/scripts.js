@@ -62,7 +62,7 @@ function items(data, size, number, order) {
                 "        <!-- Sale badge-->\n" +
                 "        <div class=\"badge bg-dark text-white position-absolute\" style=\"top: 0.5rem; right: 0.5rem\">" + itemThumbDto.createdDate + "<i class=\"bi bi-eye mx-1\"></i>" + itemThumbDto.viewCount + "</div>\n" +
                 "        <!-- Product image-->\n" +
-                "        <img class=\"card-img-top img-thumbnail hover-custom w-100 h-100\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
+                "        <img class=\"card-img-top img-thumbnail hover-custom-border w-100 h-100\" src=\"" + (itemThumbDto.uploadImage ? "/item/image/" + itemThumbDto.uploadImage.storeImageName : "https://dummyimage.com/225x225/dee2e6/6c757d.jpg" ) + "\"  alt=\"...\"  onclick=\"location.href='/item/find/" + itemThumbDto.id + "'\"/>\n" +
                 "        <!-- Product details-->\n" +
                 "        <div class=\"card-body p-4\">\n" +
                 "            <div class=\"text-center\">\n" +
@@ -76,7 +76,7 @@ function items(data, size, number, order) {
                 "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\n" +
                 "            <div class=\"text-center\">" +
                 "                <a class=\"btn btn-outline-primary mt-auto\" href=\"/member/find/"+itemThumbDto.memberInfoDto.id+"\">" + itemThumbDto.memberInfoDto.name + "</a>" +
-                "                <a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(event," + itemThumbDto.id + ")\"><i class=\"bi bi-heart \"></i></a>" +
+                "                <a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(this," + itemThumbDto.id + ")\"><i class=\"bi bi-heart mx-1\"></i></a>" +
                 "            </div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
@@ -156,16 +156,16 @@ function imagePreview(obj) {
 }
 
 /*wish*/
-function wish(event, itemId) {
+function wish(obj, itemId) {
     let xhr = new XMLHttpRequest();
     xhr.open("get", "/wish/ajax/" + itemId);
     xhr.onload = () => {
         if (xhr.responseText == "save") {
-            event.target.classList.remove("btn-outline-danger");
-            event.target.classList.add("btn-danger");
+            obj.classList.remove("btn-outline-danger");
+            obj.classList.add("btn-danger");
         } else if (xhr.responseText == "delete") {
-            event.target.classList.remove("btn-danger");
-            event.target.classList.add("btn-outline-danger");
+            obj.classList.remove("btn-danger");
+            obj.classList.add("btn-outline-danger");
         } else if (xhr.responseText == "HaveToLogin") {
             location.href = "/member/login";
         }
@@ -174,27 +174,87 @@ function wish(event, itemId) {
 }
 
 /*comment*/
+function commentForm(itemCommentDto) {
+    document.getElementById("comment_target").innerHTML += "<div class=\"d-flex flex-row p-3\">\n" +
+        "    <div class=\"w-100\">\n" +
+        "        <div class=\"d-flex justify-content-between align-items-center\">\n" +
+        "            <div class=\"d-flex flex-row align-items-center\"> " +
+        "                <a class= \"c-badge hover-custom-bgg link-light text-decoration-none\" href=\"/member/find/"+itemCommentDto.memberId+"\">"+ itemCommentDto.name +"</a>" +
+                         (document.getElementById("memberId").value == itemCommentDto.memberId ? "<small class=\"btn btn-outline-dark py-0 mx-1 px-1\" type=\"button\" onclick=\"commentEdit("+itemCommentDto.id+")\"><i class=\"bi bi-pencil-square\"></i></small><small class=\"btn btn-outline-danger py-0  px-1\" type=\"button\" onclick=\"commentRemove("+itemCommentDto.id+")\"><i class=\"bi bi-trash\"></i></small>" : "" )+
+        "            </div> <small>"+ itemCommentDto.createdDate +"</small>\n" +
+        "        </div>\n" +
+        "        <input class=\"text-justify comment-text mb-0 bg-white border-0 w-100\" type=\"text\" disabled=\"disabled\" id=\"commentInput\" name=\"commentInput\" value=\"" + itemCommentDto.comment + "\">" +
+        "    </div>\n" +
+        "</div>";
+}
+
+function comment(event) {
+    if (event.keyCode == 13) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("post", "/comment/ajax/save");
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onload = () => {
+            if (xhr.responseText == "HaveToLogin") {
+                location.href = "/member/login";
+            }
+            document.getElementById("comment_target").innerHTML = "";
+            event.target.value = "";
+            JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+                commentForm(itemCommentDto)
+            });
+        };
+        let data = {
+            comment : event.target.value,
+            itemId : document.getElementById("itemId").value,
+            memberId : document.getElementById("memberId").value
+        };
+        xhr.send(JSON.stringify(data));
+    }
+
+}
+
 function commentFind(itemId) {
     let xhr = new XMLHttpRequest();
     xhr.open("get", "/comment/" + itemId);
     xhr.onload = () => {
-        JSON.parse(xhr.responseText).forEach((itemCommentDto) => {  commentForm(itemCommentDto)  });
+        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+            commentForm(itemCommentDto)
+        });
     };
     xhr.send();
 }
 
-function commentForm(itemCommentDto) {
-    document.getElementById("comment_target").innerHTML += "" +
-        "<div class=\"d-flex flex-row p-3\">\n" +
-        "    <div class=\"w-100\">\n" +
-        "        <div class=\"d-flex justify-content-between align-items-center\">\n" +
-        "            <div class=\"d-flex flex-row align-items-center\"> <span class=\"mr-2\">"+ itemCommentDto.name +"</span> <small class=\"c-badge\">Top Comment</small> </div> <small>"+ itemCommentDto.createdDate +"</small>\n" +
-        "        </div>\n" +
-        "        <p class=\"text-justify comment-text mb-0\">"+ itemCommentDto.comment +"</p>\n" +
-        "        <div class=\"d-flex flex-row user-feed\"> <span class=\"itemWish\"><i class=\"fa fa-heartbeat mr-2\"></i>14</span> <span class=\"ml-3\"><i class=\"fa fa-comments-o mr-2\"></i>Reply</span> </div>\n" +
-        "    </div>\n" +
-        "</div>";
+function commentEdit(id) {
+    console.log("edit", id);
+    document.getElementById("commentInput").removeAttribute("disabled");
+
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "/comment/ajax/edit/" + id + "/" + document.getElementById("itemId").value);
+    xhr.onload = () => {
+        document.getElementById("comment_target").innerHTML = "";
+        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+            commentForm(itemCommentDto)
+        });
+    };
+    xhr.send();
 }
+
+function commentRemove(id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "/comment/ajax/remove/" + id + "/" + document.getElementById("itemId").value);
+    xhr.onload = () => {
+        if (xhr.responseText == "HaveToLogin") {
+            location.href = "/member/login";
+        }
+        document.getElementById("comment_target").innerHTML = "";
+        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+            commentForm(itemCommentDto)
+        });
+    };
+    xhr.send();
+}
+
 
 window.addEventListener('DOMContentLoaded', function () {
     /*indexPage 조회*/

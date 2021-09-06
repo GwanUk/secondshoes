@@ -24,15 +24,28 @@ public class ItemCommentController {
     @GetMapping("/{itemId}")
     @ResponseBody
     public List<ItemCommentDto> commentFind(@PathVariable Long itemId) {
-        log.info("@@@@@ {}", itemId);
         return itemCommentService.findItemCommentByItemId(itemId).stream().map(ItemCommentDto::createItemCommentDto).collect(Collectors.toList());
     }
 
-    @PostMapping
-    public String commentSave(@ModelAttribute ItemCommentAddDto itemCommentAddDto, RedirectAttributes redirectAttributes) {
-        log.info("@@@@@ {}", itemCommentAddDto);
-        itemCommentService.itemCommentSave(ItemComment.createItemComment(itemCommentAddDto));
-        redirectAttributes.addAttribute("itemId", itemCommentAddDto.getItemId());
-        return "redirect:/item/find/{itemId}";
+    @GetMapping("/ajax/edit/{id}/{itemId}")
+    public String commentEdit(@PathVariable Long id, @PathVariable Long itemId, RedirectAttributes redirectAttributes) {
+        itemCommentService.remove(id);
+        redirectAttributes.addAttribute("itemId", itemId);
+        return "redirect:/comment/{itemId}";
+    }
+
+    @GetMapping("/ajax/remove/{id}/{itemId}")
+    public String commentRemove(@PathVariable Long id, @PathVariable Long itemId, RedirectAttributes redirectAttributes) {
+        itemCommentService.remove(id);
+        redirectAttributes.addAttribute("itemId", itemId);
+        return "redirect:/comment/{itemId}";
+    }
+
+    @PostMapping("/ajax/save")
+    @ResponseBody
+    public List<ItemCommentDto> commentSave(@RequestBody ItemCommentAddDto itemCommentAddDto) {
+        itemCommentService.save(ItemComment.createItemComment(itemCommentAddDto));
+        return commentFind(itemCommentAddDto.getItemId());
     }
 }
+

@@ -8,12 +8,12 @@
         <th>Image</th>
         <th>Title</th>
         <th>wishes</th>
-        <th>comments</th>
+        <th>Views</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="itemSellListDto : ${itemSellListDtoPage}">
+      <tr th:each="itemSellListDto : ${itemSellListDtoPage}" th:onclick="|location.href='@{/item/find/{id}(id = ${itemSellListDto.id})}'|" class="hover-custom-bg">
         <td>
           <div class="d-flex align-items-center">
             <img th:each="image : ${itemSellListDto.uploadImages}" th:src="@{/item/image/} + ${image.storeImageName}" alt="" style="width: 45px; height: 45px" class="rounded-circle"/>
@@ -27,7 +27,7 @@
           <p class="fw-bold mb-1" th:text="${itemSellListDto.wishCount}">Software engineer</p>
         </td>
         <td>
-          <p class="fw-bold mb-1" th:text="${itemSellListDto.commentCount}">Software engineer</p>
+          <p class="fw-bold mb-1" th:text="${itemSellListDto.viewCount}">Software engineer</p>
         </td>
         <td>
           <button type="button" class="btn btn-link btn-sm btn-rounded" th:onclick="|location.href = '@{/item/updateForm/{id}(id=${itemSellListDto.id})}'|">
@@ -37,72 +37,6 @@
         </td>
       </tr>
 
-      <tr>
-        <td>
-          <div class="d-flex align-items-center">
-            <img
-                    src="https://mdbootstrap.com/img/new/avatars/6.jpg"
-                    class="rounded-circle"
-                    alt=""
-                    style="width: 45px; height: 45px"
-            />
-            <div class="ms-3">
-              <p class="fw-bold mb-1">Alex Ray</p>
-              <p class="text-muted mb-0">alex.ray@gmail.com</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <p class="fw-normal mb-1">Consultant</p>
-          <p class="text-muted mb-0">Finance</p>
-        </td>
-        <td>
-          <span class="badge badge-primary rounded-pill">Onboarding</span>
-        </td>
-        <td>Junior</td>
-        <td>
-          <button
-                  type="button"
-                  class="btn btn-link btn-rounded btn-sm fw-bold"
-                  data-mdb-ripple-color="dark"
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="d-flex align-items-center">
-            <img
-                    src="https://mdbootstrap.com/img/new/avatars/7.jpg"
-                    class="rounded-circle"
-                    alt=""
-                    style="width: 45px; height: 45px"
-            />
-            <div class="ms-3">
-              <p class="fw-bold mb-1">Kate Hunington</p>
-              <p class="text-muted mb-0">kate.hunington@gmail.com</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <p class="fw-normal mb-1">Designer</p>
-          <p class="text-muted mb-0">UI/UX</p>
-        </td>
-        <td>
-          <span class="badge badge-warning rounded-pill">Awaiting</span>
-        </td>
-        <td>Senior</td>
-        <td>
-          <button
-                  type="button"
-                  class="btn btn-link btn-rounded btn-sm fw-bold"
-                  data-mdb-ripple-color="dark"
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
       </tbody>
     </table>
   </div>
