@@ -46,10 +46,10 @@ function condition(page) {
     items(JSON.stringify(data), document.getElementById("dataPerPage").value, page, document.getElementById("dataOrder").value);
 }
 
-/*findAll*/
+/*itemsForm*/
 function items(data, size, number, order) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/item/findAll/' + size + '/' + number + '/' + order);
+    xhr.open('post', '/item/findAll?size=' + size + '&page=' + number + '&sort=' + order +',desc');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onload = () => {
         let page = JSON.parse(xhr.responseText);
@@ -76,7 +76,7 @@ function items(data, size, number, order) {
                 "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\n" +
                 "            <div class=\"text-center\">" +
                 "                <a class=\"btn btn-outline-primary mt-auto\" href=\"/member/find/"+itemThumbDto.memberInfoDto.id+"\">" + itemThumbDto.memberInfoDto.name + "</a>" +
-                "                <a class=\"" + (itemThumbDto.wished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(this," + itemThumbDto.id + ")\"><i class=\"bi bi-heart mx-1\"></i></a>" +
+                "                <a class=\"" + (itemThumbDto.itemWished ? "btn btn-danger mt-auto" : "btn btn-outline-danger mt-auto") + "\" href=\"javascript:void(0)\" onclick=\"wish(this," + itemThumbDto.id + ")\"><i class=\"bi bi-heart mx-1\"></i></a>" +
                 "            </div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
@@ -87,7 +87,7 @@ function items(data, size, number, order) {
     xhr.send(data);
 }
 
-/*paging*/
+/*pagination*/
 function paging(page) {
     let page_ul = document.getElementById("page_ul");
     page_ul.innerHTML = "";
@@ -114,6 +114,19 @@ function paging(page) {
     }
 }
 
+/*Slice*/
+function nextSellListSlice(number) {
+    location.href = "/item/findSellItems?page="+ (number + 1) +"&size=8&sort=createdDate,desc";
+}
+function preSellListSlice(number) {
+    location.href = "/item/findSellItems?page="+ (number - 1) +"&size=8&sort=createdDate,desc";
+}
+function nextWishListSlice(number) {
+    location.href = "/wish/form?page="+ (number + 1) +"&size=4";
+}
+function preWishListSlice(number) {
+    location.href = "/wish/form?page="+ (number - 1) +"&size=4";
+}
 /*item image-slide*/
 function slide(ob) {
     let imageListSlide = document.getElementById("imageListSlide");
@@ -180,15 +193,26 @@ function commentForm(itemCommentDto) {
         "        <div class=\"d-flex justify-content-between align-items-center\">\n" +
         "            <div class=\"d-flex flex-row align-items-center\"> " +
         "                <a class= \"c-badge hover-custom-bgg link-light text-decoration-none\" href=\"/member/find/"+itemCommentDto.memberId+"\">"+ itemCommentDto.name +"</a>" +
-                         (document.getElementById("memberId").value == itemCommentDto.memberId ? "<small class=\"btn btn-outline-dark py-0 mx-1 px-1\" type=\"button\" onclick=\"commentEdit("+itemCommentDto.id+")\"><i class=\"bi bi-pencil-square\"></i></small><small class=\"btn btn-outline-danger py-0  px-1\" type=\"button\" onclick=\"commentRemove("+itemCommentDto.id+")\"><i class=\"bi bi-trash\"></i></small>" : "" )+
+                         (document.getElementById("memberId").value == itemCommentDto.memberId ? "<small class=\"btn btn-outline-dark py-0 mx-1 px-1\" type=\"button\" onclick=\"commentEditForm("+itemCommentDto.id+")\"><i class=\"bi bi-pencil-square\"></i></small><small class=\"btn btn-outline-danger py-0  px-1\" type=\"button\" onclick=\"commentRemove("+itemCommentDto.id+")\"><i class=\"bi bi-trash\"></i></small>" : "" )+
         "            </div> <small>"+ itemCommentDto.createdDate +"</small>\n" +
         "        </div>\n" +
-        "        <input class=\"text-justify comment-text mb-0 bg-white border-0 w-100\" type=\"text\" disabled=\"disabled\" id=\"commentInput\" name=\"commentInput\" value=\"" + itemCommentDto.comment + "\">" +
+        "        <input class=\"text-justify comment-text mb-0 bg-white border-0 w-100\" type=\"text\" disabled=\"disabled\" id=\"commentInput" + itemCommentDto.id + "\" name=\"" + itemCommentDto.id + "\" value=\"" + itemCommentDto.comment + "\" onkeypress=\"commentEdit(event)\">" +
         "    </div>\n" +
         "</div>";
 }
 
-function comment(event) {
+function commentFind(itemId) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "/comment/" + itemId);
+    xhr.onload = () => {
+        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+            commentForm(itemCommentDto)
+        });
+    };
+    xhr.send();
+}
+
+function commentSave(event) {
     if (event.keyCode == 13) {
         let xhr = new XMLHttpRequest();
         xhr.open("post", "/comment/ajax/save");
@@ -213,31 +237,35 @@ function comment(event) {
 
 }
 
-function commentFind(itemId) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("get", "/comment/" + itemId);
-    xhr.onload = () => {
-        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
-            commentForm(itemCommentDto)
-        });
-    };
-    xhr.send();
+function commentEdit(event) {
+    let id = event.target.getAttribute("name");
+
+    if (event.keyCode == 13) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("post", "/comment/ajax/edit/" + id);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onload = () => {
+            if (xhr.responseText == "HaveToLogin") {
+                location.href = "/member/login";
+            }
+            document.getElementById("comment_target").innerHTML = "";
+            JSON.parse(xhr.responseText).forEach(itemCommentDto => {
+                commentForm(itemCommentDto)
+            });
+        };
+        let data = {
+            comment : event.target.value,
+            itemId : document.getElementById("itemId").value,
+            memberId : document.getElementById("memberId").value
+        };
+        xhr.send(JSON.stringify(data));
+    }
 }
 
-function commentEdit(id) {
-    console.log("edit", id);
-    document.getElementById("commentInput").removeAttribute("disabled");
-
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("get", "/comment/ajax/edit/" + id + "/" + document.getElementById("itemId").value);
-    xhr.onload = () => {
-        document.getElementById("comment_target").innerHTML = "";
-        JSON.parse(xhr.responseText).forEach(itemCommentDto => {
-            commentForm(itemCommentDto)
-        });
-    };
-    xhr.send();
+function commentEditForm(id) {
+    let commentInput = document.getElementById("commentInput" + id);
+    commentInput.removeAttribute("disabled");
+    commentInput.focus();
 }
 
 function commentRemove(id) {

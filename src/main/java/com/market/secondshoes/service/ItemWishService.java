@@ -4,6 +4,8 @@ import com.market.secondshoes.domain.item.ItemWish;
 import com.market.secondshoes.dto.item.ItemThumbDto;
 import com.market.secondshoes.repository.ItemWishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,16 +27,8 @@ public class ItemWishService {
         return itemWishRepository.save(ItemWish.createWish(itemId, memberId));
     }
 
-    public List<ItemWish> findWishByItemId(Long itemId) {
-        return itemWishRepository.findWishByItemId(itemId);
-    }
-
-    public List<ItemWish> findWishByMemberId(Long memberId) {
-        return itemWishRepository.findWishByMemberId(memberId);
-    }
-
-    public List<ItemWish> findWishFetchByMemberId(Long itemId) {
-        return itemWishRepository.findWishFetchByMemberId(itemId);
+    public Slice<ItemWish> findWishFetchByMemberId(Long itemId, Pageable pageable) {
+        return itemWishRepository.findWishFetchByMemberId(itemId, pageable);
     }
 
     public Optional<ItemWish> findWishByItemIdAndMemberId(Long itemId, Long memberId) {
@@ -44,5 +38,10 @@ public class ItemWishService {
     @Transactional
     public void wishDelete(Long wishId) {
         itemWishRepository.deleteById(wishId);
+    }
+
+    @Transactional
+    public void remove(Long itemId, Long memberId) {
+        itemWishRepository.deleteByItemIdAndMemberId(itemId, memberId);
     }
 }

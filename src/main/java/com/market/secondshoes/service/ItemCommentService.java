@@ -33,4 +33,9 @@ public class ItemCommentService {
     public void save(ItemComment itemComment) {
         itemCommentRepository.save(itemComment);
     }
+
+    @Transactional
+    public void update(Long id, ItemComment itemComment) {
+        itemCommentRepository.findById(id).get().itemCommentChange(itemComment);
+    }
 }

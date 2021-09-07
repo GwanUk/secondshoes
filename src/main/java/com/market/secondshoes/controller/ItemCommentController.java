@@ -16,10 +16,23 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/comment")
 @RequiredArgsConstructor
-@Slf4j
 public class ItemCommentController {
 
     private final ItemCommentService itemCommentService;
+
+    @PostMapping("/ajax/save")
+    @ResponseBody
+    public List<ItemCommentDto> commentSave(@RequestBody ItemCommentAddDto itemCommentAddDto) {
+        itemCommentService.save(itemCommentAddDto.makeItemComment());
+        return commentFind(itemCommentAddDto.getItemId());
+    }
+
+    @PostMapping("/ajax/edit/{id}")
+    @ResponseBody
+    public List<ItemCommentDto> commentEdit(@RequestBody ItemCommentAddDto itemCommentAddDto, @PathVariable Long id) {
+        itemCommentService.update(id, itemCommentAddDto.makeItemComment());
+        return commentFind(itemCommentAddDto.getItemId());
+    }
 
     @GetMapping("/{itemId}")
     @ResponseBody
@@ -27,25 +40,11 @@ public class ItemCommentController {
         return itemCommentService.findItemCommentByItemId(itemId).stream().map(ItemCommentDto::createItemCommentDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/ajax/edit/{id}/{itemId}")
-    public String commentEdit(@PathVariable Long id, @PathVariable Long itemId, RedirectAttributes redirectAttributes) {
-        itemCommentService.remove(id);
-        redirectAttributes.addAttribute("itemId", itemId);
-        return "redirect:/comment/{itemId}";
-    }
-
     @GetMapping("/ajax/remove/{id}/{itemId}")
     public String commentRemove(@PathVariable Long id, @PathVariable Long itemId, RedirectAttributes redirectAttributes) {
         itemCommentService.remove(id);
         redirectAttributes.addAttribute("itemId", itemId);
         return "redirect:/comment/{itemId}";
-    }
-
-    @PostMapping("/ajax/save")
-    @ResponseBody
-    public List<ItemCommentDto> commentSave(@RequestBody ItemCommentAddDto itemCommentAddDto) {
-        itemCommentService.save(ItemComment.createItemComment(itemCommentAddDto));
-        return commentFind(itemCommentAddDto.getItemId());
     }
 }
 

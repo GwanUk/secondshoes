@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,10 +70,11 @@ public class ItemController {
         return "redirect:/item/find/" + item.getId();
     }
 
-    @PostMapping("/findAll/{size}/{number}/{order}")
+    @PostMapping("/findAll")
     @ResponseBody
-    public Page<ItemThumbDto> findAllItem(@RequestBody(required = false) ItemConditionDto itemConditionDto, @PathVariable Integer size, @PathVariable Integer number, @PathVariable String order, @Login Long loginId) {
-        Page<Item> page = itemService.findAll(itemConditionDto, PageRequest.of(number, size, Sort.by(Sort.Direction.DESC, order)));
+    public Page<ItemThumbDto> findAllItem(@RequestBody(required = false) ItemConditionDto itemConditionDto, Pageable pageable, @Login Long loginId) {
+        log.info("@@@[{}]",pageable.toString());
+        Page<Item> page = itemService.findAll(itemConditionDto, pageable);
         return page.map(item -> {
             ItemThumbDto itemThumbDto = ItemThumbDto.createItemThumbDto(item);
             if (loginId != null && itemWishService.findWishByItemIdAndMemberId(item.getId(), loginId).isPresent()) {
@@ -88,8 +86,8 @@ public class ItemController {
 
     @GetMapping("/findSellItems")
     public String findSellItems(Pageable pageable , @Login Long loginId, Model model) {
-        Page<ItemSellListDto> page = itemService.findSellItems(loginId, pageable).map(ItemSellListDto::createItemSellListDto);
-        model.addAttribute("itemSellListDtoPage", page);
+        Slice<ItemSellListDto> itemSellListDtoSlice = itemService.findSellItems(loginId, pageable).map(ItemSellListDto::createItemSellListDto);
+        model.addAttribute("itemSellListDtoSlice", itemSellListDtoSlice);
         return "/item/itemSellList";
     }
 

@@ -1,43 +1,64 @@
 <!DOCTYPE html>
 <html th:replace="~{layout :: copy (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
 <div class="container my-5" th:fragment="copy">
-    <div class="row gx-lg-5">
-      <div class="col-lg-8 mb-4 mb-md-0">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
 
-          <div class="row border-bottom mb-4" th:each="itemDetailDto : ${itemDetailDtoList}">
-            <div class="col-md-2 mb-4 mb-md-0">
-              <div class="bg-image ripple rounded-5 mb-4 overflow-hidden d-block" data-ripple-color="light">
-                <img th:src="(${itemDetailDto.uploadImages.size()} != 0) ? @{/item/image/} + ${itemDetailDto.uploadImages[0].storeImageName} : 'https://dummyimage.com/101x152/dee2e6/6c757d.jpg'" class="w-100" height="152px" alt=""/>
-                <a href="#!">
-                  <div class="hover-overlay">
-                    <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>
+            <div class="row border-bottom mb-4" th:each="itemDetailDto : ${itemDetailDtoSlice}">
+              <div class="col-md-9 mb-4 mb-md-0">
+                <div class="album px-0">
+                  <div id="imageListSlide" class="images">
+                    <img class="image"
+                         th:each="uploadImage : ${itemDetailDto.uploadImages}"
+                         th:src="@{/item/image/} + ${uploadImage.storeImageName}"
+                         alt="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                         th:field="${itemDetailDto.uploadImages}"/>
                   </div>
-                </a>
+                  <div class="control_panel">
+                    <span class="dot" th:each="uploadImage, uploadImageStat : ${itemDetailDto.uploadImages}" th:name="${uploadImageStat.count}" onclick="slide(this)"></span>
+                  </div>
+                </div>
+<!--                <div class="bg-image ripple rounded-5 mb-4 overflow-hidden d-block" data-ripple-color="light">-->
+<!--                  <img th:each="uploadImage : ${itemDetailDto.uploadImages}" th:src="@{/item/image/{storeImageName}(storeImageName = ${uploadImage.storeImageName})}" class="w-25" height="152px" alt=""/>-->
+<!--                  <a href="#!">-->
+<!--                    <div class="hover-overlay">-->
+<!--                      <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>-->
+<!--                    </div>-->
+<!--                  </a>-->
+<!--                </div>-->
               </div>
-            </div>
-            <div class="col-md-8 mb-4 mb-md-0">
-              <p class="fw-bold" th:text="${itemDetailDto.title}">Product very long title</p>
-              <p class="mb-1"><span class="text-muted me-2">Gender:</span><span th:text="${itemDetailDto.gender.getSex()}">8.5</span></p>
-              <p class="mb-1"><span class="text-muted me-2">Size:</span><span th:text="${itemDetailDto.size.getDimensions()}">8.5</span></p>
-              <p class="mb-1"><span class="text-muted me-2">Brand:</span><span th:text="${itemDetailDto.brand.getBrandName()}">8.5</span></p>
-              <p><span class="text-muted me-2">Category:</span><span th:text="${itemDetailDto.category.getCategoryType()}">Red</span></p>
-              <p class="mb-4">
-                <a href="" class="text-muted pe-3 border-end"><small><i class="fas fa-trash me-2"></i>Remove</small></a>
-                <a href="" class="text-muted ps-3"><small><i class="fas fa-heart me-2"></i>Move to wishlist</small></a>
-              </p>
-            </div>
-            <div class="col-md-2 mb-4 mb-md-0">
-              <div class="form-outline mb-4">
-                <input type="number" id="typeNumber" class="form-control" value="1" min="1"/>
-                <label class="form-label" for="typeNumber">Quantity</label>
+              <div class="col-md-3 mb-4 mb-md-0">
+                <p class="fw-bold fs-4" th:text="${itemDetailDto.title}">Product very long title</p>
+                <p class="mb-1"><span class="text-muted me-2">Price:</span><span th:text="|${itemDetailDto.price}원|">8.5</span></p>
+                <p class="mb-1"><span class="text-muted me-2">Gender:</span><span th:text="${itemDetailDto.gender.getSex()}">8.5</span></p>
+                <p class="mb-1"><span class="text-muted me-2">Size:</span><span th:text="${itemDetailDto.size.getDimensions()}">8.5</span></p>
+                <p class="mb-1"><span class="text-muted me-2">Brand:</span><span th:text="${itemDetailDto.brand.getBrandName()}">8.5</span></p>
+                <p><span class="text-muted me-2">Category:</span><span th:text="${itemDetailDto.category.getCategoryType()}">Red</span></p>
+                <p class="mb-4">
+                  <a th:href="@{/wish/remove/{itemId}(itemId = ${itemDetailDto.id})}" class="text-muted pe-3 border-end"><small><i class="fas fa-trash me-2"></i>Remove</small></a>
+                  <a th:href="@{/item/find/{id}(id = ${itemDetailDto.id})}" class="text-muted ps-3"><small><i class="fas fa-heart me-2"></i>Move to shoes</small></a>
+                </p>
               </div>
-              <h5 class="mb-2">
-                <s class="text-muted me-2 small align-middle">$119</s><span class="align-middle">$101</span>
-              </h5>
-              <p class="text-danger"><small>You save 15%</small></p>
-            </div>
-          </div>
 
+<!--              <div class="col-md-2 mb-4 mb-md-0">-->
+<!--                <div class="form-outline mb-4">-->
+<!--                  <a class="align-content-end" th:text="${itemDetailDto.memberInfoDto.name}"></a>-->
+<!--                </div>-->
+<!--                <h5 class="mb-2">-->
+<!--                  <i class="bi bi-cash-coin mx-2"></i><span class="align-middle" th:text="${itemDetailDto.price}">$101</span>-->
+<!--                </h5>-->
+<!--                <p class="text-secondary"><small th:text="${itemDetailDto.createdDate}">You save 15%</small></p>-->
+<!--              </div>-->
+<!--            </div>-->
+
+          </div>
+          <div class="d-flex justify-content-center">
+            <div style="font-size: 48px; cursor: pointer" th:if="${itemDetailDtoSlice.hasPrevious()}" th:onclick="|preWishListSlice(${itemDetailDtoSlice.getNumber()})|"><i class="bi bi-caret-left fa-10x"></i></div>
+            <div style="font-size: 48px; cursor: pointer" th:if="${itemDetailDtoSlice.hasNext()}" th:onclick="|nextWishListSlice(${itemDetailDtoSlice.getNumber()})|"><i class="bi bi-caret-right fa-10x"></i></div>
+          </div>
+        </div>
       </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{layout :: copy (~{::copy})}" xmlns:th="http://www.thymeleaf.org">
 <div class="container my-5" th:fragment="copy">
-  <div class="shadow-4 rounded-5 overflow-hidden">
+  <div class="shadow-4 rounded-5 overflow-hidden mb-4">
     <table class="table align-middle mb-0 bg-white">
       <thead class="bg-light">
       <tr>
@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="itemSellListDto : ${itemSellListDtoPage}" th:onclick="|location.href='@{/item/find/{id}(id = ${itemSellListDto.id})}'|" class="hover-custom-bg">
+      <tr th:each="itemSellListDto : ${itemSellListDtoSlice}" th:onclick="|location.href='@{/item/find/{id}(id = ${itemSellListDto.id})}'|" class="hover-custom-bg">
         <td>
           <div class="d-flex align-items-center">
             <img th:each="image : ${itemSellListDto.uploadImages}" th:src="@{/item/image/} + ${image.storeImageName}" alt="" style="width: 45px; height: 45px" class="rounded-circle"/>
@@ -31,7 +31,6 @@
         </td>
         <td>
           <button type="button" class="btn btn-link btn-sm btn-rounded" th:onclick="|location.href = '@{/item/updateForm/{id}(id=${itemSellListDto.id})}'|">
-<!--          <button type="button" class="btn btn-link btn-sm btn-rounded" th:onclick="'location.href = \'/item/updateForm/' + ${itemSellListDto.id} + '\''">-->
             Edit
           </button>
         </td>
@@ -39,6 +38,10 @@
 
       </tbody>
     </table>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div style="font-size: 48px; cursor: pointer" th:if="${itemSellListDtoSlice.hasPrevious()}" th:onclick="|preSellListSlice(${itemSellListDtoSlice.getNumber()})|"><i class="bi bi-caret-left fa-10x"></i></div>
+    <div style="font-size: 48px; cursor: pointer" th:if="${itemSellListDtoSlice.hasNext()}" th:onclick="|nextSellListSlice(${itemSellListDtoSlice.getNumber()})|"><i class="bi bi-caret-right fa-10x"></i></div>
   </div>
 </div>
 </html>

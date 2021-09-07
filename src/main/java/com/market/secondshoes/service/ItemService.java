@@ -6,6 +6,7 @@ import com.market.secondshoes.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,9 +46,8 @@ public class ItemService {
         return itemRepository.findAll(itemConditionDto, pageable);
     }
 
-    public Page<Item> findSellItems(Long id, Pageable pageable) {
+    public Slice<Item> findSellItems(Long id, Pageable pageable) {
         return itemRepository.findItemsByMemberId(id, pageable);
-
     }
 
     public Item findItemById(Long id) {
