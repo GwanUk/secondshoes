@@ -33,6 +33,7 @@
                 <div class="d-flex">
                     <input class="form-control text-center me-3" th:field="*{viewCount}" style="max-width: 3rem"/>
                     <button th:class="(*{itemWished} == false) ?  'btn btn-outline-danger' : 'btn btn-danger'" type="button"
+                            th:onclick="|wish(this, *{id})|"
                             th:unless="${memberId} == *{memberInfoDto.id}"><i class="bi bi-heart mx-1"></i>
                     </button>
                     <button class="btn btn-outline-dark flex-shrink-0 mx-1" type="button"

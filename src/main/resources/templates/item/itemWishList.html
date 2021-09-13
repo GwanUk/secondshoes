@@ -5,9 +5,9 @@
       <div class="col-xl-9">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
-
             <div class="row border-bottom mb-4" th:each="itemDetailDto : ${itemDetailDtoSlice}">
-              <div class="col-md-9 mb-4 mb-md-0">
+              <!--image-->
+              <div class="col-md-8 mb-4 mb-md-0">
                 <div class="album px-0">
                   <div id="imageListSlide" class="images">
                     <img class="image"
@@ -20,38 +20,23 @@
                     <span class="dot" th:each="uploadImage, uploadImageStat : ${itemDetailDto.uploadImages}" th:name="${uploadImageStat.count}" onclick="slide(this)"></span>
                   </div>
                 </div>
-<!--                <div class="bg-image ripple rounded-5 mb-4 overflow-hidden d-block" data-ripple-color="light">-->
-<!--                  <img th:each="uploadImage : ${itemDetailDto.uploadImages}" th:src="@{/item/image/{storeImageName}(storeImageName = ${uploadImage.storeImageName})}" class="w-25" height="152px" alt=""/>-->
-<!--                  <a href="#!">-->
-<!--                    <div class="hover-overlay">-->
-<!--                      <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>-->
-<!--                    </div>-->
-<!--                  </a>-->
-<!--                </div>-->
               </div>
-              <div class="col-md-3 mb-4 mb-md-0">
+              <!--item-detail-->
+              <div class="col-md-4 mb-4 mb-md-0 align-self-center">
                 <p class="fw-bold fs-4" th:text="${itemDetailDto.title}">Product very long title</p>
                 <p class="mb-1"><span class="text-muted me-2">Price:</span><span th:text="|${itemDetailDto.price}원|">8.5</span></p>
                 <p class="mb-1"><span class="text-muted me-2">Gender:</span><span th:text="${itemDetailDto.gender.getSex()}">8.5</span></p>
                 <p class="mb-1"><span class="text-muted me-2">Size:</span><span th:text="${itemDetailDto.size.getDimensions()}">8.5</span></p>
                 <p class="mb-1"><span class="text-muted me-2">Brand:</span><span th:text="${itemDetailDto.brand.getBrandName()}">8.5</span></p>
-                <p><span class="text-muted me-2">Category:</span><span th:text="${itemDetailDto.category.getCategoryType()}">Red</span></p>
+                <p class="mb-1"><span class="text-muted me-2">Category:</span><span th:text="${itemDetailDto.category.getCategoryType()}">Red</span></p>
+                <p class="mb-1"><span class="text-muted me-2">Name:</span><a class="link-dark" th:href="@{/member/find/{id}(id = ${itemDetailDto.memberInfoDto.id})}" th:text="${itemDetailDto.memberInfoDto.name}">8.5</a></p>
+                <p class="mb-1"><span class="text-muted me-2">View:</span><span th:text="${itemDetailDto.viewCount}">8.5</span></p>
+                <p><span class="text-muted me-2">Date:</span><span th:text="${itemDetailDto.createdDate}">8.5</span></p>
                 <p class="mb-4">
                   <a th:href="@{/wish/remove/{itemId}(itemId = ${itemDetailDto.id})}" class="text-muted pe-3 border-end"><small><i class="fas fa-trash me-2"></i>Remove</small></a>
-                  <a th:href="@{/item/find/{id}(id = ${itemDetailDto.id})}" class="text-muted ps-3"><small><i class="fas fa-heart me-2"></i>Move to shoes</small></a>
+                  <a th:href="@{/item/find/{id}(id = ${itemDetailDto.id})}" class="text-muted ps-3"><small><i class="fas fa-heart me-2"></i>Move to detail</small></a>
                 </p>
               </div>
-
-<!--              <div class="col-md-2 mb-4 mb-md-0">-->
-<!--                <div class="form-outline mb-4">-->
-<!--                  <a class="align-content-end" th:text="${itemDetailDto.memberInfoDto.name}"></a>-->
-<!--                </div>-->
-<!--                <h5 class="mb-2">-->
-<!--                  <i class="bi bi-cash-coin mx-2"></i><span class="align-middle" th:text="${itemDetailDto.price}">$101</span>-->
-<!--                </h5>-->
-<!--                <p class="text-secondary"><small th:text="${itemDetailDto.createdDate}">You save 15%</small></p>-->
-<!--              </div>-->
-<!--            </div>-->
 
           </div>
           <div class="d-flex justify-content-center">

@@ -129,11 +129,15 @@ function preWishListSlice(number) {
 }
 /*item image-slide*/
 function slide(ob) {
-    let imageListSlide = document.getElementById("imageListSlide");
+    let imageListSlide = ob.parentNode.previousSibling.previousSibling;
     let nowDot = ob.getAttribute("name");
     imageListSlide.style.transform = "translate(" + (1 - nowDot) * 522 + "px, 0px)";
-    for (let dot of document.getElementsByClassName("dot")) {
-        dot.className = "dot";
+
+    let dots = ob.parentNode.childNodes;
+    console.log(dots)
+    for (let i= 0; i < dots.length; i++) {
+
+        dots[i].className = "dot";
     }
     ob.classList.add("active");
 }
@@ -297,8 +301,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
     /*image-slide css*/
     if (document.getElementsByClassName("dot").length > 0) {
-        document.getElementsByClassName("dot")[0].classList.add("active");
+        for (let panel of document.getElementsByClassName("control_panel")) {
+            panel.firstElementChild.classList.add("active");
+        }
     }
+
+
 });
 
 

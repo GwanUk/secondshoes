@@ -13,7 +13,7 @@
 .images{
     position: relative;
     display: flex;
-    height: 522px;
+    /*height: 522px;*/
     transition: 500ms;
 }
 .image{
