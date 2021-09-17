@@ -1,9 +1,16 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/shoes
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/test_db?characterEncoding=utf8
+    username: test_user
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/shoes
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
