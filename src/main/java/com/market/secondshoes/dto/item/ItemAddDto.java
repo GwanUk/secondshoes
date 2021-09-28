@@ -51,7 +51,7 @@ public class ItemAddDto {
         itemAddDto.brand = item.getBrand();
         itemAddDto.category = item.getCategory();
         itemAddDto.price = item.getPrice();
-        itemAddDto.explain = item.getExplain();
+        itemAddDto.explain = item.getItemExplain();
 
         return itemAddDto;
     }

@@ -1,10 +1,9 @@
 package com.market.secondshoes.domain.item;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 @Getter
 public enum Category {
-    OXFORD("옥스포드"), DERBY("더비"), WING_TIP("윙팁");
+    SNEAKERS("스니커즈"), HIGH_TOP("하이탑"), SANDAL("샌들");
 
     private final String categoryType;
 

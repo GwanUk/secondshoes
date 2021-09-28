@@ -51,7 +51,7 @@ public class ItemDetailDto {
     }
 
     public static ItemDetailDto createItemDetailDto(Item item) {
-        return createItemDetailDto(item.getId(), item.getTitle(), item.getGender(), item.getSize(), item.getBrand(), item.getCategory(), item.getPrice(), item.getExplain(), item.getUploadImages(), item.getMember(), item.getCreatedDate(), item.getLastModifiedDate(), item.getViewCount());
+        return createItemDetailDto(item.getId(), item.getTitle(), item.getGender(), item.getSize(), item.getBrand(), item.getCategory(), item.getPrice(), item.getItemExplain(), item.getUploadImages(), item.getMember(), item.getCreatedDate(), item.getLastModifiedDate(), item.getViewCount());
     }
 
     public void wished() {

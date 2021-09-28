@@ -37,7 +37,7 @@ public class Item extends BaseTimeEntity {
 
     @Lob
     @Column(length = 1023)
-    private String explain;
+    private String itemExplain;
 
     @ElementCollection
     @CollectionTable(name = "ITEM_IMAGES", joinColumns = @JoinColumn(name = "ITEM_ID"))
@@ -76,7 +76,7 @@ public class Item extends BaseTimeEntity {
         brand = itemAddDto.getBrand();
         category = itemAddDto.getCategory();
         price = itemAddDto.getPrice();
-        explain = itemAddDto.getExplain();
+        itemExplain = itemAddDto.getExplain();
         this.uploadImages = uploadImages;
         addMember(member);
     }
@@ -93,7 +93,7 @@ public class Item extends BaseTimeEntity {
         brand = item.getBrand();
         category = item.getCategory();
         price = item.getPrice();
-        explain = item.getExplain();
+        itemExplain = item.getItemExplain();
         if (!item.getUploadImages().isEmpty()) {
             uploadImages = item.getUploadImages();
         }
