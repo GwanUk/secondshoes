@@ -38,7 +38,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
             String[] searches = condition.getSearch().trim().split(" ");
             Arrays.asList(searches).forEach(s -> {
                 builder.or(item.title.contains(s));
-                builder.or(item.explain.contains(s));
+                builder.or(item.itemExplain.contains(s));
             });
         }
 

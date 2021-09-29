@@ -12,7 +12,6 @@ public class MemberInfoDto {
     private Long id;
     private String email;
     private String name;
-    private Integer grade;
     private Address address;
 
     public static MemberInfoDto createMemberInfoDto(Member member) {
@@ -20,7 +19,6 @@ public class MemberInfoDto {
         memberInfoDto.id = member.getId();
         memberInfoDto.email = member.getEmail();
         memberInfoDto.name = member.getName();
-        memberInfoDto.grade = member.getGrade();
         memberInfoDto.address = member.getAddress();
         return memberInfoDto;
     }
