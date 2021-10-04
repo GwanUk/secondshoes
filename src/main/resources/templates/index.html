@@ -6,7 +6,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Second-Shoes</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                <p class="lead fw-normal text-white-50 mb-0">A place for people who are interested in shoes</p>
             </div>
         </div>
     </header>
@@ -64,18 +64,18 @@
                         </article>
                         <article class="card-group-item">
                             <header class="card-header">
-                                <h6 class="title">Range input </h6>
+                                <h6 class="title">가격대 </h6>
                             </header>
                             <div class="filter-content">
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Min</label>
-                                            <input type="number" class="form-control" th:field="*{priceGoe}" placeholder="$0">
+                                            <input type="number" class="form-control" th:field="*{priceGoe}" placeholder="최소 금액">
                                         </div>
                                         <div class="form-group col-md-6 text-right">
                                             <label>Max</label>
-                                            <input type="number" class="form-control" th:field="*{priceLoe}" placeholder="$1,0000">
+                                            <input type="number" class="form-control" th:field="*{priceLoe}" placeholder="최대 금액">
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
     <div class="container px-4 px-lg-5 mb-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mb-5" id="items_target"></div>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <ul class="pagination" id="page_ul"></ul>
+            <ul class="pagination justify-content-center" id="page_ul"></ul>
         </div>
     </div>
 </content>

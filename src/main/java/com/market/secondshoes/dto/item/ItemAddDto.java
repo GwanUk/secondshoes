@@ -35,7 +35,7 @@ public class ItemAddDto {
     @Range(max = Integer.MAX_VALUE)
     private Integer price;
 
-    @Length(max = 10)
+    @Length(max = 1000)
     private String explain;
 
     private List<MultipartFile> images;
